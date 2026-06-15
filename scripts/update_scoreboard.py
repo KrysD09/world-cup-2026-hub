@@ -67,7 +67,7 @@ CONFEDERATION = {
     'Uruguay':'CONMEBOL','Ecuador':'CONMEBOL','Paraguay':'CONMEBOL',
     'Morocco':'CAF','Senegal':'CAF','Ivory Coast':'CAF','Ghana':'CAF',
     'Egypt':'CAF','Algeria':'CAF','Tunisia':'CAF','DR Congo':'CAF',
-    'Cape Verde':'CAF','Cabo Verde':'CAF','South Africa':'CAF',
+    'Cabo Verde':'CAF','South Africa':'CAF',
     'Japan':'AFC','South Korea':'AFC','Australia':'AFC','Saudi Arabia':'AFC',
     'Iran':'AFC','Iraq':'AFC','Qatar':'AFC','Jordan':'AFC','Uzbekistan':'AFC',
     'Mexico':'CONCACAF','USA':'CONCACAF','Canada':'CONCACAF',
