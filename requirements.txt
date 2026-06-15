@@ -1,0 +1,9 @@
+requests==2.31.0
+pandas==2.1.4
+python-dotenv==1.0.0
+jupyter==1.0.0
+matplotlib==3.8.2
+seaborn==0.13.1
+scipy==1.11.4
+statsmodels==0.14.1
+pykalman==0.9.7

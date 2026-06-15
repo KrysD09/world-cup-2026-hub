@@ -1,0 +1,21 @@
+# Environment
+.env
+*.env
+
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+
+# Data (raw timestamped files can get large — keep processed only)
+data/raw/matches/matches_*.csv
+data/raw/weather/weather_*.csv
+
+# OS
+.DS_Store
+Thumbs.db

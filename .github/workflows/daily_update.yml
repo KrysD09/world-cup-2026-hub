@@ -1,0 +1,44 @@
+name: Daily World Cup Data Update
+
+on:
+  schedule:
+    # 2:00 PM UTC = 10:00 AM ET — runs after morning matches have ended
+    - cron: '0 14 * * *'
+  workflow_dispatch:
+    # Also allows manual trigger from GitHub Actions tab
+
+jobs:
+  collect-data:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Collect match results
+        env:
+          FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
+        run: python scripts/collect_matches.py
+
+      - name: Collect venue weather data
+        run: python scripts/collect_weather.py
+
+      - name: Update confederation scoreboard
+        run: python scripts/update_scoreboard.py
+
+      - name: Commit and push updated data
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add data/
+          # Only commit if there are actual changes
+          git diff --staged --quiet || git commit -m "Data update $(date -u +%Y-%m-%d) [automated]"
+          git push

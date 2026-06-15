@@ -1,0 +1,17 @@
+city,stadium,country,latitude,longitude,altitude_m,capacity,roof,surface,timezone,matches_hosted
+Mexico City,Estadio Azteca,Mexico,19.3023,-99.1506,2240,87523,Open,Grass,America/Mexico_City,7
+Guadalajara,Estadio Akron,Mexico,20.6460,-103.4621,1566,46232,Open,Grass,America/Mexico_City,6
+Monterrey,Estadio BBVA,Mexico,25.6694,-100.3097,538,53500,Open,Grass,America/Monterrey,7
+Toronto,BMO Field,Canada,43.6333,-79.4187,76,30000,Retractable,Grass,America/Toronto,7
+Vancouver,BC Place,Canada,49.2766,-123.1119,3,54500,Retractable,Turf,America/Vancouver,7
+Los Angeles,SoFi Stadium,USA,33.9534,-118.3391,71,70240,Roof,Turf,America/Los_Angeles,8
+New York/NJ,MetLife Stadium,USA,40.8136,-74.0742,9,82500,Open,Turf,America/New_York,8
+Dallas,AT&T Stadium,USA,32.7480,-97.0929,195,80000,Retractable,Turf,America/Chicago,8
+Houston,NRG Stadium,USA,29.6847,-95.4107,13,72220,Retractable,Grass,America/Chicago,7
+Philadelphia,Lincoln Financial Field,USA,39.9008,-75.1675,4,69796,Open,Turf,America/New_York,7
+Seattle,Lumen Field,USA,47.5952,-122.3316,11,68740,Partial,Turf,America/Los_Angeles,7
+Miami,Hard Rock Stadium,USA,25.9580,-80.2389,2,65326,Partial,Grass,America/New_York,8
+Atlanta,Mercedes-Benz Stadium,USA,33.7553,-84.4006,294,71000,Retractable,Turf,America/New_York,8
+Kansas City,Arrowhead Stadium,USA,39.0489,-94.4839,265,76416,Open,Grass,America/Chicago,7
+San Francisco,Levi's Stadium,USA,37.4033,-121.9694,15,68500,Open,Grass,America/Los_Angeles,7
+Boston,Gillette Stadium,USA,42.0909,-71.2643,17,65878,Open,Turf,America/New_York,7
