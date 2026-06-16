@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-H1Z4M1L7P5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-H1Z4M1L7P5');
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Beautiful Data — 2026 FIFA World Cup</title>
@@ -523,6 +531,11 @@ function switchTab(n,btn){
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('tab-'+n).classList.add('active');
   if(btn)btn.classList.add('active');
+  if(typeof gtag==='function'){gtag('event','page_view',{
+    page_title:'Beautiful Data — '+n.charAt(0).toUpperCase()+n.slice(1),
+    page_location:location.href.split('#')[0]+'#'+n,
+    page_path:'/'+n
+  });}
 }
 
 // ── Overview charts ────────────────────────────────────────────────────
