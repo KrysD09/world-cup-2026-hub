@@ -3,540 +3,780 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Beautiful Data — 2026 FIFA World Cup Dashboard</title>
+<title>The Beautiful Data — 2026 FIFA World Cup</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <style>
-  /* ── Reset & base ─────────────────────────────────────────────── */
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --red:   #E61D25;
-    --blue:  #2A398D;
-    --green: #3CAC3B;
-    --gold:  #C9A227;
-    --dark:  #12183A;
-    --gray:  #6B7280;
-    --lgray: #F3F4F6;
-    --white: #FFFFFF;
-    --bg:    #FAFAF7;
-    --border:#E5E5E0;
-    --card-shadow: 0 1px 8px rgba(0,0,0,.06);
-  }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-         background: var(--bg); color: var(--dark); font-size: 14px; line-height: 1.5; }
-
-  /* ── Color bar ────────────────────────────────────────────────── */
-  .color-bar { height: 5px; display: flex; }
-  .color-bar span { flex: 1; }
-
-  /* ── Header ───────────────────────────────────────────────────── */
-  header { background: var(--white); border-bottom: 1px solid var(--border);
-           padding: 18px 24px 14px; }
-  .header-row { display: flex; justify-content: space-between;
-                align-items: flex-start; flex-wrap: wrap; gap: 10px; }
-  .header-left h1 { font-size: 22px; font-weight: 600; color: var(--dark); }
-  .header-left p  { font-size: 13px; color: var(--gray); margin-top: 2px; }
-  .header-right   { text-align: right; font-size: 12px; color: var(--gray); }
-  .header-right a { color: var(--blue); text-decoration: none; }
-  .updated-badge  { display: inline-block; padding: 3px 10px; border-radius: 999px;
-                    background: var(--lgray); font-size: 11px; color: var(--gray);
-                    margin-top: 4px; }
-
-  /* ── Progress bar ─────────────────────────────────────────────── */
-  .progress-wrap  { margin-top: 12px; }
-  .progress-label { display: flex; justify-content: space-between;
-                    font-size: 11px; color: var(--gray); margin-bottom: 4px; }
-  .progress-track { height: 6px; background: var(--lgray); border-radius: 3px; overflow: hidden; }
-  .progress-fill  { height: 100%; background: var(--blue); border-radius: 3px;
-                    transition: width .4s ease; }
-
-  /* ── Main layout ──────────────────────────────────────────────── */
-  main { max-width: 1100px; margin: 0 auto; padding: 20px 16px 40px; }
-
-  /* ── Stat cards ───────────────────────────────────────────────── */
-  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px,1fr));
-               gap: 10px; margin-bottom: 20px; }
-  .stat-card { background: var(--white); border: 1px solid var(--border);
-               border-radius: 12px; padding: 14px 16px;
-               box-shadow: var(--card-shadow); }
-  .stat-label { font-size: 11px; font-weight: 500; color: var(--gray);
-                text-transform: uppercase; letter-spacing: .04em; margin-bottom: 4px; }
-  .stat-value { font-size: 26px; font-weight: 600; color: var(--dark); }
-  .stat-sub   { font-size: 11px; color: var(--gray); margin-top: 2px; }
-
-  /* ── Section cards ────────────────────────────────────────────── */
-  .card { background: var(--white); border: 1px solid var(--border);
-          border-radius: 12px; padding: 18px 20px; margin-bottom: 16px;
-          box-shadow: var(--card-shadow); }
-  .card-title { font-size: 14px; font-weight: 600; color: var(--dark);
-                margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
-  .card-title .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-
-  /* ── Two column layout ────────────────────────────────────────── */
-  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  @media (max-width: 680px) { .two-col { grid-template-columns: 1fr; } }
-
-  /* ── Confederation table ──────────────────────────────────────── */
-  table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  th { font-size: 11px; font-weight: 500; color: var(--gray); text-align: left;
-       padding: 6px 8px; border-bottom: 1px solid var(--border);
-       text-transform: uppercase; letter-spacing: .04em; }
-  td { padding: 9px 8px; border-bottom: 1px solid var(--lgray); vertical-align: middle; }
-  tr:last-child td { border-bottom: none; }
-  tr:hover td { background: var(--lgray); }
-  .conf-pill { display: inline-block; font-size: 11px; font-weight: 500;
-               padding: 2px 8px; border-radius: 999px; color: #fff; }
-  .pts-bar-wrap { background: var(--lgray); border-radius: 3px;
-                  height: 6px; width: 80px; overflow: hidden; }
-  .pts-bar-fill { height: 100%; border-radius: 3px; }
-  .leader-row td { font-weight: 500; }
-
-  /* ── Brazil tracker ───────────────────────────────────────────── */
-  .match-list { display: flex; flex-direction: column; gap: 8px; }
-  .match-item { display: flex; align-items: center; gap: 10px;
-                padding: 10px 12px; border-radius: 8px;
-                border: 1px solid var(--border); background: var(--white); }
-  .match-item.brazil { border-left: 3px solid var(--green); }
-  .match-result { font-size: 13px; font-weight: 600; min-width: 36px; text-align: center;
-                  padding: 3px 6px; border-radius: 6px; }
-  .result-W { background: #D4FAE2; color: #0A5C35; }
-  .result-D { background: #FEF3CC; color: #6B4C00; }
-  .result-L { background: #FDE8E8; color: #7B1F1F; }
-  .result-TBD { background: var(--lgray); color: var(--gray); font-size: 11px; }
-  .match-teams { flex: 1; font-size: 13px; color: var(--dark); }
-  .match-meta  { font-size: 11px; color: var(--gray); text-align: right; }
-
-  /* ── Group C standings ────────────────────────────────────────── */
-  .standings-table th, .standings-table td { padding: 7px 8px; }
-  .brazil-row td { color: var(--green); font-weight: 500; }
-
-  /* ── Chart container ──────────────────────────────────────────── */
-  .chart-wrap { position: relative; height: 220px; }
-
-  /* ── Loading / error ──────────────────────────────────────────── */
-  .loading { text-align: center; padding: 30px; color: var(--gray); font-size: 13px; }
-  .error   { background: #FDE8E8; color: #7B1F1F; padding: 10px 14px;
-             border-radius: 8px; font-size: 12px; }
-
-  /* ── Footer ───────────────────────────────────────────────────── */
-  footer { text-align: center; padding: 20px; font-size: 11px; color: var(--gray);
-           border-top: 1px solid var(--border); margin-top: 8px; }
-  footer a { color: var(--blue); text-decoration: none; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--red:#E61D25;--blue:#2A398D;--green:#3CAC3B;--gold:#C9A227;
+  --dark:#12183A;--gray:#6B7280;--lgray:#F3F4F6;--white:#FFFFFF;
+  --bg:#FAFAF7;--border:#E5E5E0;--shadow:0 1px 8px rgba(0,0,0,.06);}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  background:var(--bg);color:var(--dark);font-size:14px;line-height:1.5;}
+.color-bar{height:5px;display:flex;}
+.color-bar span{flex:1;}
+header{background:var(--white);border-bottom:1px solid var(--border);padding:16px 24px 12px;}
+.header-row{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;}
+.header-left h1{font-size:20px;font-weight:600;}
+.header-left p{font-size:12px;color:var(--gray);margin-top:2px;}
+.header-right{text-align:right;font-size:12px;color:var(--gray);}
+.header-right a{color:var(--blue);text-decoration:none;}
+.updated-badge{display:inline-block;padding:3px 10px;border-radius:999px;
+  background:var(--lgray);font-size:11px;color:var(--gray);margin-top:4px;}
+.progress-wrap{margin-top:10px;}
+.progress-label{display:flex;justify-content:space-between;font-size:11px;color:var(--gray);margin-bottom:3px;}
+.progress-track{height:5px;background:var(--lgray);border-radius:3px;overflow:hidden;}
+.progress-fill{height:100%;background:var(--blue);border-radius:3px;transition:width .4s;}
+.tab-nav{background:var(--white);border-bottom:1px solid var(--border);
+  padding:0 24px;display:flex;overflow-x:auto;position:sticky;top:0;z-index:100;}
+.tab-btn{padding:12px 18px;font-size:13px;font-weight:500;color:var(--gray);
+  border:none;background:transparent;cursor:pointer;border-bottom:2px solid transparent;
+  white-space:nowrap;transition:all .15s;}
+.tab-btn:hover{color:var(--dark);}
+.tab-btn.active{color:var(--blue);border-bottom-color:var(--blue);}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+main{max-width:1100px;margin:0 auto;padding:20px 16px 40px;}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:18px;}
+.stat-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow);}
+.stat-label{font-size:11px;font-weight:500;color:var(--gray);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;}
+.stat-value{font-size:24px;font-weight:600;color:var(--dark);}
+.stat-sub{font-size:11px;color:var(--gray);margin-top:2px;}
+.card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin-bottom:16px;box-shadow:var(--shadow);}
+.card-title{font-size:14px;font-weight:600;color:var(--dark);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.card-title .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media(max-width:680px){.two-col{grid-template-columns:1fr;}}
+table{width:100%;border-collapse:collapse;font-size:13px;}
+th{font-size:11px;font-weight:500;color:var(--gray);text-align:left;padding:7px 8px;
+  border-bottom:1px solid var(--border);text-transform:uppercase;letter-spacing:.04em;cursor:pointer;}
+th:hover{color:var(--dark);}
+td{padding:9px 8px;border-bottom:1px solid var(--lgray);vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:var(--lgray);}
+.badge{display:inline-block;font-size:10px;font-weight:500;padding:2px 8px;border-radius:999px;}
+.bg{background:#D4FAE2;color:#0A5C35;}.br{background:#FDE8E8;color:#7B1F1F;}
+.by{background:#FEF3CC;color:#6B4C00;}.bgr{background:var(--lgray);color:var(--gray);}
+.bb{background:#E6F1FB;color:#1B4FD8;}
+.conf-pill{display:inline-block;font-size:11px;font-weight:500;padding:2px 8px;border-radius:999px;color:#fff;}
+.tier-b{display:inline-flex;width:22px;height:22px;border-radius:50%;align-items:center;justify-content:center;font-size:10px;font-weight:600;}
+.conf-selector,.filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;align-items:center;}
+.cs-btn{padding:6px 14px;border-radius:999px;font-size:12px;font-weight:500;
+  cursor:pointer;border:1px solid var(--border);color:var(--gray);background:var(--white);transition:all .15s;}
+.pts-bw{background:var(--lgray);border-radius:3px;height:5px;width:70px;overflow:hidden;display:inline-block;}
+.pts-bf{height:100%;border-radius:3px;}
+.upset-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;}
+.upset-card{border:1px solid var(--border);border-radius:10px;padding:10px 12px;background:var(--white);border-left:3px solid var(--gold);}
+.upset-score{font-size:15px;font-weight:600;color:var(--dark);}
+.upset-meta{font-size:11px;color:var(--gray);margin-top:3px;}
+.upset-lbl{font-size:10px;font-weight:500;color:var(--gold);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;}
+.match-list{display:flex;flex-direction:column;gap:6px;}
+.match-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;border:1px solid var(--border);background:var(--white);}
+.match-item.hi{border-left:3px solid var(--green);}
+.mr{font-size:12px;font-weight:600;min-width:40px;text-align:center;padding:3px 6px;border-radius:6px;}
+.rW{background:#D4FAE2;color:#0A5C35;}.rD{background:#FEF3CC;color:#6B4C00;}
+.rL{background:#FDE8E8;color:#7B1F1F;}.rT{background:var(--lgray);color:var(--gray);font-size:10px;}
+.mt{flex:1;font-size:13px;}.mm{font-size:11px;color:var(--gray);}
+.chart-wrap{position:relative;height:240px;}
+.brazil-row td{color:var(--green);font-weight:500;}
+/* Countries */
+.search-box{padding:7px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;
+  background:var(--white);color:var(--dark);outline:none;min-width:200px;}
+.search-box:focus{border-color:var(--blue);}
+.country-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-bottom:16px;}
+.country-card{border:1px solid var(--border);border-radius:10px;padding:12px 10px;
+  background:var(--white);cursor:pointer;text-align:center;transition:all .15s;user-select:none;}
+.country-card:hover{border-color:var(--blue);box-shadow:0 2px 8px rgba(42,57,141,.12);}
+.country-card.active{border-color:var(--blue);border-width:2px;background:#f0f5ff;}
+.country-flag{font-size:28px;margin-bottom:4px;}
+.country-name{font-size:12px;font-weight:500;color:var(--dark);line-height:1.3;}
+.country-meta{font-size:10px;color:var(--gray);margin-top:3px;}
+.country-pts{font-size:11px;font-weight:500;margin-top:4px;}
+.country-detail{background:var(--white);border:2px solid var(--blue);border-radius:12px;
+  padding:20px;margin-bottom:16px;display:none;}
+.country-detail.show{display:block;}
+.detail-header{display:flex;align-items:center;gap:14px;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+.detail-flag{font-size:48px;}
+.detail-info h2{font-size:18px;font-weight:600;}
+.detail-info p{font-size:12px;color:var(--gray);margin-top:2px;}
+.detail-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px;margin-bottom:14px;}
+.detail-stat{background:var(--lgray);border-radius:8px;padding:10px 12px;text-align:center;}
+.detail-stat .v{font-size:20px;font-weight:600;color:var(--dark);}
+.detail-stat .l{font-size:10px;color:var(--gray);margin-top:2px;}
+/* Venues */
+.venue-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;}
+.venue-card{border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--white);box-shadow:var(--shadow);}
+.venue-img{width:100%;height:160px;object-fit:cover;display:block;background:var(--lgray);}
+.venue-img-placeholder{width:100%;height:160px;display:flex;align-items:center;justify-content:center;
+  font-size:32px;background:linear-gradient(135deg,var(--lgray),#e8e8e0);}
+.venue-body{padding:12px 14px;}
+.venue-name{font-size:13px;font-weight:600;color:var(--dark);margin-bottom:2px;}
+.venue-city{font-size:12px;color:var(--gray);margin-bottom:8px;}
+.venue-stats{display:flex;gap:8px;flex-wrap:wrap;}
+.venue-stat{font-size:11px;background:var(--lgray);padding:3px 8px;border-radius:6px;color:var(--dark);}
+.alt-badge{font-size:11px;font-weight:500;padding:3px 8px;border-radius:6px;}
+.alt-high{background:#FDE8E8;color:#7B1F1F;}
+.alt-mid{background:#FEF3CC;color:#6B4C00;}
+.alt-low{background:#E6F1FB;color:#1B4FD8;}
+.goals-live{font-size:11px;font-weight:500;padding:3px 8px;border-radius:6px;background:#D4FAE2;color:#0A5C35;}
+/* Bracket */
+.bracket-rounds{overflow-x:auto;padding-bottom:10px;}
+.bracket-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:0;min-width:800px;}
+.round-col{display:flex;flex-direction:column;}
+.round-header{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.04em;
+  color:var(--white);padding:7px 10px;text-align:center;border-radius:6px 6px 0 0;margin:0 4px;}
+.bracket-slots{display:flex;flex-direction:column;flex:1;padding:8px 4px;gap:6px;}
+.bracket-match{border:1px solid var(--border);border-radius:8px;overflow:hidden;background:var(--white);}
+.bslot{display:flex;align-items:center;gap:6px;padding:6px 8px;border-bottom:1px solid var(--lgray);}
+.bslot:last-child{border-bottom:none;}
+.bslot input{border:none;background:transparent;font-size:12px;color:var(--dark);
+  flex:1;outline:none;font-family:inherit;}
+.bslot input::placeholder{color:#ccc;}
+.bslot input.winner{font-weight:500;color:var(--green);}
+.bslot-num{font-size:9px;color:var(--gray);min-width:12px;}
+.match-info{font-size:9px;color:var(--gray);padding:2px 8px;border-top:1px solid var(--lgray);background:var(--lgray);}
+.bracket-controls{display:flex;gap:8px;margin-bottom:14px;align-items:center;flex-wrap:wrap;}
+.btn-sm{padding:6px 14px;border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid var(--border);background:var(--white);color:var(--dark);}
+.btn-sm:hover{background:var(--lgray);}
+.btn-danger{border-color:#f5c5c5;color:#c44;background:#fff8f8;}
+.btn-save{border-color:var(--green);color:var(--green);}
+.bracket-final{text-align:center;margin-top:20px;padding:20px;border:2px solid var(--gold);border-radius:12px;background:#fffcf0;}
+.trophy-icon{font-size:36px;margin-bottom:8px;}
+.champion-input{border:none;border-bottom:2px solid var(--gold);background:transparent;
+  font-size:20px;font-weight:600;color:var(--gold);text-align:center;outline:none;width:260px;padding:4px;}
+.champion-input::placeholder{color:#e8d89a;font-size:15px;font-weight:400;}
+footer{text-align:center;padding:20px;font-size:11px;color:var(--gray);border-top:1px solid var(--border);}
+footer a{color:var(--blue);text-decoration:none;}
+.loading{text-align:center;padding:20px;color:var(--gray);font-size:13px;}
+.err{background:#FDE8E8;color:#7B1F1F;padding:10px 14px;border-radius:8px;font-size:12px;}
 </style>
 </head>
 <body>
-
 <div class="color-bar">
-  <span style="background:var(--red)"></span>
-  <span style="background:var(--blue)"></span>
-  <span style="background:var(--green)"></span>
-  <span style="background:var(--gold);flex:.3"></span>
+  <span style="background:var(--red)"></span><span style="background:var(--blue)"></span>
+  <span style="background:var(--green)"></span><span style="background:var(--gold);flex:.3"></span>
 </div>
-
 <header>
   <div class="header-row">
     <div class="header-left">
       <h1>The Beautiful Data</h1>
-      <p>2026 FIFA World Cup Analytics Dashboard &nbsp;·&nbsp; Signal &amp; Structure by Krystie Dickson</p>
+      <p>2026 FIFA World Cup Analytics &nbsp;&middot;&nbsp; Signal &amp; Structure by Krystie Dickson</p>
     </div>
     <div class="header-right">
-      <div>
-        <a href="https://signalandstructurehq.substack.com/s/the-beautiful-data" target="_blank">Substack</a>
-        &nbsp;·&nbsp;
-        <a href="https://github.com/kadickson/world-cup-2026-hub" target="_blank">GitHub</a>
-      </div>
+      <a href="https://signalandstructurehq.substack.com/s/the-beautiful-data" target="_blank">Substack</a>
+      &nbsp;&middot;&nbsp;
+      <a href="https://github.com/KrysD09/world-cup-2026-hub" target="_blank">GitHub</a>
       <div class="updated-badge" id="updated-badge">Loading...</div>
     </div>
   </div>
   <div class="progress-wrap">
-    <div class="progress-label">
-      <span id="progress-label-left">Matches played</span>
-      <span id="progress-label-right">of 104</span>
-    </div>
-    <div class="progress-track">
-      <div class="progress-fill" id="progress-fill" style="width:0%"></div>
-    </div>
+    <div class="progress-label"><span id="prog-l">Loading...</span><span>of 104 matches</span></div>
+    <div class="progress-track"><div class="progress-fill" id="prog-f" style="width:0%"></div></div>
   </div>
 </header>
 
-<main>
+<div class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('overview',this)">Overview</button>
+  <button class="tab-btn" onclick="switchTab('confederations',this)">Confederations</button>
+  <button class="tab-btn" onclick="switchTab('countries',this)">Countries</button>
+  <button class="tab-btn" onclick="switchTab('venues',this)">Venues</button>
+  <button class="tab-btn" onclick="switchTab('bracket',this)">Bracket</button>
+</div>
 
-  <!-- Stat cards -->
-  <div class="stat-grid" id="stat-grid">
-    <div class="stat-card">
-      <div class="stat-label">Matches played</div>
-      <div class="stat-value" id="stat-played">—</div>
-      <div class="stat-sub">of 104 total</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Goals scored</div>
-      <div class="stat-value" id="stat-goals">—</div>
-      <div class="stat-sub" id="stat-gpg">— per game</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Top confederation</div>
-      <div class="stat-value" id="stat-top-conf" style="font-size:18px">—</div>
-      <div class="stat-sub" id="stat-top-pts">—</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Brazil</div>
-      <div class="stat-value" id="stat-brazil" style="font-size:18px">—</div>
-      <div class="stat-sub" id="stat-brazil-sub">Group C</div>
-    </div>
+<!-- OVERVIEW -->
+<div id="tab-overview" class="tab-panel active"><main>
+  <div class="stat-grid">
+    <div class="stat-card"><div class="stat-label">Matches played</div><div class="stat-value" id="ov-p">--</div><div class="stat-sub">of 104 total</div></div>
+    <div class="stat-card"><div class="stat-label">Goals scored</div><div class="stat-value" id="ov-g">--</div><div class="stat-sub" id="ov-gpg">-- per game</div></div>
+    <div class="stat-card"><div class="stat-label">Leading conf.</div><div class="stat-value" id="ov-tc" style="font-size:17px">--</div><div class="stat-sub" id="ov-ts">--</div></div>
+    <div class="stat-card"><div class="stat-label">Brazil</div><div class="stat-value" id="ov-br" style="font-size:17px">--</div><div class="stat-sub" id="ov-bs">Group C</div></div>
   </div>
-
-  <!-- Confederation scoreboard + chart -->
-  <div class="card">
-    <div class="card-title">
-      <div class="dot" style="background:var(--blue)"></div>
-      Confederation Scoreboard
-    </div>
-    <div class="two-col">
-      <div>
-        <table id="conf-table">
-          <thead>
-            <tr>
-              <th>Confederation</th>
-              <th>GP</th>
-              <th>Pts</th>
-              <th>Wins</th>
-              <th>GD</th>
-              <th>Pts/Game</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody id="conf-tbody">
-            <tr><td colspan="7" class="loading">Loading...</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div>
-        <div class="chart-wrap">
-          <canvas id="conf-chart"></canvas>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Brazil tracker + Group C -->
   <div class="two-col">
-    <div class="card">
-      <div class="card-title">
-        <div class="dot" style="background:var(--green)"></div>
-        Brazil 2026 — Match Tracker
-      </div>
-      <div class="match-list" id="brazil-matches">
-        <div class="loading">Loading...</div>
-      </div>
-    </div>
+    <div class="card"><div class="card-title"><div class="dot" style="background:var(--green)"></div>Brazil Match Tracker</div>
+      <div class="match-list" id="ov-bm"><div class="loading">Loading...</div></div></div>
+    <div class="card"><div class="card-title"><div class="dot" style="background:var(--gold)"></div>Group C Standings</div>
+      <table><thead><tr><th>Team</th><th>GP</th><th>W</th><th>D</th><th>L</th><th>GD</th><th>Pts</th></tr></thead>
+      <tbody id="ov-gc"><tr><td colspan="7" class="loading">Loading...</td></tr></tbody></table></div>
+  </div>
+  <div class="card"><div class="card-title"><div class="dot" style="background:var(--gold)"></div>Upcoming Matches</div>
+    <div class="match-list" id="ov-up"><div class="loading">Loading...</div></div></div>
+</main></div>
 
-    <div class="card">
-      <div class="card-title">
-        <div class="dot" style="background:var(--gold)"></div>
-        Group C Standings
-      </div>
-      <table class="standings-table">
-        <thead>
-          <tr><th>Team</th><th>GP</th><th>W</th><th>D</th><th>L</th><th>GD</th><th>Pts</th></tr>
-        </thead>
-        <tbody id="group-c-tbody">
-          <tr><td colspan="7" class="loading">Loading...</td></tr>
-        </tbody>
-      </table>
+<!-- CONFEDERATIONS -->
+<div id="tab-confederations" class="tab-panel"><main>
+  <div class="conf-selector" id="cs">
+    <button class="cs-btn" data-c="ALL" onclick="selConf('ALL',this)" style="background:var(--dark);color:#fff;border-color:var(--dark)">All</button>
+    <button class="cs-btn" data-c="UEFA" onclick="selConf('UEFA',this)">UEFA</button>
+    <button class="cs-btn" data-c="CONMEBOL" onclick="selConf('CONMEBOL',this)">CONMEBOL</button>
+    <button class="cs-btn" data-c="CAF" onclick="selConf('CAF',this)">CAF</button>
+    <button class="cs-btn" data-c="AFC" onclick="selConf('AFC',this)">AFC</button>
+    <button class="cs-btn" data-c="CONCACAF" onclick="selConf('CONCACAF',this)">CONCACAF</button>
+    <button class="cs-btn" data-c="OFC" onclick="selConf('OFC',this)">OFC</button>
+  </div>
+  <div id="conf-sumcards" style="display:none" class="stat-grid"></div>
+  <div class="two-col">
+    <div class="card"><div class="card-title"><div class="dot" style="background:var(--blue)"></div><span id="ct-title">Confederation Scoreboard</span></div>
+      <table><thead><tr><th onclick="srtC('name')">Confederation</th><th onclick="srtC('teams')">Teams</th>
+        <th onclick="srtC('played')">GP</th><th onclick="srtC('points')">Pts</th>
+        <th onclick="srtC('wins')">W</th><th onclick="srtC('gd')">GD</th>
+        <th onclick="srtC('ppg')">Pts/G</th><th></th></tr></thead>
+      <tbody id="conf-tb"><tr><td colspan="8" class="loading">Loading...</td></tr></tbody></table></div>
+    <div class="card"><div class="card-title"><div class="dot" style="background:var(--gold)"></div><span id="cc-title">Points per game</span></div>
+      <div class="chart-wrap"><canvas id="conf-chart"></canvas></div></div>
+  </div>
+  <div id="team-dd" style="display:none" class="card">
+    <div class="card-title"><div class="dot" style="background:var(--green)"></div><span id="dd-title">Teams</span></div>
+    <table><thead><tr><th>Team</th><th>Group</th><th>Tier</th><th>GP</th><th>W</th><th>D</th><th>L</th><th>GD</th><th>Pts</th><th>Pts/G</th><th>vs Expected</th></tr></thead>
+    <tbody id="team-tb"><tr><td colspan="11" class="loading">Loading...</td></tr></tbody></table></div>
+  <div class="card"><div class="card-title"><div class="dot" style="background:var(--gold)"></div>Upset Tracker</div>
+    <p style="font-size:12px;color:var(--gray);margin-bottom:12px">Matches where a lower-ranked tier beat a higher one.</p>
+    <div class="upset-grid" id="upset-g"><div class="loading">Loading...</div></div></div>
+</main></div>
+
+<!-- COUNTRIES -->
+<div id="tab-countries" class="tab-panel"><main>
+  <div class="filter-row">
+    <input class="search-box" id="country-search" placeholder="Search country..." oninput="filterCountries()">
+    <div id="country-conf-filter" style="display:flex;gap:6px;flex-wrap:wrap">
+      <button class="cs-btn" style="background:var(--dark);color:#fff;border-color:var(--dark)" onclick="filterConf('ALL',this)">All</button>
+      <button class="cs-btn" onclick="filterConf('UEFA',this)">UEFA</button>
+      <button class="cs-btn" onclick="filterConf('CONMEBOL',this)">CONMEBOL</button>
+      <button class="cs-btn" onclick="filterConf('CAF',this)">CAF</button>
+      <button class="cs-btn" onclick="filterConf('AFC',this)">AFC</button>
+      <button class="cs-btn" onclick="filterConf('CONCACAF',this)">CONCACAF</button>
+      <button class="cs-btn" onclick="filterConf('OFC',this)">OFC</button>
     </div>
   </div>
-
-  <!-- Upcoming matches -->
-  <div class="card">
-    <div class="card-title">
-      <div class="dot" style="background:var(--gold)"></div>
-      Upcoming Matches
+  <div id="country-detail" class="country-detail">
+    <div class="detail-header">
+      <div class="detail-flag" id="d-flag">-</div>
+      <div class="detail-info">
+        <h2 id="d-name">-</h2>
+        <p id="d-meta">-</p>
+      </div>
     </div>
-    <div class="match-list" id="upcoming-list">
-      <div class="loading">Loading...</div>
+    <div class="detail-grid" id="d-stats"></div>
+    <div class="two-col">
+      <div><div class="stat-label" style="margin-bottom:8px">2026 Matches</div>
+        <div class="match-list" id="d-matches"></div></div>
+      <div><div class="stat-label" style="margin-bottom:8px">Group Standings</div>
+        <table><thead><tr><th>Team</th><th>GP</th><th>W</th><th>D</th><th>L</th><th>GD</th><th>Pts</th></tr></thead>
+        <tbody id="d-group"></tbody></table></div>
     </div>
   </div>
+  <div class="country-grid" id="country-grid"><div class="loading">Loading...</div></div>
+</main></div>
 
-</main>
+<!-- VENUES -->
+<div id="tab-venues" class="tab-panel"><main>
+  <div class="stat-grid" style="margin-bottom:18px">
+    <div class="stat-card"><div class="stat-label">Host cities</div><div class="stat-value">16</div><div class="stat-sub">USA, Mexico, Canada</div></div>
+    <div class="stat-card"><div class="stat-label">Highest altitude</div><div class="stat-value">2,240m</div><div class="stat-sub">Mexico City (Azteca)</div></div>
+    <div class="stat-card"><div class="stat-label">Largest stadium</div><div class="stat-value">87,523</div><div class="stat-sub">Estadio Azteca</div></div>
+    <div class="stat-card"><div class="stat-label">Indoor venues</div><div class="stat-value">5</div><div class="stat-sub">Climate-controlled</div></div>
+  </div>
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-title"><div class="dot" style="background:var(--blue)"></div>Altitude &amp; Environment Key</div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;font-size:12px">
+      <span><span class="alt-badge alt-high">High altitude &gt;1500m</span> Thinner air, affects stamina and scoring</span>
+      <span><span class="alt-badge alt-mid">Mid altitude 500-1500m</span> Moderate effect</span>
+      <span><span class="alt-badge alt-low">Sea level &lt;500m</span> Standard conditions</span>
+      <span><span class="goals-live">Goals: live</span> Updates after each match</span>
+    </div>
+  </div>
+  <div class="venue-grid" id="venue-grid"><div class="loading">Loading venue data...</div></div>
+</main></div>
 
-<footer>
-  <p>
-    Data: <a href="https://www.football-data.org" target="_blank">football-data.org</a> API · 
-    Updated daily via GitHub Actions · 
-    <a href="https://signalandstructurehq.substack.com/s/the-beautiful-data" target="_blank">The Beautiful Data on Substack</a> · 
-    <a href="https://github.com/KrysD09/world-cup-2026-hub" target="_blank">View source on GitHub</a>
-  </p>
-</footer>
+<!-- BRACKET -->
+<div id="tab-bracket" class="tab-panel"><main>
+  <div class="bracket-controls">
+    <button class="btn-sm btn-save" onclick="saveBracket()">Save predictions</button>
+    <button class="btn-sm btn-danger" onclick="clearBracket()">Clear bracket</button>
+    <span style="font-size:11px;color:var(--gray)" id="bracket-status">Click any slot to enter a team</span>
+  </div>
+  <div class="bracket-rounds">
+    <div class="bracket-grid" id="bracket-grid"></div>
+  </div>
+  <div class="bracket-final">
+    <div class="trophy-icon">&#127942;</div>
+    <div style="font-size:11px;font-weight:500;color:var(--gold);letter-spacing:.05em;margin-bottom:8px">2026 WORLD CHAMPION</div>
+    <input class="champion-input" id="champion-input" placeholder="Your champion pick..." oninput="saveBracket()">
+  </div>
+</main></div>
+
+<footer>Data: <a href="https://www.football-data.org" target="_blank">football-data.org</a> &middot;
+Updated daily via GitHub Actions &middot;
+<a href="https://signalandstructurehq.substack.com/s/the-beautiful-data" target="_blank">The Beautiful Data</a> &middot;
+<a href="https://github.com/KrysD09/world-cup-2026-hub" target="_blank">View source</a></footer>
 
 <script>
-// ── Config — update GITHUB_USER if your username changes ──────────────────
-const GITHUB_USER = 'KrysD09';
-const GITHUB_REPO = 'world-cup-2026-hub';
-const RAW = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/main/data/processed`;
+// ── Config ─────────────────────────────────────────────────────────────
+const GU='KrysD09',GR='world-cup-2026-hub';
+const RAW=`https://raw.githubusercontent.com/${GU}/${GR}/main/data/processed`;
+const CC={UEFA:'#185FA5',CONMEBOL:'#3CAC3B',CAF:'#BA7517',AFC:'#A32D2D',CONCACAF:'#534AB7',OFC:'#888888'};
+const TIER={France:'S',England:'S',Spain:'S',Brazil:'S',Argentina:'S',Portugal:'S',Germany:'S',Netherlands:'S',
+  Belgium:'A',Uruguay:'A',Croatia:'A',Colombia:'A',Morocco:'A',Japan:'A',Mexico:'A','United States':'A',
+  Austria:'A',Switzerland:'A',Norway:'A',Ecuador:'B',Australia:'B',Senegal:'B','Korea Republic':'B',
+  'Turkiye':'B','Sweden':'B',"Cote d'Ivoire":'B',Algeria:'B',Iran:'B',Ghana:'B',Tunisia:'B',Egypt:'B',
+  Scotland:'B',Canada:'B','South Africa':'B','Saudi Arabia':'C',Paraguay:'C',Iraq:'C',Czechia:'C',
+  'Bosnia and Herzegovina':'C',Jordan:'C','New Zealand':'C',Uzbekistan:'C',Panama:'C','Cabo Verde':'C',
+  Qatar:'C',Haiti:'D','Curacao':'D','Congo DR':'D'};
+const TC={S:'#185FA5',A:'#3CAC3B',B:'#BA7517',C:'#888888',D:'#BBBBBB'};
+const TPPG={S:2.0,A:1.5,B:1.0,C:0.6,D:0.3};
+const TO={S:5,A:4,B:3,C:2,D:1};
 
-const CONF_COLOR = {
-  UEFA:'#185FA5', CONMEBOL:'#3CAC3B', CAF:'#BA7517',
-  AFC:'#A32D2D',  CONCACAF:'#534AB7', OFC:'#888888'
-};
+// 48 countries
+const COUNTRIES=[
+  {n:'Mexico',api:'Mexico',f:'&#127474;&#127485;',g:'A',c:'CONCACAF',t:'B',titles:0},
+  {n:'South Africa',api:'South Africa',f:'&#127487;&#127462;',g:'A',c:'CAF',t:'C',titles:0},
+  {n:'South Korea',api:'Korea Republic',f:'&#127472;&#127479;',g:'A',c:'AFC',t:'B',titles:0},
+  {n:'Czech Republic',api:'Czechia',f:'&#127464;&#127487;',g:'A',c:'UEFA',t:'C',titles:0},
+  {n:'Canada',api:'Canada',f:'&#127464;&#127462;',g:'B',c:'CONCACAF',t:'B',titles:0},
+  {n:'Bosnia-Herzegovina',api:'Bosnia and Herzegovina',f:'&#127463;&#127462;',g:'B',c:'UEFA',t:'C',titles:0},
+  {n:'Qatar',api:'Qatar',f:'&#127478;&#127462;',g:'B',c:'AFC',t:'C',titles:0},
+  {n:'Switzerland',api:'Switzerland',f:'&#127464;&#127469;',g:'B',c:'UEFA',t:'A',titles:0},
+  {n:'Brazil',api:'Brazil',f:'&#127463;&#127479;',g:'C',c:'CONMEBOL',t:'S',titles:5},
+  {n:'Morocco',api:'Morocco',f:'&#127474;&#127462;',g:'C',c:'CAF',t:'A',titles:0},
+  {n:'Haiti',api:'Haiti',f:'&#127469;&#127481;',g:'C',c:'CONCACAF',t:'D',titles:0},
+  {n:'Scotland',api:'Scotland',f:'&#127988;',g:'C',c:'UEFA',t:'B',titles:0},
+  {n:'USA',api:'United States',f:'&#127482;&#127480;',g:'D',c:'CONCACAF',t:'A',titles:0},
+  {n:'Paraguay',api:'Paraguay',f:'&#127477;&#127486;',g:'D',c:'CONMEBOL',t:'C',titles:0},
+  {n:'Australia',api:'Australia',f:'&#127462;&#127482;',g:'D',c:'AFC',t:'B',titles:0},
+  {n:'Turkey',api:'Turkiye',f:'&#127481;&#127479;',g:'D',c:'UEFA',t:'B',titles:0},
+  {n:'Germany',api:'Germany',f:'&#127465;&#127466;',g:'E',c:'UEFA',t:'S',titles:4},
+  {n:'Curacao',api:'Curacao',f:'&#127464;&#127484;',g:'E',c:'CONCACAF',t:'D',titles:0},
+  {n:'Ivory Coast',api:"Cote d'Ivoire",f:'&#127464;&#127470;',g:'E',c:'CAF',t:'B',titles:0},
+  {n:'Ecuador',api:'Ecuador',f:'&#127466;&#127464;',g:'E',c:'CONMEBOL',t:'B',titles:0},
+  {n:'Netherlands',api:'Netherlands',f:'&#127475;&#127473;',g:'F',c:'UEFA',t:'S',titles:0},
+  {n:'Japan',api:'Japan',f:'&#127471;&#127477;',g:'F',c:'AFC',t:'A',titles:0},
+  {n:'Sweden',api:'Sweden',f:'&#127480;&#127466;',g:'F',c:'UEFA',t:'B',titles:0},
+  {n:'Tunisia',api:'Tunisia',f:'&#127481;&#127475;',g:'F',c:'CAF',t:'B',titles:0},
+  {n:'Belgium',api:'Belgium',f:'&#127463;&#127466;',g:'G',c:'UEFA',t:'A',titles:0},
+  {n:'Egypt',api:'Egypt',f:'&#127466;&#127468;',g:'G',c:'CAF',t:'C',titles:0},
+  {n:'Iran',api:'Iran',f:'&#127470;&#127479;',g:'G',c:'AFC',t:'C',titles:0},
+  {n:'New Zealand',api:'New Zealand',f:'&#127475;&#127487;',g:'G',c:'OFC',t:'C',titles:0},
+  {n:'Spain',api:'Spain',f:'&#127466;&#127480;',g:'H',c:'UEFA',t:'S',titles:1},
+  {n:'Cape Verde',api:'Cabo Verde',f:'&#127464;&#127483;',g:'H',c:'CAF',t:'D',titles:0},
+  {n:'Saudi Arabia',api:'Saudi Arabia',f:'&#127480;&#127462;',g:'H',c:'AFC',t:'C',titles:0},
+  {n:'Uruguay',api:'Uruguay',f:'&#127482;&#127486;',g:'H',c:'CONMEBOL',t:'A',titles:2},
+  {n:'France',api:'France',f:'&#127467;&#127479;',g:'I',c:'UEFA',t:'S',titles:2},
+  {n:'Senegal',api:'Senegal',f:'&#127480;&#127475;',g:'I',c:'CAF',t:'B',titles:0},
+  {n:'Norway',api:'Norway',f:'&#127475;&#127476;',g:'I',c:'UEFA',t:'A',titles:0},
+  {n:'Iraq',api:'Iraq',f:'&#127470;&#127478;',g:'I',c:'AFC',t:'C',titles:0},
+  {n:'Argentina',api:'Argentina',f:'&#127462;&#127479;',g:'J',c:'CONMEBOL',t:'S',titles:3},
+  {n:'Algeria',api:'Algeria',f:'&#127465;&#127487;',g:'J',c:'CAF',t:'B',titles:0},
+  {n:'Austria',api:'Austria',f:'&#127462;&#127481;',g:'J',c:'UEFA',t:'A',titles:0},
+  {n:'Jordan',api:'Jordan',f:'&#127471;&#127476;',g:'J',c:'AFC',t:'C',titles:0},
+  {n:'Portugal',api:'Portugal',f:'&#127477;&#127481;',g:'K',c:'UEFA',t:'S',titles:0},
+  {n:'DR Congo',api:'Congo DR',f:'&#127464;&#127465;',g:'K',c:'CAF',t:'D',titles:0},
+  {n:'England',api:'England',f:'&#127988;',g:'K',c:'UEFA',t:'S',titles:1},
+  {n:'Ghana',api:'Ghana',f:'&#127468;&#127469;',g:'K',c:'CAF',t:'B',titles:0},
+  {n:'Panama',api:'Panama',f:'&#127477;&#127462;',g:'L',c:'CONCACAF',t:'C',titles:0},
+  {n:'Croatia',api:'Croatia',f:'&#127469;&#127479;',g:'L',c:'UEFA',t:'A',titles:0},
+  {n:'Uzbekistan',api:'Uzbekistan',f:'&#127482;&#127487;',g:'L',c:'AFC',t:'C',titles:0},
+  {n:'Colombia',api:'Colombia',f:'&#127464;&#127476;',g:'L',c:'CONMEBOL',t:'A',titles:0},
+];
 
-// ── Fetch helpers ─────────────────────────────────────────────────────────
-async function fetchJSON(url) {
-  const r = await fetch(url);
-  if (!r.ok) throw new Error(`HTTP ${r.status}`);
-  return r.json();
+// Venues
+const VENUES=[
+  {city:'Mexico City',sta:'Estadio Azteca',country:'Mexico',flag:'&#127474;&#127485;',alt:2240,cap:87523,roof:'Open',
+   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Estadio_Azteca_2015.jpg/480px-Estadio_Azteca_2015.jpg'},
+  {city:'Guadalajara',sta:'Estadio Akron',country:'Mexico',flag:'&#127474;&#127485;',alt:1566,cap:46232,roof:'Open',
+   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Akron_stadium_chivas.jpg/480px-Akron_stadium_chivas.jpg'},
+  {city:'Monterrey',sta:'Estadio BBVA',country:'Mexico',flag:'&#127474;&#127485;',alt:538,cap:53500,roof:'Open',
+   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/EstadioMTY.jpg/480px-EstadioMTY.jpg'},
+  {city:'Toronto',sta:'BMO Field',country:'Canada',flag:'&#127464;&#127462;',alt:76,cap:30000,roof:'Retractable',
+   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/BMO_Field_Toronto.jpg/480px-BMO_Field_Toronto.jpg'},
+  {city:'Vancouver',sta:'BC Place',country:'Canada',flag:'&#127464;&#127462;',alt:3,cap:54500,roof:'Retractable',
+   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/BC_Place_stadium_2011.jpg/480px-BC_Place_stadium_2011.jpg'},
+  {city:'Los Angeles',sta:'SoFi Stadium',country:'USA',flag:'&#127482;&#127480;',alt:71,cap:70240,roof:'Covered',
+   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/SoFi_Stadium_-_2020.jpg/480px-SoFi_Stadium_-_2020.jpg'},
+  {city:'New York/NJ',sta:'MetLife Stadium',country:'USA',flag:'&#127482;&#127480;',alt:9,cap:82500,roof:'Open',
+   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/MetLife_Stadium_NJSP.jpg/480px-MetLife_Stadium_NJSP.jpg'},
+  {city:'Dallas',sta:'AT&T Stadium',country:'USA',flag:'&#127482;&#127480;',alt:195,cap:80000,roof:'Retractable',
+   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/AT%26T_Stadium_2014.jpg/480px-AT%26T_Stadium_2014.jpg'},
+  {city:'Houston',sta:'NRG Stadium',country:'USA',flag:'&#127482;&#127480;',alt:13,cap:72220,roof:'Retractable',
+   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/NRG_Stadium_-_Houston%2C_TX.jpg/480px-NRG_Stadium_-_Houston%2C_TX.jpg'},
+  {city:'Philadelphia',sta:'Lincoln Financial Field',country:'USA',flag:'&#127482;&#127480;',alt:4,cap:69796,roof:'Open',
+   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Lincoln_Financial_Field_2017.jpg/480px-Lincoln_Financial_Field_2017.jpg'},
+  {city:'Seattle',sta:'Lumen Field',country:'USA',flag:'&#127482;&#127480;',alt:11,cap:68740,roof:'Partial',
+   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Lumen_Field_2020.jpg/480px-Lumen_Field_2020.jpg'},
+  {city:'Miami',sta:'Hard Rock Stadium',country:'USA',flag:'&#127482;&#127480;',alt:2,cap:65326,roof:'Partial',
+   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Hard_Rock_Stadium_2018.jpg/480px-Hard_Rock_Stadium_2018.jpg'},
+  {city:'Atlanta',sta:'Mercedes-Benz Stadium',country:'USA',flag:'&#127482;&#127480;',alt:294,cap:71000,roof:'Retractable',
+   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Mercedes-Benz_Stadium.jpg/480px-Mercedes-Benz_Stadium.jpg'},
+  {city:'Kansas City',sta:'Arrowhead Stadium',country:'USA',flag:'&#127482;&#127480;',alt:265,cap:76416,roof:'Open',
+   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Arrowhead_Stadium_2013.jpg/480px-Arrowhead_Stadium_2013.jpg'},
+  {city:'San Francisco',sta:"Levi's Stadium",country:'USA',flag:'&#127482;&#127480;',alt:15,cap:68500,roof:'Open',
+   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Levi%27s_Stadium.jpg/480px-Levi%27s_Stadium.jpg'},
+  {city:'Boston',sta:'Gillette Stadium',country:'USA',flag:'&#127482;&#127480;',alt:17,cap:65878,roof:'Open',
+   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Gillette_Stadium_2012.jpg/480px-Gillette_Stadium_2012.jpg'},
+];
+
+// Bracket rounds
+const ROUNDS=[
+  {id:'r32',label:'Round of 32',color:'#2A398D',matches:[
+    {id:'M73',t1:'2nd Grp A',t2:'2nd Grp B',city:'Los Angeles',date:'Jun 28'},
+    {id:'M74',t1:'1st Grp E',t2:'Best 3rd',city:'Boston',date:'Jun 29'},
+    {id:'M75',t1:'1st Grp F',t2:'2nd Grp C',city:'Monterrey',date:'Jun 29'},
+    {id:'M76',t1:'1st Grp C',t2:'2nd Grp F',city:'Houston',date:'Jun 29'},
+    {id:'M77',t1:'1st Grp I',t2:'Best 3rd',city:'New York/NJ',date:'Jun 30'},
+    {id:'M78',t1:'2nd Grp E',t2:'2nd Grp I',city:'Dallas',date:'Jun 30'},
+    {id:'M79',t1:'1st Grp A',t2:'Best 3rd',city:'Mexico City',date:'Jun 30'},
+    {id:'M80',t1:'1st Grp L',t2:'Best 3rd',city:'Atlanta',date:'Jul 1'},
+    {id:'M81',t1:'1st Grp D',t2:'Best 3rd',city:'San Francisco',date:'Jul 1'},
+    {id:'M82',t1:'1st Grp G',t2:'Best 3rd',city:'Seattle',date:'Jul 1'},
+    {id:'M83',t1:'2nd Grp K',t2:'2nd Grp L',city:'Toronto',date:'Jul 2'},
+    {id:'M84',t1:'1st Grp H',t2:'2nd Grp J',city:'Los Angeles',date:'Jul 2'},
+    {id:'M85',t1:'1st Grp B',t2:'Best 3rd',city:'Vancouver',date:'Jul 2'},
+    {id:'M86',t1:'1st Grp J',t2:'2nd Grp H',city:'Miami',date:'Jul 3'},
+    {id:'M87',t1:'1st Grp K',t2:'Best 3rd',city:'Kansas City',date:'Jul 3'},
+    {id:'M88',t1:'2nd Grp D',t2:'2nd Grp G',city:'Dallas',date:'Jul 3'},
+  ]},
+  {id:'r16',label:'Round of 16',color:'#534AB7',matches:[
+    {id:'M89',t1:'W M74',t2:'W M77',city:'Philadelphia',date:'Jul 4'},
+    {id:'M90',t1:'W M73',t2:'W M75',city:'Houston',date:'Jul 4'},
+    {id:'M91',t1:'W M76',t2:'W M78',city:'New York/NJ',date:'Jul 5'},
+    {id:'M92',t1:'W M79',t2:'W M80',city:'Mexico City',date:'Jul 5'},
+    {id:'M93',t1:'W M83',t2:'W M84',city:'Dallas',date:'Jul 6'},
+    {id:'M94',t1:'W M81',t2:'W M82',city:'Seattle',date:'Jul 6'},
+    {id:'M95',t1:'W M86',t2:'W M88',city:'Atlanta',date:'Jul 7'},
+    {id:'M96',t1:'W M85',t2:'W M87',city:'Vancouver',date:'Jul 7'},
+  ]},
+  {id:'qf',label:'Quarterfinals',color:'#3CAC3B',matches:[
+    {id:'M97',t1:'W M89',t2:'W M90',city:'Boston',date:'Jul 9'},
+    {id:'M98',t1:'W M93',t2:'W M94',city:'Los Angeles',date:'Jul 10'},
+    {id:'M99',t1:'W M91',t2:'W M92',city:'Miami',date:'Jul 11'},
+    {id:'M100',t1:'W M95',t2:'W M96',city:'Kansas City',date:'Jul 11'},
+  ]},
+  {id:'sf',label:'Semifinals',color:'#C9A227',matches:[
+    {id:'M101',t1:'W M97',t2:'W M98',city:'Dallas',date:'Jul 14'},
+    {id:'M102',t1:'W M99',t2:'W M100',city:'Atlanta',date:'Jul 15'},
+  ]},
+  {id:'f3',label:'Bronze Match',color:'#888888',matches:[
+    {id:'M103',t1:'L M101',t2:'L M102',city:'Miami',date:'Jul 18'},
+  ]},
+];
+
+// ── State ──────────────────────────────────────────────────────────────
+let SB=null,MA=null,curConf='ALL',sortK='ppg',sortD=-1,cChart=null;
+let countryConf='ALL',selectedCountry=null;
+
+// ── Helpers ────────────────────────────────────────────────────────────
+const fGD=n=>n>0?`+${n}`:String(n);
+const fDate=s=>{if(!s)return'';const d=new Date(s);return d.toLocaleDateString('en-US',{month:'short',day:'numeric'});};
+const ppg=(p,g)=>g>0?(p/g).toFixed(2):'--';
+async function fJSON(u){const r=await fetch(u+'?t='+Date.now());if(!r.ok)throw new Error('HTTP '+r.status);return r.json();}
+
+function switchTab(n,btn){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+n).classList.add('active');
+  if(btn)btn.classList.add('active');
 }
 
-// ── Format helpers ────────────────────────────────────────────────────────
-function fmtGD(n) { return n > 0 ? `+${n}` : String(n); }
-function fmtDate(s) {
-  if (!s) return '';
-  const d = new Date(s);
-  return d.toLocaleDateString('en-US', {month:'short', day:'numeric'});
+// ── Overview ───────────────────────────────────────────────────────────
+function buildOV(){
+  const p=SB.matches_played||0;
+  document.getElementById('ov-p').textContent=p;
+  document.getElementById('ov-g').textContent=SB.total_goals||'--';
+  document.getElementById('ov-gpg').textContent=`${p>0?(SB.total_goals/p).toFixed(2):'--'} per game`;
+  document.getElementById('prog-l').textContent=`${p} matches played`;
+  document.getElementById('prog-f').style.width=`${(p/104*100).toFixed(1)}%`;
+  const ts=new Date(SB.last_updated);
+  document.getElementById('updated-badge').textContent=`Updated ${ts.toLocaleDateString('en-US',{month:'short',day:'numeric'})}`;
+  const cs=SB.confederations||{};
+  const top=Object.entries(cs).filter(([,v])=>v.played>0).sort((a,b)=>(b[1].points/b[1].played)-(a[1].points/a[1].played));
+  if(top.length){document.getElementById('ov-tc').textContent=top[0][0];document.getElementById('ov-ts').textContent=`${top[0][1].points} pts &middot; ${ppg(top[0][1].points,top[0][1].played)}/game`;}
+  buildBR();buildGC();buildUP();
 }
 
-let confChart = null;
+function teamMatches(api){return MA.filter(m=>(m.home_team||'').includes(api)||(m.away_team||'').includes(api));}
+function teamRecord(api){
+  const pl=teamMatches(api).filter(m=>m.status==='FINISHED');
+  let w=0,d=0,l=0,gf=0,ga=0,pts=0;
+  pl.forEach(m=>{const h=(m.home_team||'').includes(api);const bg=h?m.home_score:m.away_score,ag=h?m.away_score:m.home_score;gf+=bg;ga+=ag;if(bg>ag){w++;pts+=3;}else if(bg===ag){d++;pts++;}else l++;});
+  return{played:pl.length,w,d,l,gf,ga,gd:gf-ga,pts};
+}
 
-// ── Build confederation table ─────────────────────────────────────────────
-function buildConfTable(confs) {
-  const order = ['UEFA','AFC','CAF','CONCACAF','CONMEBOL','OFC'];
-  const sorted = order
-    .filter(c => confs[c])
-    .map(c => ({ name: c, ...confs[c] }))
-    .sort((a, b) => (b.points/Math.max(b.played,1)) - (a.points/Math.max(a.played,1)));
+function buildBR(){
+  const bm=teamMatches('Brazil'),pl=bm.filter(m=>m.status==='FINISHED');
+  const r=teamRecord('Brazil');
+  document.getElementById('ov-br').textContent=`${r.pts} pts`;
+  document.getElementById('ov-bs').textContent=`${r.played} played &middot; GD ${fGD(r.gd)} &middot; Group C`;
+  const all=[...pl,...bm.filter(m=>m.status!=='FINISHED').slice(0,3)];
+  document.getElementById('ov-bm').innerHTML=all.map(m=>{
+    const h=(m.home_team||'').includes('Brazil'),opp=h?m.away_team:m.home_team;
+    const bg=h?m.home_score:m.away_score,ag=h?m.away_score:m.home_score;
+    let cls='rT',lbl='TBD',sc='Upcoming';
+    if(m.status==='FINISHED'){const rv=bg>ag?'W':bg===ag?'D':'L';cls=`r${rv}`;lbl=rv;sc=`${bg}--${ag}`;}
+    return `<div class="match-item hi"><span class="mr ${cls}">${lbl} ${sc}</span><div class="mt">Brazil vs ${opp||'TBD'}</div><div class="mm">${fDate(m.date)}</div></div>`;
+  }).join('')||'<div class="loading">No matches found</div>';
+}
 
-  const maxPts = Math.max(...sorted.map(c => c.points), 1);
+function buildGroupStandings(group,tbodyId,highlightTeam){
+  const groupTeams=COUNTRIES.filter(c=>c.g===group),s={};
+  groupTeams.forEach(t=>s[t.api]={n:t.n,gp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0});
+  MA.filter(m=>m.status==='FINISHED').forEach(m=>{
+    const ht=m.home_team,at=m.away_team,hg=m.home_score,ag=m.away_score;
+    const hk=Object.keys(s).find(k=>ht.includes(k)),ak=Object.keys(s).find(k=>at.includes(k));
+    if(!hk&&!ak)return;
+    if(s[hk]){s[hk].gp++;s[hk].gf+=hg;s[hk].ga+=ag;}
+    if(s[ak]){s[ak].gp++;s[ak].gf+=ag;s[ak].ga+=hg;}
+    if(hg>ag){if(s[hk]){s[hk].w++;s[hk].pts+=3;}if(s[ak])s[ak].l++;}
+    else if(hg===ag){if(s[hk]){s[hk].d++;s[hk].pts++;}if(s[ak]){s[ak].d++;s[ak].pts++;}}
+    else{if(s[ak]){s[ak].w++;s[ak].pts+=3;}if(s[hk])s[hk].l++;}
+  });
+  const sorted=Object.values(s).sort((a,b)=>b.pts-a.pts||(b.gf-b.ga)-(a.gf-a.ga));
+  document.getElementById(tbodyId).innerHTML=sorted.map(v=>
+    `<tr class="${v.n===highlightTeam?'brazil-row':''}"><td>${v.n}</td><td>${v.gp}</td><td>${v.w}</td><td>${v.d}</td><td>${v.l}</td><td>${fGD(v.gf-v.ga)}</td><td><strong>${v.pts}</strong></td></tr>`).join('');
+}
 
-  const tbody = document.getElementById('conf-tbody');
-  tbody.innerHTML = sorted.map((c, i) => {
-    const ppg = c.played > 0 ? (c.points / c.played).toFixed(2) : '—';
-    const barW = Math.round((c.points / maxPts) * 100);
-    const isLeader = i === 0;
-    return `<tr class="${isLeader ? 'leader-row' : ''}">
-      <td><span class="conf-pill" style="background:${CONF_COLOR[c.name]}">${c.name}</span></td>
-      <td style="color:var(--gray)">${c.played}</td>
-      <td><strong>${c.points}</strong></td>
-      <td>${c.wins}</td>
-      <td style="color:${c.gd>=0?'var(--green)':'var(--red)'}">${fmtGD(c.gd)}</td>
-      <td><strong>${ppg}</strong></td>
-      <td><div class="pts-bar-wrap"><div class="pts-bar-fill" style="width:${barW}%;background:${CONF_COLOR[c.name]}"></div></div></td>
-    </tr>`;
-  }).join('');
+function buildGC(){buildGroupStandings('C','ov-gc','Brazil');}
+function buildUP(){
+  const up=MA.filter(m=>m.status==='TIMED'||m.status==='SCHEDULED').slice(0,6);
+  document.getElementById('ov-up').innerHTML=up.length?up.map(m=>{
+    const isBR=(m.home_team||'').includes('Brazil')||(m.away_team||'').includes('Brazil');
+    return `<div class="match-item ${isBR?'hi':''}"><span class="mr rT">TBD</span><div class="mt">${m.home_team||'TBD'} vs ${m.away_team||'TBD'}${isBR?' <span style="color:var(--green);font-size:11px">&#9733;</span>':''}</div><div class="mm">${fDate(m.date)}</div></div>`;
+  }).join(''):'<div class="loading">No upcoming matches in data</div>';
+}
 
-  // Chart
-  const labels = sorted.map(c => c.name);
-  const ppgVals = sorted.map(c => c.played > 0 ? +(c.points / c.played).toFixed(2) : 0);
-  const colors  = sorted.map(c => CONF_COLOR[c.name]);
-
-  if (confChart) confChart.destroy();
-  const ctx = document.getElementById('conf-chart').getContext('2d');
-  confChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels,
-      datasets: [{
-        label: 'Points per game',
-        data: ppgVals,
-        backgroundColor: colors.map(c => c + 'CC'),
-        borderColor: colors,
-        borderWidth: 1.5,
-        borderRadius: 4,
-      }]
-    },
-    options: {
-      indexAxis: 'y',
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          callbacks: {
-            label: ctx => ` ${ctx.parsed.x} pts/game`
-          }
-        }
-      },
-      scales: {
-        x: { beginAtZero: true, grid: { color: '#EEEEEC' },
-             ticks: { font: { size: 11 }, color: '#6B7280' } },
-        y: { grid: { display: false },
-             ticks: { font: { size: 12 }, color: '#12183A' } }
-      }
+// ── Confederations ─────────────────────────────────────────────────────
+function selConf(c,btn){
+  curConf=c;
+  document.querySelectorAll('.cs-btn').forEach(b=>{b.classList.remove('active');b.style.cssText='';});
+  btn.style.background=c==='ALL'?'var(--dark)':CC[c];btn.style.color='#fff';btn.style.borderColor='transparent';
+  if(SB&&MA)renderConf();
+}
+function renderConf(){
+  const cs=SB.confederations||{},ts=SB.team_standings||{};
+  const ORDER=['UEFA','AFC','CAF','CONCACAF','CONMEBOL','OFC'];
+  let rows=ORDER.filter(c=>cs[c]).map(c=>({n:c,...cs[c],ppg:cs[c].played>0?cs[c].points/cs[c].played:0}));
+  rows.sort((a,b)=>sortD*(sortK==='n'?a.n.localeCompare(b.n):sortK==='ppg'?a.ppg-b.ppg:a[sortK]-b[sortK]));
+  const maxP=Math.max(...rows.map(r=>r.ppg),0.01);
+  document.getElementById('conf-tb').innerHTML=rows.map(r=>`<tr>
+    <td><span class="conf-pill" style="background:${CC[r.n]}">${r.n}</span></td>
+    <td style="color:var(--gray)">${r.teams||'--'}</td><td style="color:var(--gray)">${r.played}</td>
+    <td><strong>${r.points}</strong></td><td>${r.wins}</td>
+    <td style="color:${r.gd>=0?'var(--green)':'var(--red)'}">${fGD(r.gd)}</td>
+    <td><strong>${r.ppg.toFixed(2)}</strong></td>
+    <td><div class="pts-bw"><div class="pts-bf" style="width:${Math.round(r.ppg/maxP*100)}%;background:${CC[r.n]}"></div></div></td>
+  </tr>`).join('');
+  const cr=[...rows].sort((a,b)=>a.ppg-b.ppg);
+  buildChart(cr.map(r=>r.n),cr.map(r=>parseFloat(r.ppg.toFixed(2))),cr.map(r=>CC[r.n]));
+  const dd=document.getElementById('team-dd'),sc=document.getElementById('conf-sumcards');
+  if(curConf==='ALL'){dd.style.display='none';sc.style.display='none';document.getElementById('ct-title').textContent='Confederation Scoreboard';}
+  else{
+    document.getElementById('ct-title').textContent=`${curConf} highlighted`;
+    dd.style.display='block';sc.style.display='grid';
+    document.getElementById('dd-title').textContent=`${curConf} -- Team Breakdown`;
+    const cd=cs[curConf]||{};
+    sc.innerHTML=[['Teams',cd.teams||0,'in tournament'],['Points',cd.points||0,`${cd.played||0} games`],
+      ['Wins',cd.wins||0,`GD ${fGD(cd.gd||0)}`],['Pts/Game',cd.played>0?(cd.points/cd.played).toFixed(2):'--','efficiency']
+    ].map(([l,v,s])=>`<div class="stat-card"><div class="stat-label">${l}</div><div class="stat-value" style="font-size:22px">${v}</div><div class="stat-sub">${s}</div></div>`).join('');
+    const ct=Object.entries(ts).filter(([,v])=>v.conf===curConf).map(([name,v])=>{
+      const p2=v.played>0?v.points/v.played:0,tier=TIER[name]||'C',exp=TPPG[tier]||0.6,delta=p2-exp;
+      return{name,tier,p2,delta,grp:(v.group||'').replace('GROUP_',''),...v};
+    }).sort((a,b)=>b.points-a.points||b.gd-a.gd);
+    document.getElementById('team-tb').innerHTML=ct.map(t=>{
+      const pb=t.played===0?`<span class="badge bgr">Not played</span>`:
+        t.delta>0.4?`<span class="badge bg">+${t.delta.toFixed(1)} Over</span>`:
+        t.delta<-0.4?`<span class="badge br">${t.delta.toFixed(1)} Under</span>`:
+        `<span class="badge by">On track</span>`;
+      return`<tr><td><strong>${t.name}</strong></td>
+        <td><span class="badge bgr">${t.grp||'--'}</span></td>
+        <td><span class="tier-b" style="background:${TC[t.tier]}22;color:${TC[t.tier]}">${t.tier}</span></td>
+        <td>${t.played}</td><td>${t.won}</td><td>${t.drawn}</td><td>${t.lost}</td>
+        <td style="color:${t.gd>=0?'var(--green)':'var(--red)'}">${fGD(t.gd)}</td>
+        <td><strong>${t.points}</strong></td><td>${t.played>0?t.p2.toFixed(2):'--'}</td>
+        <td>${pb}</td></tr>`;
+    }).join('')||'<tr><td colspan="11" class="loading">No data yet</td></tr>';
+    const pt=ct.filter(t=>t.played>0);
+    if(pt.length)buildChart(pt.map(t=>t.name),pt.map(t=>parseFloat(t.p2.toFixed(2))),pt.map(()=>CC[curConf]));
+    document.getElementById('cc-title').textContent=`${curConf} -- Points per game`;
+  }
+  buildUpsets();
+}
+function buildChart(labels,data,colors){
+  if(cChart)cChart.destroy();
+  cChart=new Chart(document.getElementById('conf-chart').getContext('2d'),{
+    type:'bar',data:{labels,datasets:[{label:'Pts/game',data,backgroundColor:colors.map(c=>c+'BB'),borderColor:colors,borderWidth:1.5,borderRadius:4}]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` ${c.parsed.x} pts/game`}}},
+      scales:{x:{beginAtZero:true,grid:{color:'#EEEEEC'},ticks:{font:{size:11},color:'#6B7280'}},
+              y:{grid:{display:false},ticks:{font:{size:11},color:'#12183A'}}}}});
+}
+function srtC(k){if(sortK===k)sortD*=-1;else{sortK=k;sortD=-1;}renderConf();}
+function buildUpsets(){
+  const ts=SB.team_standings||{},upsets=[];
+  MA.filter(m=>m.status==='FINISHED').forEach(m=>{
+    const ht=m.home_team,at=m.away_team,hg=m.home_score,ag=m.away_score;
+    if(hg===ag)return;
+    const winner=hg>ag?ht:at,loser=hg>ag?at:ht;
+    const wT=TO[TIER[winner]||'C']||2,lT=TO[TIER[loser]||'C']||2;
+    if(wT<lT){
+      const wC=(ts[winner]||{}).conf||'--',lC=(ts[loser]||{}).conf||'--';
+      upsets.push({winner,loser,score:`${Math.max(hg,ag)}--${Math.min(hg,ag)}`,wT:TIER[winner]||'C',lT:TIER[loser]||'C',wC,lC,date:m.date});
     }
   });
-
-  // Top confederation stat
-  if (sorted.length > 0) {
-    const top = sorted[0];
-    document.getElementById('stat-top-conf').textContent = top.name;
-    document.getElementById('stat-top-pts').textContent =
-      `${top.points} pts · ${top.played} games`;
-  }
+  const fil=curConf==='ALL'?upsets:upsets.filter(u=>u.wC===curConf||u.lC===curConf);
+  document.getElementById('upset-g').innerHTML=fil.length?fil.map(u=>
+    `<div class="upset-card"><div class="upset-lbl">Upset &middot; ${fDate(u.date)}</div>
+    <div class="upset-score">${u.winner} ${u.score} ${u.loser}</div>
+    <div class="upset-meta"><span class="tier-b" style="font-size:9px;background:${TC[u.wT]}22;color:${TC[u.wT]}">${u.wT}</span> beat
+    <span class="tier-b" style="font-size:9px;background:${TC[u.lT]}22;color:${TC[u.lT]}">${u.lT}</span>
+    &middot; ${u.wC} vs ${u.lC}</div></div>`).join('')
+    :'<div class="loading">No upsets recorded yet</div>';
 }
 
-// ── Build Brazil tracker ──────────────────────────────────────────────────
-function buildBrazilTracker(matches) {
-  const brazil = matches.filter(m =>
-    (m.home_team||'').includes('Brazil') || (m.away_team||'').includes('Brazil')
+// ── Countries ──────────────────────────────────────────────────────────
+let countryConfFilter='ALL';
+function filterConf(c,btn){
+  countryConfFilter=c;
+  document.querySelectorAll('#country-conf-filter .cs-btn').forEach(b=>{b.style.cssText='';b.style.color='var(--gray)';});
+  btn.style.background=c==='ALL'?'var(--dark)':CC[c];btn.style.color='#fff';btn.style.borderColor='transparent';
+  filterCountries();
+}
+function filterCountries(){
+  const q=(document.getElementById('country-search').value||'').toLowerCase();
+  const filtered=COUNTRIES.filter(c=>
+    (countryConfFilter==='ALL'||c.c===countryConfFilter)&&
+    (c.n.toLowerCase().includes(q))
   );
-
-  const played  = brazil.filter(m => m.status === 'FINISHED');
-  const upcoming = brazil.filter(m => m.status !== 'FINISHED').slice(0, 3);
-
-  // Brazil stat
-  const pts = played.reduce((acc, m) => {
-    const isBH = (m.home_team||'').includes('Brazil');
-    const bg = isBH ? m.home_score : m.away_score;
-    const ag = isBH ? m.away_score : m.home_score;
-    return acc + (bg > ag ? 3 : bg === ag ? 1 : 0);
-  }, 0);
-  const gd = played.reduce((acc, m) => {
-    const isBH = (m.home_team||'').includes('Brazil');
-    return acc + (isBH ? m.home_score - m.away_score : m.away_score - m.home_score);
-  }, 0);
-  document.getElementById('stat-brazil').textContent = `${pts} pts`;
-  document.getElementById('stat-brazil-sub').textContent =
-    `${played.length} played · GD ${fmtGD(gd)}`;
-
-  // Match list
-  const all = [...played, ...upcoming];
-  const html = all.map(m => {
-    const isBH = (m.home_team||'').includes('Brazil');
-    const opp  = isBH ? m.away_team : m.home_team;
-    const bg   = isBH ? m.home_score : m.away_score;
-    const ag   = isBH ? m.away_score : m.home_score;
-    let res = 'TBD', resClass = 'result-TBD', scoreStr = 'Upcoming';
-
-    if (m.status === 'FINISHED') {
-      scoreStr = `${bg}–${ag}`;
-      res = bg > ag ? 'W' : bg === ag ? 'D' : 'L';
-      resClass = `result-${res}`;
-    }
-
-    return `<div class="match-item brazil">
-      <span class="match-result ${resClass}">${res === 'TBD' ? 'TBD' : `${res} ${scoreStr}`}</span>
-      <div class="match-teams">Brazil vs ${opp||'TBD'}</div>
-      <div class="match-meta">${fmtDate(m.date)}</div>
+  renderCountryGrid(filtered);
+}
+function renderCountryGrid(list){
+  const ts=SB?SB.team_standings||{}:{};
+  document.getElementById('country-grid').innerHTML=list.map(c=>{
+    const td=Object.entries(ts).find(([k])=>k.includes(c.api)||c.api.includes(k));
+    const pts=td?td[1].points:0,played=td?td[1].played:0;
+    const pfx=played>0?`<div class="country-pts" style="color:${CC[c.c]}">${pts} pts &middot; ${played} played</div>`:
+      `<div class="country-pts" style="color:var(--gray)">Group ${c.g}</div>`;
+    return `<div class="country-card ${selectedCountry===c.n?'active':''}" onclick="showCountry('${c.n}')">
+      <div class="country-flag">${c.f}</div>
+      <div class="country-name">${c.n}</div>
+      <div class="country-meta"><span class="conf-pill" style="background:${CC[c.c]};font-size:9px">${c.c}</span> &middot; Grp ${c.g}</div>
+      ${pfx}
     </div>`;
   }).join('');
-
-  document.getElementById('brazil-matches').innerHTML =
-    html || '<div class="loading">No Brazil matches found</div>';
+}
+function showCountry(name){
+  selectedCountry=name;
+  const country=COUNTRIES.find(c=>c.n===name);
+  if(!country)return;
+  const det=document.getElementById('country-detail');
+  det.classList.add('show');
+  document.getElementById('d-flag').innerHTML=country.f;
+  document.getElementById('d-name').textContent=name;
+  document.getElementById('d-meta').textContent=`Group ${country.g} &middot; ${country.c} &middot; Tier ${country.t}${country.titles?' &middot; '+country.titles+' title'+(country.titles>1?'s':''):''}`;
+  const r=teamRecord(country.api);
+  document.getElementById('d-stats').innerHTML=[
+    ['Points',r.pts,'2026 so far'],['Played',r.played,'matches'],
+    ['Wins',r.w,'draws: '+r.d],['GD',fGD(r.gd),'goals '+r.gf+'-'+r.ga],
+  ].map(([l,v,s])=>`<div class="detail-stat"><div class="v">${v}</div><div class="l">${l}</div><div class="l">${s}</div></div>`).join('');
+  const ms=teamMatches(country.api);
+  const pl=ms.filter(m=>m.status==='FINISHED');
+  const up=ms.filter(m=>m.status!=='FINISHED').slice(0,2);
+  document.getElementById('d-matches').innerHTML=[...pl,...up].map(m=>{
+    const h=(m.home_team||'').includes(country.api),opp=h?m.away_team:m.home_team;
+    const bg=h?m.home_score:m.away_score,ag=h?m.away_score:m.home_score;
+    let cls='rT',lbl='TBD',sc='Upcoming';
+    if(m.status==='FINISHED'){const rv=bg>ag?'W':bg===ag?'D':'L';cls=`r${rv}`;lbl=rv;sc=`${bg}--${ag}`;}
+    return `<div class="match-item"><span class="mr ${cls}">${lbl} ${sc}</span><div class="mt">${name} vs ${opp||'TBD'}</div><div class="mm">${fDate(m.date)}</div></div>`;
+  }).join('')||'<div class="loading">No matches yet</div>';
+  buildGroupStandings(country.g,'d-group',name);
+  det.scrollIntoView({behavior:'smooth',block:'start'});
+  filterCountries();
 }
 
-// ── Group C standings ─────────────────────────────────────────────────────
-function buildGroupC(matches) {
-  const groupC = ['Brazil','Morocco','Haiti','Scotland'];
-  const stats  = {};
-  groupC.forEach(t => { stats[t] = {gp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0}; });
+function buildCountries(){if(SB&&MA)filterCountries();}
 
-  matches.filter(m => m.status === 'FINISHED').forEach(m => {
-    const ht = m.home_team, at = m.away_team;
-    const hg = m.home_score, ag = m.away_score;
-    if (!groupC.includes(ht) && !groupC.includes(at)) return;
-
-    [ht, at].forEach(t => { if (stats[t]) stats[t].gp++; });
-    if (stats[ht]) { stats[ht].gf += hg; stats[ht].ga += ag; }
-    if (stats[at]) { stats[at].gf += ag; stats[at].ga += hg; }
-
-    if (hg > ag) {
-      if (stats[ht]) { stats[ht].w++; stats[ht].pts += 3; }
-      if (stats[at]) stats[at].l++;
-    } else if (hg === ag) {
-      if (stats[ht]) { stats[ht].d++; stats[ht].pts++; }
-      if (stats[at]) { stats[at].d++; stats[at].pts++; }
-    } else {
-      if (stats[at]) { stats[at].w++; stats[at].pts += 3; }
-      if (stats[ht]) stats[ht].l++;
-    }
-  });
-
-  const sorted = Object.entries(stats)
-    .sort((a,b) => b[1].pts - a[1].pts || (b[1].gf-b[1].ga) - (a[1].gf-a[1].ga));
-
-  document.getElementById('group-c-tbody').innerHTML = sorted.map(([team, s]) =>
-    `<tr class="${team==='Brazil'?'brazil-row':''}">
-      <td>${team}</td>
-      <td>${s.gp}</td><td>${s.w}</td><td>${s.d}</td><td>${s.l}</td>
-      <td>${fmtGD(s.gf-s.ga)}</td>
-      <td><strong>${s.pts}</strong></td>
-    </tr>`
-  ).join('');
-}
-
-// ── Upcoming matches ──────────────────────────────────────────────────────
-function buildUpcoming(matches) {
-  const upcoming = matches
-    .filter(m => m.status === 'TIMED' || m.status === 'SCHEDULED')
-    .slice(0, 6);
-
-  if (!upcoming.length) {
-    document.getElementById('upcoming-list').innerHTML =
-      '<div class="loading">No upcoming matches in data yet</div>';
-    return;
+// ── Venues ─────────────────────────────────────────────────────────────
+function buildVenues(){
+  const venueGoals={};
+  if(MA){
+    MA.filter(m=>m.status==='FINISHED').forEach(m=>{
+      const city=Object.keys(venueGoals).find(v=>m.venue&&m.venue.includes(v));
+      if(city){if(!venueGoals[city])venueGoals[city]={goals:0,games:0};venueGoals[city].goals+=m.home_score+m.away_score;venueGoals[city].games++;}
+      else{
+        const v=VENUES.find(v=>m.venue&&(m.venue.includes(v.city)||m.venue.includes(v.sta)));
+        if(v){if(!venueGoals[v.city])venueGoals[v.city]={goals:0,games:0};venueGoals[v.city].goals+=m.home_score+m.away_score;venueGoals[v.city].games++;}
+      }
+    });
   }
-
-  document.getElementById('upcoming-list').innerHTML = upcoming.map(m => {
-    const isBrazil = (m.home_team||'').includes('Brazil') ||
-                     (m.away_team||'').includes('Brazil');
-    return `<div class="match-item ${isBrazil?'brazil':''}">
-      <span class="match-result result-TBD">TBD</span>
-      <div class="match-teams">${m.home_team||'TBD'} vs ${m.away_team||'TBD'}
-        ${isBrazil ? '<span style="color:var(--green);font-size:11px"> ★ Brazil</span>':''}
+  document.getElementById('venue-grid').innerHTML=VENUES.map(v=>{
+    const ac=v.alt>1500?'alt-high':v.alt>500?'alt-mid':'alt-low';
+    const al=v.alt>1500?'High altitude':v.alt>500?'Mid altitude':'Sea level';
+    const vg=venueGoals[v.city];
+    const glabel=vg&&vg.games>0?`<span class="goals-live">${(vg.goals/vg.games).toFixed(1)} goals/game (${vg.games})</span>`:'';
+    return `<div class="venue-card">
+      <img class="venue-img" src="${v.img}" alt="${v.sta}" loading="lazy"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="venue-img-placeholder" style="display:none">${v.flag}</div>
+      <div class="venue-body">
+        <div class="venue-name">${v.sta}</div>
+        <div class="venue-city">${v.flag} ${v.city}, ${v.country}</div>
+        <div class="venue-stats">
+          <span class="alt-badge ${ac}">${v.alt.toLocaleString()}m ${al}</span>
+          <span class="venue-stat">&#128106; ${v.cap.toLocaleString()}</span>
+          <span class="venue-stat">${v.roof}</span>
+          ${glabel}
+        </div>
       </div>
-      <div class="match-meta">${fmtDate(m.date)}</div>
     </div>`;
   }).join('');
 }
 
-// ── Main data load ────────────────────────────────────────────────────────
-async function loadAll() {
-  try {
-    const [sb, matches] = await Promise.all([
-      fetchJSON(`${RAW}/scoreboard.json`),
-      fetchJSON(`${RAW}/latest_matches.json`),
-    ]);
-
-    // Header
-    const ts = new Date(sb.last_updated);
-    document.getElementById('updated-badge').textContent =
-      `Updated ${ts.toLocaleDateString('en-US',{month:'short',day:'numeric'})} at ${ts.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'})}`;
-
-    // Progress
-    const played = sb.matches_played || 0;
-    document.getElementById('stat-played').textContent = played;
-    document.getElementById('progress-label-left').textContent = `${played} matches played`;
-    document.getElementById('progress-fill').style.width = `${(played/104*100).toFixed(1)}%`;
-
-    // Goals
-    document.getElementById('stat-goals').textContent = sb.total_goals || '—';
-    const gpg = sb.total_goals && played ? (sb.total_goals/played).toFixed(2) : '—';
-    document.getElementById('stat-gpg').textContent = `${gpg} per game`;
-
-    // Confederation table + chart
-    if (sb.confederations) buildConfTable(sb.confederations);
-
-    // Brazil tracker
-    buildBrazilTracker(matches);
-
-    // Group C
-    buildGroupC(matches);
-
-    // Upcoming
-    buildUpcoming(matches);
-
-  } catch (err) {
-    console.error(err);
-    document.getElementById('updated-badge').textContent = 'Could not load data';
-    document.getElementById('conf-tbody').innerHTML =
-      `<tr><td colspan="7" class="error">
-        Could not load data from GitHub. Make sure your repo is public and 
-        data/processed/ files have been committed.
-        <br><br>Error: ${err.message}
-       </td></tr>`;
-  }
+// ── Bracket ────────────────────────────────────────────────────────────
+function buildBracket(){
+  const grid=document.getElementById('bracket-grid');
+  grid.innerHTML=ROUNDS.map(r=>`
+    <div class="round-col">
+      <div class="round-header" style="background:${r.color}">${r.label}</div>
+      <div class="bracket-slots">
+        ${r.matches.map(m=>`
+          <div class="bracket-match">
+            <div class="bslot"><span class="bslot-num">1</span><input id="${m.id}-a" placeholder="${m.t1}" oninput="saveBracket()"></div>
+            <div class="bslot"><span class="bslot-num">2</span><input id="${m.id}-b" placeholder="${m.t2}" oninput="saveBracket()"></div>
+            <div class="match-info">${m.date} &middot; ${m.city}</div>
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+  loadBracket();
+}
+function saveBracket(){
+  const data={};
+  document.querySelectorAll('.bracket-match input,.champion-input').forEach(i=>{if(i.value)data[i.id]=i.value;});
+  try{localStorage.setItem('wc2026-bracket',JSON.stringify(data));}catch(e){}
+  document.getElementById('bracket-status').textContent='Saved '+new Date().toLocaleTimeString();
+}
+function loadBracket(){
+  try{
+    const d=JSON.parse(localStorage.getItem('wc2026-bracket')||'{}');
+    Object.entries(d).forEach(([k,v])=>{const el=document.getElementById(k);if(el)el.value=v;});
+  }catch(e){}
+}
+function clearBracket(){
+  if(!confirm('Clear all bracket predictions?'))return;
+  document.querySelectorAll('.bracket-match input,.champion-input').forEach(i=>i.value='');
+  localStorage.removeItem('wc2026-bracket');
+  document.getElementById('bracket-status').textContent='Bracket cleared';
 }
 
-loadAll();
-// Auto-refresh every 10 minutes
-setInterval(loadAll, 10 * 60 * 1000);
+// ── Main load ──────────────────────────────────────────────────────────
+async function load(){
+  try{
+    const[sb,ma]=await Promise.all([fJSON(`${RAW}/scoreboard.json`),fJSON(`${RAW}/latest_matches.json`)]);
+    SB=sb;MA=ma;
+    buildOV();renderConf();buildCountries();buildVenues();buildBracket();
+  }catch(e){
+    console.error(e);
+    document.getElementById('updated-badge').textContent='Error loading data';
+    document.getElementById('conf-tb').innerHTML=`<tr><td colspan="8" class="err">Could not load: ${e.message}</td></tr>`;
+    buildBracket();
+  }
+}
+load();
+setInterval(load,600000);
 </script>
 </body>
 </html>
