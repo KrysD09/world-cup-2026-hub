@@ -1,11 +1,12 @@
-name: Daily World Cup Data Update
+name: World Cup Data Update
 
 on:
   schedule:
-    # 2:00 PM UTC = 10:00 AM ET — runs after morning matches have ended
-    - cron: '0 14 * * *'
-  workflow_dispatch:
-    # Also allows manual trigger from GitHub Actions tab
+    # Three times daily (cron is in UTC; ET = UTC-4 during the tournament)
+    - cron: '0 4 * * *'    # 12:00 AM ET (midnight) — catches the day's late evening games
+    - cron: '0 19 * * *'   # 3:00 PM ET — catches afternoon/early games
+    - cron: '0 1 * * *'    # 9:00 PM ET — catches mid-evening games
+  workflow_dispatch:        # Manual trigger button in the Actions tab
 
 jobs:
   collect-data:
@@ -36,9 +37,8 @@ jobs:
 
       - name: Commit and push updated data
         run: |
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add data/
-          # Only commit if there are actual changes
-          git diff --staged --quiet || git commit -m "Data update $(date -u +%Y-%m-%d) [automated]"
+          git diff --staged --quiet || git commit -m "Data update $(date -u +'%Y-%m-%d %H:%M') UTC [automated]"
           git push
