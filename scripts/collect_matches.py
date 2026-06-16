@@ -12,7 +12,7 @@ Requires:
     Free key at: https://www.football-data.org/client/register
 """
 
-import os, json, time, requests, pandas as pd
+import os, json, requests, pandas as pd
 from datetime import datetime, timezone
 from pathlib import Path
 from dotenv import load_dotenv
@@ -26,7 +26,46 @@ WC_CODE  = 'WC'   # football-data.org code for FIFA World Cup
 
 RAW_DIR       = Path('data/raw/matches')
 PROCESSED_DIR = Path('data/processed')
-VENUE_CACHE   = PROCESSED_DIR / 'venues_by_match.json'   # match_id -> venue, persisted
+VENUES_FILE   = Path('data/processed/venues.json')   # shared schedule (also used by weather)
+
+# ── Venue resolution ───────────────────────────────────────────────────────
+# football-data.org's free tier does NOT return venue for the World Cup, so we
+# supply it ourselves from venues.json (the same authoritative schedule the
+# weather collector uses). Matching is by date + either team name (partial).
+def load_venue_schedule():
+    if not VENUES_FILE.exists():
+        print(f"  ! {VENUES_FILE} not found — venue/city will be null")
+        return {}, {}
+    data = json.loads(VENUES_FILE.read_text(encoding='utf-8'))
+    return data.get('schedule', {}), data.get('venues', {})
+
+def _match_on_day(day, home_team, away_team):
+    for sched_team, city in day.items():
+        if sched_team and (sched_team in (home_team or '') or
+                           sched_team in (away_team or '')):
+            return city
+    return None
+
+def resolve_city(schedule, date_str, home_team, away_team):
+    """Find the host city for a match using date + (partial) team-name match.
+    The API's kickoff date can differ from our schedule by a day (timezone /
+    late-night games), so we also check +/- 1 day before giving up."""
+    from datetime import datetime, timedelta
+    # exact day first
+    city = _match_on_day(schedule.get(date_str, {}), home_team, away_team)
+    if city:
+        return city
+    # +/- 1 day fallback
+    try:
+        d = datetime.strptime(date_str, '%Y-%m-%d')
+    except Exception:
+        return None
+    for delta in (-1, 1):
+        alt = (d + timedelta(days=delta)).strftime('%Y-%m-%d')
+        city = _match_on_day(schedule.get(alt, {}), home_team, away_team)
+        if city:
+            return city
+    return None
 
 # Confederation lookup (for scoreboard)
 CONFEDERATION = {
@@ -76,50 +115,6 @@ def fetch_standings():
     data = api_get(f'competitions/{WC_CODE}/standings')
     return data.get('standings', [])
 
-def load_venue_cache():
-    """Load previously-fetched venues so we never re-fetch the same match."""
-    if VENUE_CACHE.exists():
-        try:
-            return json.loads(VENUE_CACHE.read_text())
-        except Exception:
-            return {}
-    return {}
-
-def save_venue_cache(cache):
-    VENUE_CACHE.write_text(json.dumps(cache, indent=2))
-
-def enrich_venues(raw_matches, cache, max_fetch=8, throttle=7.0):
-    """
-    The list endpoint does NOT return venue (v4 folds 'deep' fields out of
-    list views). Venue is only available on the single-match resource
-    /matches/{id}. So for FINISHED matches we don't already have cached,
-    fetch them individually, gently, to respect the 10 req/min free tier.
-
-    max_fetch caps how many NEW matches we look up per run, so a backlog
-    gets filled in over a few runs rather than blowing the rate limit.
-    """
-    finished = [m for m in raw_matches
-                if m.get('status') == 'FINISHED' and str(m['id']) not in cache]
-    if not finished:
-        print("Venues: all finished matches already cached.")
-        return cache
-
-    to_fetch = finished[:max_fetch]
-    print(f"Venues: fetching {len(to_fetch)} new match(es) "
-          f"({len(finished)-len(to_fetch)} will fill in on later runs)...")
-    for m in to_fetch:
-        mid = m['id']
-        try:
-            detail = api_get(f'matches/{mid}')
-            cache[str(mid)] = detail.get('venue')   # may be None if API lacks it
-            print(f"  {mid}: {cache[str(mid)] or 'no venue listed'}")
-        except Exception as e:
-            print(f"  {mid}: fetch failed ({e})")
-        time.sleep(throttle)   # stay under 10 req/min
-    save_venue_cache(cache)
-    return cache
-
-# ── Processing ────────────────────────────────────────────────────────────
 def parse_matches(raw_matches, venue_cache=None):
     """Convert raw API response to clean DataFrame."""
     records = []
@@ -230,9 +225,6 @@ if __name__ == '__main__':
 
     raw_matches   = fetch_matches()
     raw_standings = fetch_standings()
-
-    venue_cache  = load_venue_cache()
-    venue_cache  = enrich_venues(raw_matches, venue_cache)
 
     matches_df   = parse_matches(raw_matches, venue_cache)
     standings_df = parse_standings(raw_standings)

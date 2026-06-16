@@ -1,0 +1,315 @@
+{
+  "_comment": "Authoritative match->venue mapping for WC2026. football-data.org free tier does NOT provide venue, so we supply it. Shared by collect_matches.py and collect_weather.py. Edit here only.",
+  "venues": {
+    "Mexico City": {
+      "lat": 19.302,
+      "lon": -99.151,
+      "alt_m": 2240,
+      "tz": "America/Mexico_City",
+      "stadium": "Estadio Azteca"
+    },
+    "Guadalajara": {
+      "lat": 20.646,
+      "lon": -103.462,
+      "alt_m": 1566,
+      "tz": "America/Mexico_City",
+      "stadium": "Estadio Akron"
+    },
+    "Monterrey": {
+      "lat": 25.669,
+      "lon": -100.31,
+      "alt_m": 538,
+      "tz": "America/Monterrey",
+      "stadium": "Estadio BBVA"
+    },
+    "Toronto": {
+      "lat": 43.633,
+      "lon": -79.419,
+      "alt_m": 76,
+      "tz": "America/Toronto",
+      "stadium": "BMO Field"
+    },
+    "Vancouver": {
+      "lat": 49.277,
+      "lon": -123.112,
+      "alt_m": 3,
+      "tz": "America/Vancouver",
+      "stadium": "BC Place"
+    },
+    "Los Angeles": {
+      "lat": 33.953,
+      "lon": -118.339,
+      "alt_m": 71,
+      "tz": "America/Los_Angeles",
+      "stadium": "SoFi Stadium"
+    },
+    "New York/NJ": {
+      "lat": 40.813,
+      "lon": -74.074,
+      "alt_m": 9,
+      "tz": "America/New_York",
+      "stadium": "MetLife Stadium"
+    },
+    "Dallas": {
+      "lat": 32.748,
+      "lon": -97.093,
+      "alt_m": 195,
+      "tz": "America/Chicago",
+      "stadium": "AT&T Stadium"
+    },
+    "Houston": {
+      "lat": 29.685,
+      "lon": -95.411,
+      "alt_m": 13,
+      "tz": "America/Chicago",
+      "stadium": "NRG Stadium"
+    },
+    "Philadelphia": {
+      "lat": 39.901,
+      "lon": -75.167,
+      "alt_m": 4,
+      "tz": "America/New_York",
+      "stadium": "Lincoln Financial Field"
+    },
+    "Seattle": {
+      "lat": 47.595,
+      "lon": -122.332,
+      "alt_m": 11,
+      "tz": "America/Los_Angeles",
+      "stadium": "Lumen Field"
+    },
+    "Miami": {
+      "lat": 25.958,
+      "lon": -80.239,
+      "alt_m": 2,
+      "tz": "America/New_York",
+      "stadium": "Hard Rock Stadium"
+    },
+    "Atlanta": {
+      "lat": 33.755,
+      "lon": -84.401,
+      "alt_m": 294,
+      "tz": "America/New_York",
+      "stadium": "Mercedes-Benz Stadium"
+    },
+    "Kansas City": {
+      "lat": 39.049,
+      "lon": -94.484,
+      "alt_m": 265,
+      "tz": "America/Chicago",
+      "stadium": "Arrowhead Stadium"
+    },
+    "San Francisco": {
+      "lat": 37.403,
+      "lon": -121.97,
+      "alt_m": 15,
+      "tz": "America/Los_Angeles",
+      "stadium": "Levi's Stadium"
+    },
+    "Boston": {
+      "lat": 42.091,
+      "lon": -71.264,
+      "alt_m": 17,
+      "tz": "America/New_York",
+      "stadium": "Gillette Stadium"
+    }
+  },
+  "schedule": {
+    "2026-06-11": {
+      "Mexico": "Mexico City",
+      "South Africa": "Mexico City",
+      "Korea": "Guadalajara",
+      "Czech": "Guadalajara"
+    },
+    "2026-06-12": {
+      "Canada": "Toronto",
+      "Bosnia": "Toronto",
+      "United States": "Los Angeles",
+      "USA": "Los Angeles",
+      "Paraguay": "Los Angeles"
+    },
+    "2026-06-13": {
+      "Qatar": "San Francisco",
+      "Switzerland": "San Francisco",
+      "Brazil": "New York/NJ",
+      "Morocco": "New York/NJ",
+      "Haiti": "Boston",
+      "Scotland": "Boston"
+    },
+    "2026-06-14": {
+      "Australia": "Vancouver",
+      "Türkiye": "Vancouver",
+      "Turkey": "Vancouver",
+      "Germany": "Houston",
+      "Curaçao": "Houston",
+      "Curacao": "Houston",
+      "Netherlands": "Dallas",
+      "Japan": "Dallas",
+      "Ivory Coast": "Philadelphia",
+      "Côte d'Ivoire": "Philadelphia",
+      "Ecuador": "Philadelphia",
+      "Sweden": "Monterrey",
+      "Tunisia": "Monterrey"
+    },
+    "2026-06-15": {
+      "Spain": "Atlanta",
+      "Cape Verde": "Atlanta",
+      "Cabo Verde": "Atlanta",
+      "Belgium": "Seattle",
+      "Egypt": "Seattle",
+      "Saudi Arabia": "Miami",
+      "Uruguay": "Miami",
+      "Iran": "Los Angeles",
+      "New Zealand": "Los Angeles"
+    },
+    "2026-06-16": {
+      "France": "New York/NJ",
+      "Senegal": "New York/NJ",
+      "Iraq": "Boston",
+      "Norway": "Boston",
+      "Argentina": "Kansas City",
+      "Algeria": "Kansas City"
+    },
+    "2026-06-17": {
+      "Austria": "San Francisco",
+      "Jordan": "San Francisco",
+      "Portugal": "Houston",
+      "DR Congo": "Houston",
+      "Congo DR": "Houston",
+      "England": "Dallas",
+      "Croatia": "Dallas",
+      "Ghana": "Toronto",
+      "Panama": "Toronto",
+      "Uzbekistan": "Mexico City",
+      "Colombia": "Mexico City"
+    },
+    "2026-06-18": {
+      "Czech": "Atlanta",
+      "South Africa": "Atlanta",
+      "Switzerland": "Los Angeles",
+      "Bosnia": "Los Angeles",
+      "Canada": "Vancouver",
+      "Qatar": "Vancouver",
+      "Mexico": "Guadalajara",
+      "Korea": "Guadalajara"
+    },
+    "2026-06-19": {
+      "Türkiye": "San Francisco",
+      "Turkey": "San Francisco",
+      "Paraguay": "San Francisco",
+      "United States": "Seattle",
+      "USA": "Seattle",
+      "Australia": "Seattle",
+      "Scotland": "Boston",
+      "Morocco": "Boston",
+      "Brazil": "Philadelphia",
+      "Haiti": "Philadelphia"
+    },
+    "2026-06-20": {
+      "Netherlands": "Houston",
+      "Sweden": "Houston",
+      "Germany": "Toronto",
+      "Ivory Coast": "Toronto",
+      "Côte d'Ivoire": "Toronto",
+      "Ecuador": "Kansas City",
+      "Curaçao": "Kansas City",
+      "Curacao": "Kansas City"
+    },
+    "2026-06-21": {
+      "Tunisia": "Monterrey",
+      "Japan": "Monterrey",
+      "Spain": "Atlanta",
+      "Saudi Arabia": "Atlanta",
+      "Belgium": "Los Angeles",
+      "Iran": "Los Angeles",
+      "Uruguay": "Miami",
+      "Cape Verde": "Miami",
+      "Cabo Verde": "Miami",
+      "New Zealand": "Vancouver",
+      "Egypt": "Vancouver"
+    },
+    "2026-06-22": {
+      "Argentina": "Dallas",
+      "Austria": "Dallas",
+      "France": "Philadelphia",
+      "Iraq": "Philadelphia",
+      "Norway": "New York/NJ",
+      "Senegal": "New York/NJ",
+      "Jordan": "San Francisco",
+      "Algeria": "San Francisco"
+    },
+    "2026-06-23": {
+      "Portugal": "Houston",
+      "Uzbekistan": "Houston",
+      "England": "Boston",
+      "Ghana": "Boston",
+      "Panama": "Toronto",
+      "Croatia": "Toronto",
+      "Colombia": "Guadalajara",
+      "DR Congo": "Guadalajara",
+      "Congo DR": "Guadalajara"
+    },
+    "2026-06-24": {
+      "Switzerland": "Vancouver",
+      "Canada": "Vancouver",
+      "Bosnia": "Seattle",
+      "Qatar": "Seattle",
+      "Scotland": "Miami",
+      "Brazil": "Miami",
+      "Morocco": "Atlanta",
+      "Haiti": "Atlanta",
+      "Czech": "Mexico City",
+      "Mexico": "Mexico City",
+      "South Africa": "Monterrey",
+      "Korea": "Monterrey"
+    },
+    "2026-06-25": {
+      "Curaçao": "Philadelphia",
+      "Curacao": "Philadelphia",
+      "Ivory Coast": "Philadelphia",
+      "Côte d'Ivoire": "Philadelphia",
+      "Ecuador": "New York/NJ",
+      "Germany": "New York/NJ",
+      "Japan": "Dallas",
+      "Sweden": "Dallas",
+      "Tunisia": "Kansas City",
+      "Netherlands": "Kansas City",
+      "Türkiye": "Los Angeles",
+      "Turkey": "Los Angeles",
+      "United States": "Los Angeles",
+      "USA": "Los Angeles",
+      "Paraguay": "San Francisco",
+      "Australia": "San Francisco"
+    },
+    "2026-06-26": {
+      "Norway": "Boston",
+      "France": "Boston",
+      "Senegal": "Toronto",
+      "Iraq": "Toronto",
+      "Cape Verde": "Houston",
+      "Cabo Verde": "Houston",
+      "Saudi Arabia": "Houston",
+      "Uruguay": "Guadalajara",
+      "Spain": "Guadalajara",
+      "Egypt": "Seattle",
+      "Iran": "Seattle",
+      "New Zealand": "Vancouver",
+      "Belgium": "Vancouver"
+    },
+    "2026-06-27": {
+      "Panama": "New York/NJ",
+      "England": "New York/NJ",
+      "Croatia": "Philadelphia",
+      "Ghana": "Philadelphia",
+      "Colombia": "Miami",
+      "Portugal": "Miami",
+      "DR Congo": "Atlanta",
+      "Congo DR": "Atlanta",
+      "Uzbekistan": "Atlanta",
+      "Algeria": "Kansas City",
+      "Austria": "Kansas City",
+      "Jordan": "Dallas",
+      "Argentina": "Dallas"
+    }
+  }
+}

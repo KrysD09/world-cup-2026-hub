@@ -126,18 +126,31 @@ PROCESSED_DIR = Path('data/processed')
 RAW_DIR       = Path('data/raw/weather')
 
 # ── Resolve venue from schedule ────────────────────────────────────────────
-def resolve_venue(date_str, home_team, away_team):
-    """Find the city for a match using our schedule (date + team match)."""
-    day = SCHEDULE.get(date_str, {})
-    if not day:
-        return None
-    # Try to match either team name against schedule keys (partial match)
+def _venue_on_day(day, home_team, away_team):
     for team in [home_team, away_team]:
         if not team:
             continue
         for sched_team, city in day.items():
             if sched_team.lower() in team.lower() or team.lower() in sched_team.lower():
                 return city
+    return None
+
+def resolve_venue(date_str, home_team, away_team):
+    """Find the city for a match using our schedule (date + team match).
+    API kickoff dates can be +/- 1 day off our schedule, so check neighbours too."""
+    from datetime import datetime, timedelta
+    city = _venue_on_day(SCHEDULE.get(date_str, {}), home_team, away_team)
+    if city:
+        return city
+    try:
+        d = datetime.strptime(date_str, '%Y-%m-%d')
+    except Exception:
+        return None
+    for delta in (-1, 1):
+        alt = (d + timedelta(days=delta)).strftime('%Y-%m-%d')
+        city = _venue_on_day(SCHEDULE.get(alt, {}), home_team, away_team)
+        if city:
+            return city
     return None
 
 # ── Weather fetch ─────────────────────────────────────────────────────────
