@@ -1021,7 +1021,12 @@ function renderConf(){
 }
 function buildChart(labels,data,colors,meta){
   if(cChart)cChart.destroy();
-  cChart=new Chart(document.getElementById('conf-chart').getContext('2d'),{
+  // Give the chart enough height for every bar+label (≈26px each), so Chart.js
+  // never has to skip y-axis labels. Scales from 6 confederations to 16 teams.
+  const cv=document.getElementById('conf-chart');
+  const wrap=cv.closest('.chart-wrap');
+  if(wrap)wrap.style.height=Math.max(240,labels.length*26)+'px';
+  cChart=new Chart(cv.getContext('2d'),{
     type:'bar',data:{labels,datasets:[{label:'Pts/game',data,backgroundColor:colors.map(c=>c+'BB'),borderColor:colors,borderWidth:1.5,borderRadius:4}]},
     options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
       plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>{
@@ -1030,7 +1035,7 @@ function buildChart(labels,data,colors,meta){
         return ` ${c.parsed.x} pts/game`;
       }}}},
       scales:{x:{beginAtZero:true,grid:{color:'#EEEEEC'},ticks:{font:{size:11},color:'#6B7280'}},
-              y:{grid:{display:false},ticks:{font:{size:11},
+              y:{grid:{display:false},ticks:{autoSkip:false,font:{size:11},
                 color:(ctx)=>{const m=meta&&meta[ctx.index];return (m&&m.played===0)?'#B0B3BD':'#12183A';}}}}}});
 }
 function srtC(k){if(sortK===k)sortD*=-1;else{sortK=k;sortD=-1;}renderConf();}
