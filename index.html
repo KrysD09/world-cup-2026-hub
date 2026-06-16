@@ -578,7 +578,14 @@ let ovC1=null,ovC2=null,ovC3=null,ovC4=null;
 
 // ── Helpers ────────────────────────────────────────────────────────────
 const fGD=n=>n>0?`+${n}`:String(n);
-const fDate=s=>{if(!s)return'';const d=new Date(s);return d.toLocaleDateString('en-US',{month:'short',day:'numeric'});};
+const fDate=s=>{
+  if(!s)return'';
+  // Date-only strings (YYYY-MM-DD) are parsed as UTC midnight by JS, which shifts
+  // back a day in the Americas. Parse those as LOCAL time instead.
+  const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(s);
+  const d=m?new Date(+m[1],+m[2]-1,+m[3]):new Date(s);
+  return d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+};
 const ppg=(p,g)=>g>0?(p/g).toFixed(2):'--';
 async function fJSON(u){const r=await fetch(u+'?t='+Date.now());if(!r.ok)throw new Error('HTTP '+r.status);return r.json();}
 
@@ -718,7 +725,7 @@ function buildOV(){
   document.getElementById('updated-badge').textContent=`Updated ${ts.toLocaleDateString('en-US',{month:'short',day:'numeric'})}`;
   const cs=SB.confederations||{};
   const top=Object.entries(cs).filter(([,v])=>v.played>0).sort((a,b)=>(b[1].points/b[1].played)-(a[1].points/a[1].played));
-  if(top.length){document.getElementById('ov-tc').textContent=top[0][0];document.getElementById('ov-ts').textContent=`${top[0][1].points} pts &middot; ${ppg(top[0][1].points,top[0][1].played)}/game`;}
+  if(top.length){document.getElementById('ov-tc').textContent=top[0][0];document.getElementById('ov-ts').textContent=`${top[0][1].points} pts \u00B7 ${ppg(top[0][1].points,top[0][1].played)}/game`;}
   buildScoreboard('ov-scoreboard');buildUP();
   buildGoalsPerMatch();buildOutcomesChart();buildConfPPGOverview();buildGoalsByGroup();
 }
@@ -744,12 +751,12 @@ function buildScoreboard(targetId){
   });
   if(!rows.length){el.innerHTML='<div class="loading">No data yet</div>';return;}
   const METRICS=[
-    {k:'teams',label:'Teams',color:CC.UEFA},
-    {k:'played',label:'GP',color:'#185FA5'},
-    {k:'points',label:'Points',color:'#C9A227'},
-    {k:'wins',label:'Wins',color:'#3CAC3B'},
-    {k:'gd',label:'GD',color:'#3A8DBF'},
-    {k:'ppg',label:'Pts/Game',color:'#7FC4E8'},
+    {k:'teams',label:'Teams',color:'#12183A',txt:'#fff'},
+    {k:'played',label:'GP',color:'#185FA5',txt:'#fff'},
+    {k:'points',label:'Points',color:'#C9A227',txt:'#3A2E00'},
+    {k:'wins',label:'Wins',color:'#3CAC3B',txt:'#fff'},
+    {k:'gd',label:'GD',color:'#3A8DBF',txt:'#fff'},
+    {k:'ppg',label:'Pts/Game',color:'#7FC4E8',txt:'#0A3550'},
   ];
   // scale ranges per metric (GD can be negative)
   const ranges=METRICS.map(m=>{
@@ -768,9 +775,13 @@ function buildScoreboard(targetId){
       // width of fill relative to span; for negatives, fill from left baseline
       const w=Math.max(3,Math.round(Math.abs(v-Math.min(0,rg.min))/rg.span*100));
       const fill=v<0?m.color+'BB':m.color;
+      // value sits on the bar; use white/dark text per metric, but if the bar is
+      // very short the text overflows onto the gray track — then force dark text.
+      const onBar=w>=22;
+      const tcol=onBar?m.txt:'#12183A';
       return `<div class="sb-cell"><div class="sb-bar">
         <div class="sb-fill" style="left:0;width:${Math.min(100,w)}%;background:${fill}"></div>
-        <div class="sb-val">${fmt(m.k,v)}</div></div></div>`;
+        <div class="sb-val" style="color:${tcol}">${fmt(m.k,v)}</div></div></div>`;
     }).join('');
     return `<div class="sb-row"><div class="sb-name">${r.n}</div>${cells}</div>`;
   }).join('');
@@ -945,7 +956,7 @@ function showCountry(name){
   det.classList.add('show');
   document.getElementById('d-flag').innerHTML=country.f;
   document.getElementById('d-name').textContent=name;
-  document.getElementById('d-meta').textContent=`Group ${country.g} &middot; ${country.c} &middot; Tier ${country.t}${country.titles?' &middot; '+country.titles+' title'+(country.titles>1?'s':''):''}`;
+  document.getElementById('d-meta').textContent=`Group ${country.g} \u00B7 ${country.c} \u00B7 Tier ${country.t}${country.titles?' \u00B7 '+country.titles+' title'+(country.titles>1?'s':''):''}`;
   const r=teamRecord(country.api);
   document.getElementById('d-stats').innerHTML=[
     ['Points',r.pts,'2026 so far'],['Played',r.played,'matches'],
