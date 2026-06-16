@@ -199,6 +199,33 @@ footer a{color:var(--blue);text-decoration:none;}
   </div>
   <div class="card"><div class="card-title"><div class="dot" style="background:var(--gold)"></div>Upcoming Matches</div>
     <div class="match-list" id="ov-up"><div class="loading">Loading...</div></div></div>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title"><div class="dot" style="background:var(--red)"></div>Goals per Match
+        <span style="font-size:11px;font-weight:400;color:var(--gray);margin-left:4px">each bar = one game</span>
+      </div>
+      <div class="chart-wrap" style="height:200px"><canvas id="ov-goals-match"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="dot" style="background:var(--gold)"></div>Match Outcomes</div>
+      <div style="display:flex;align-items:center;gap:16px">
+        <div class="chart-wrap" style="height:180px;width:180px;flex-shrink:0"><canvas id="ov-outcomes"></canvas></div>
+        <div id="ov-outcomes-stats" style="font-size:12px;color:var(--gray);line-height:2"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title"><div class="dot" style="background:var(--blue)"></div>Confederation — Points per Game</div>
+      <div class="chart-wrap" style="height:200px"><canvas id="ov-conf-ppg"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="dot" style="background:var(--green)"></div>Goals per Game by Group</div>
+      <div class="chart-wrap" style="height:200px"><canvas id="ov-group-goals"></canvas></div>
+    </div>
+  </div>
 </main></div>
 
 <!-- CONFEDERATIONS -->
@@ -313,6 +340,7 @@ Updated daily via GitHub Actions &middot;
 const GU='KrysD09',GR='world-cup-2026-hub';
 const RAW=`https://raw.githubusercontent.com/${GU}/${GR}/main/data/processed`;
 const CC={UEFA:'#185FA5',CONMEBOL:'#3CAC3B',CAF:'#BA7517',AFC:'#A32D2D',CONCACAF:'#534AB7',OFC:'#888888'};
+const GC={A:'#E61D25',B:'#2A398D',C:'#3CAC3B',D:'#534AB7',E:'#185FA5',F:'#BA7517',G:'#A32D2D',H:'#C9A227',I:'#185FA5',J:'#3CAC3B',K:'#E61D25',L:'#2A398D'};
 const TIER={France:'S',England:'S',Spain:'S',Brazil:'S',Argentina:'S',Portugal:'S',Germany:'S',Netherlands:'S',
   Belgium:'A',Uruguay:'A',Croatia:'A',Colombia:'A',Morocco:'A',Japan:'A',Mexico:'A','United States':'A',
   Austria:'A',Switzerland:'A',Norway:'A',Ecuador:'B',Australia:'B',Senegal:'B','Korea Republic':'B',
@@ -460,6 +488,7 @@ const ROUNDS=[
 // ── State ──────────────────────────────────────────────────────────────
 let SB=null,MA=null,curConf='ALL',sortK='ppg',sortD=-1,cChart=null;
 let countryConf='ALL',selectedCountry=null;
+let ovC1=null,ovC2=null,ovC3=null,ovC4=null;
 
 // ── Helpers ────────────────────────────────────────────────────────────
 const fGD=n=>n>0?`+${n}`:String(n);
@@ -472,6 +501,118 @@ function switchTab(n,btn){
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('tab-'+n).classList.add('active');
   if(btn)btn.classList.add('active');
+}
+
+// ── Overview charts ────────────────────────────────────────────────────
+function buildGoalsPerMatch(){
+  const fin=MA.filter(m=>m.status==='FINISHED');
+  if(!fin.length)return;
+  const labels=fin.map(m=>{
+    const ht=(m.home_team||'???').substring(0,3).toUpperCase();
+    const at=(m.away_team||'???').substring(0,3).toUpperCase();
+    return ht+'-'+at;
+  });
+  const goals=fin.map(m=>(m.home_score||0)+(m.away_score||0));
+  const colors=fin.map(m=>{const g=(m.group||'').replace('GROUP_','');return(GC[g]||'#888')+'CC';});
+  const bcolors=fin.map(m=>{const g=(m.group||'').replace('GROUP_','');return GC[g]||'#888';});
+  const avg=goals.reduce((a,b)=>a+b,0)/goals.length;
+  if(ovC1)ovC1.destroy();
+  ovC1=new Chart(document.getElementById('ov-goals-match').getContext('2d'),{
+    type:'bar',
+    data:{labels,datasets:[
+      {label:'Goals',data:goals,backgroundColor:colors,borderColor:bcolors,borderWidth:1,borderRadius:3},
+      {label:'Avg',data:goals.map(()=>parseFloat(avg.toFixed(2))),type:'line',
+       borderColor:'#12183A',borderWidth:1.5,borderDash:[4,3],pointRadius:0,fill:false}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{
+        title:i=>{const m=fin[i[0].dataIndex];return(m.home_team||'')+ ' vs '+(m.away_team||'');},
+        label:i=>` ${i.parsed.y} goals`
+      }}},
+      scales:{
+        x:{grid:{display:false},ticks:{font:{size:9},color:'#6B7280',maxRotation:45}},
+        y:{beginAtZero:true,grid:{color:'#EEEEEC'},ticks:{font:{size:11},stepSize:1}}
+      }}
+  });
+}
+
+function buildOutcomesChart(){
+  const fin=MA.filter(m=>m.status==='FINISHED');
+  if(!fin.length)return;
+  let hw=0,aw=0,dr=0;
+  fin.forEach(m=>{if(m.home_score>m.away_score)hw++;else if(m.home_score<m.away_score)aw++;else dr++;});
+  const tot=fin.length;
+  document.getElementById('ov-outcomes-stats').innerHTML=
+    `<div><span style="color:#3CAC3B;font-weight:500">${hw}</span> Home wins (${Math.round(hw/tot*100)}%)</div>
+     <div><span style="color:#2A398D;font-weight:500">${aw}</span> Away wins (${Math.round(aw/tot*100)}%)</div>
+     <div><span style="color:#C9A227;font-weight:500">${dr}</span> Draws (${Math.round(dr/tot*100)}%)</div>
+     <div style="margin-top:4px;padding-top:4px;border-top:1px solid #eee;color:#444">${tot} matches played</div>`;
+  if(ovC2)ovC2.destroy();
+  ovC2=new Chart(document.getElementById('ov-outcomes').getContext('2d'),{
+    type:'doughnut',
+    data:{
+      labels:['Home Win','Away Win','Draw'],
+      datasets:[{data:[hw,aw,dr],backgroundColor:['#3CAC3B','#2A398D','#C9A227'],borderColor:'#FFFFFF',borderWidth:3}]
+    },
+    options:{responsive:true,maintainAspectRatio:false,cutout:'68%',
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:i=>` ${i.raw} (${Math.round(i.raw/tot*100)}%)`}}}
+    }
+  });
+}
+
+function buildConfPPGOverview(){
+  const cs=SB.confederations||{};
+  const ORDER=['UEFA','AFC','CAF','CONCACAF','CONMEBOL','OFC'];
+  const rows=ORDER.filter(c=>cs[c]&&cs[c].played>0)
+    .map(c=>({n:c,ppg:cs[c].points/cs[c].played}))
+    .sort((a,b)=>a.ppg-b.ppg);
+  if(!rows.length)return;
+  if(ovC3)ovC3.destroy();
+  ovC3=new Chart(document.getElementById('ov-conf-ppg').getContext('2d'),{
+    type:'bar',
+    data:{labels:rows.map(r=>r.n),datasets:[{
+      label:'Pts/game',data:rows.map(r=>parseFloat(r.ppg.toFixed(2))),
+      backgroundColor:rows.map(r=>CC[r.n]+'BB'),borderColor:rows.map(r=>CC[r.n]),
+      borderWidth:1.5,borderRadius:4
+    }]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:i=>` ${i.parsed.x} pts/game`}}},
+      scales:{
+        x:{beginAtZero:true,grid:{color:'#EEEEEC'},ticks:{font:{size:11},color:'#6B7280'}},
+        y:{grid:{display:false},ticks:{font:{size:11},color:'#12183A'}}
+      }}
+  });
+}
+
+function buildGoalsByGroup(){
+  const gg={};
+  MA.filter(m=>m.status==='FINISHED').forEach(m=>{
+    const g=(m.group||'').replace('GROUP_','');
+    if(!g)return;
+    if(!gg[g])gg[g]={goals:0,games:0};
+    gg[g].goals+=(m.home_score||0)+(m.away_score||0);
+    gg[g].games++;
+  });
+  const sorted=Object.entries(gg).filter(([,v])=>v.games>0).sort((a,b)=>a[0].localeCompare(b[0]));
+  if(!sorted.length)return;
+  const avg=sorted.reduce((a,[,v])=>a+v.goals/v.games,0)/sorted.length;
+  if(ovC4)ovC4.destroy();
+  ovC4=new Chart(document.getElementById('ov-group-goals').getContext('2d'),{
+    type:'bar',
+    data:{labels:sorted.map(([g])=>`Grp ${g}`),datasets:[
+      {label:'Goals/game',data:sorted.map(([,v])=>parseFloat((v.goals/v.games).toFixed(2))),
+       backgroundColor:sorted.map(([g])=>(GC[g]||'#888')+'CC'),
+       borderColor:sorted.map(([g])=>GC[g]||'#888'),borderWidth:1.5,borderRadius:4},
+      {label:'Avg',data:sorted.map(()=>parseFloat(avg.toFixed(2))),type:'line',
+       borderColor:'#12183A',borderWidth:1.5,borderDash:[4,3],pointRadius:0,fill:false}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:i=>` ${i.parsed.y} goals/game`}}},
+      scales:{
+        x:{grid:{display:false},ticks:{font:{size:10},color:'#6B7280'}},
+        y:{beginAtZero:true,grid:{color:'#EEEEEC'},ticks:{font:{size:11}}}
+      }}
+  });
 }
 
 // ── Overview ───────────────────────────────────────────────────────────
@@ -488,6 +629,7 @@ function buildOV(){
   const top=Object.entries(cs).filter(([,v])=>v.played>0).sort((a,b)=>(b[1].points/b[1].played)-(a[1].points/a[1].played));
   if(top.length){document.getElementById('ov-tc').textContent=top[0][0];document.getElementById('ov-ts').textContent=`${top[0][1].points} pts &middot; ${ppg(top[0][1].points,top[0][1].played)}/game`;}
   buildBR();buildGC();buildUP();
+  buildGoalsPerMatch();buildOutcomesChart();buildConfPPGOverview();buildGoalsByGroup();
 }
 
 function teamMatches(api){return MA.filter(m=>(m.home_team||'').includes(api)||(m.away_team||'').includes(api));}
