@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-16T13:36:34.936839+00:00",
+  "last_updated": "2026-06-16T17:23:17.610474+00:00",
   "matches_played": 16,
   "total_matches": 104,
   "total_goals": 46,
@@ -91,7 +91,7 @@
       "gf": 1,
       "ga": 2,
       "points": 0,
-      "conf": "Unknown"
+      "conf": "UEFA"
     },
     "South Africa": {
       "group": "Group A",
@@ -146,7 +146,7 @@
       "gf": 1,
       "ga": 1,
       "points": 1,
-      "conf": "Unknown"
+      "conf": "UEFA"
     },
     "Scotland": {
       "group": "Group C",
@@ -201,7 +201,7 @@
       "gf": 4,
       "ga": 1,
       "points": 3,
-      "conf": "Unknown"
+      "conf": "CONCACAF"
     },
     "Australia": {
       "group": "Group D",
@@ -410,7 +410,7 @@
       "gf": 0,
       "ga": 0,
       "points": 1,
-      "conf": "Unknown"
+      "conf": "CAF"
     },
     "France": {
       "group": "Group I",
@@ -509,7 +509,7 @@
       "gf": 0,
       "ga": 0,
       "points": 0,
-      "conf": "Unknown"
+      "conf": "CAF"
     },
     "Colombia": {
       "group": "Group K",
