@@ -8,6 +8,9 @@ on:
     - cron: '0 1 * * *'    # 9:00 PM ET — catches mid-evening games
   workflow_dispatch:        # Manual trigger button in the Actions tab
 
+permissions:
+  contents: write
+  
 jobs:
   collect-data:
     runs-on: ubuntu-latest
