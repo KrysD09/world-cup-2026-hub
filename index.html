@@ -575,7 +575,7 @@ function renderConf(){
     ].map(([l,v,s])=>`<div class="stat-card"><div class="stat-label">${l}</div><div class="stat-value" style="font-size:22px">${v}</div><div class="stat-sub">${s}</div></div>`).join('');
     const ct=Object.entries(ts).filter(([,v])=>v.conf===curConf).map(([name,v])=>{
       const p2=v.played>0?v.points/v.played:0,tier=TIER[name]||'C',exp=TPPG[tier]||0.6,delta=p2-exp;
-      return{name,tier,p2,delta,grp:(v.group||'').replace('GROUP_',''),...v};
+      return{name,tier,p2,delta,grp:(v.group||'').replace('GROUP_',''),...v,gd:(v.gf||0)-(v.ga||0)};
     }).sort((a,b)=>b.points-a.points||b.gd-a.gd);
     document.getElementById('team-tb').innerHTML=ct.map(t=>{
       const pb=t.played===0?`<span class="badge bgr">Not played</span>`:
