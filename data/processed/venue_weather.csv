@@ -1,0 +1,11 @@
+city,date,altitude_m,temp_c,feels_like_c,humidity_pct,wind_kph,wbgt_approx,heat_category,collected_at,match_id,home_team,away_team,total_goals
+Mexico City,2026-06-11,2240,18.7,20.0,75,0.7,28.2,Very High,2026-06-16T03:01:49.958272+00:00,537327,Mexico,South Africa,2
+Toronto,2026-06-12,76,26.0,23.9,41,17.9,31.3,Very High,2026-06-16T03:01:50.884773+00:00,537333,Canada,Bosnia-Herzegovina,2
+San Francisco,2026-06-13,15,25.8,24.7,46,14.8,31.7,Very High,2026-06-16T03:01:51.342058+00:00,537334,Qatar,Switzerland,2
+New York/NJ,2026-06-13,9,31.3,30.1,29,10.0,34.3,Very High,2026-06-16T03:01:56.687106+00:00,537339,Brazil,Morocco,2
+Vancouver,2026-06-14,3,27.5,25.4,25,7.4,30.7,Very High,2026-06-16T03:01:57.441006+00:00,537346,Australia,Turkey,2
+Houston,2026-06-14,13,27.3,33.2,86,4.8,37.7,Very High,2026-06-16T03:01:57.969756+00:00,537351,Germany,Curaçao,8
+Dallas,2026-06-14,195,27.7,30.2,69,14.8,36.1,Very High,2026-06-16T03:02:03.306808+00:00,537357,Netherlands,Japan,4
+Philadelphia,2026-06-14,4,30.6,29.6,40,19.2,35.1,Very High,2026-06-16T03:02:04.046949+00:00,537352,Ivory Coast,Ecuador,1
+Atlanta,2026-06-15,294,27.5,28.5,50,8.4,33.7,Very High,2026-06-16T03:02:04.543823+00:00,537369,Spain,Cape Verde Islands,0
+Seattle,2026-06-15,11,27.1,25.0,35,15.3,31.6,Very High,2026-06-16T03:02:05.054162+00:00,537363,Belgium,Egypt,2
