@@ -230,6 +230,7 @@ footer a{color:var(--blue);text-decoration:none;}
 
 <div class="tab-nav">
   <button class="tab-btn active" onclick="switchTab('overview',this)">Overview</button>
+  <button class="tab-btn" onclick="switchTab('brazil',this)">Brazil</button>
   <button class="tab-btn" onclick="switchTab('confederations',this)">Confederations</button>
   <button class="tab-btn" onclick="switchTab('countries',this)">Countries</button>
   <button class="tab-btn" onclick="switchTab('venues',this)">Venues</button>
@@ -278,6 +279,36 @@ footer a{color:var(--blue);text-decoration:none;}
 
   <div class="card"><div class="card-title"><div class="dot" style="background:var(--gold)"></div>Upcoming Matches</div>
     <div class="match-list" id="ov-up"><div class="loading">Loading...</div></div></div>
+</main></div>
+
+<!-- BRAZIL -->
+<div id="tab-brazil" class="tab-panel"><main>
+  <div class="stat-grid" id="br-stats">
+    <div class="stat-card"><div class="stat-label">Points</div><div class="stat-value" id="br-pts">--</div><div class="stat-sub" id="br-pts-sub">Group C</div></div>
+    <div class="stat-card"><div class="stat-label">Record</div><div class="stat-value" id="br-rec" style="font-size:20px">--</div><div class="stat-sub">W &middot; D &middot; L</div></div>
+    <div class="stat-card"><div class="stat-label">Goal difference</div><div class="stat-value" id="br-gd">--</div><div class="stat-sub" id="br-gf">-- for, -- against</div></div>
+    <div class="stat-card"><div class="stat-label">Group position</div><div class="stat-value" id="br-pos">--</div><div class="stat-sub" id="br-pos-sub">in Group C</div></div>
+  </div>
+
+  <div class="two-col">
+    <div class="card"><div class="card-title"><div class="dot" style="background:var(--green)"></div>Brazil Match Tracker
+        <span style="font-size:11px;font-weight:400;color:var(--gray);margin-left:4px">2026 results &amp; upcoming</span>
+      </div>
+      <div class="match-list" id="br-matches"><div class="loading">Loading...</div></div></div>
+    <div class="card"><div class="card-title"><div class="dot" style="background:var(--gold)"></div>Group C Standings</div>
+      <table><thead><tr><th>Team</th><th>GP</th><th>W</th><th>D</th><th>L</th><th>GD</th><th>Pts</th></tr></thead>
+      <tbody id="br-group"><tr><td colspan="7" class="loading">Loading...</td></tr></tbody></table>
+      <p style="font-size:11px;color:var(--gray);margin-top:10px">Brazil highlighted in green.</p></div>
+  </div>
+
+  <div class="card"><div class="card-title"><div class="dot" style="background:var(--blue)"></div>Goals — Brazil vs Opponents</div>
+    <div class="chart-wrap" style="height:220px"><canvas id="br-goals-chart"></canvas></div></div>
+
+  <div class="card" style="background:#fbfbf8;border-style:dashed">
+    <div class="card-title"><div class="dot" style="background:var(--gold)"></div>Looking for the historical deep dives?</div>
+    <p style="font-size:13px;color:var(--gray);line-height:1.6">Brazil's all-time World Cup performance and the quarterfinal-exit pattern live in
+      <a href="https://signalandstructurehq.substack.com/s/the-beautiful-data" target="_blank" style="color:var(--blue);text-decoration:none;font-weight:500">The Beautiful Data</a> on Substack.
+      This tab tracks the live 2026 campaign.</p></div>
 </main></div>
 
 <!-- CONFEDERATIONS -->
@@ -574,7 +605,7 @@ const ROUNDS=[
 // ── State ──────────────────────────────────────────────────────────────
 let SB=null,MA=null,curConf='ALL',sortK='ppg',sortD=-1,cChart=null;
 let countryConf='ALL',selectedCountry=null;
-let ovC1=null,ovC2=null,ovC3=null,ovC4=null;
+let ovC1=null,ovC2=null,ovC3=null,ovC4=null,brC=null;
 
 // ── Helpers ────────────────────────────────────────────────────────────
 const fGD=n=>n>0?`+${n}`:String(n);
@@ -737,6 +768,67 @@ function teamRecord(api){
   pl.forEach(m=>{const h=(m.home_team||'').includes(api);const bg=h?m.home_score:m.away_score,ag=h?m.away_score:m.home_score;gf+=bg;ga+=ag;if(bg>ag){w++;pts+=3;}else if(bg===ag){d++;pts++;}else l++;});
   return{played:pl.length,w,d,l,gf,ga,gd:gf-ga,pts};
 }
+
+// ── Brazil tab ─────────────────────────────────────────────────────────
+function buildBrazil(){
+  const r=teamRecord('Brazil');
+  document.getElementById('br-pts').textContent=r.pts;
+  document.getElementById('br-pts-sub').textContent=`${r.played} played \u00B7 Group C`;
+  document.getElementById('br-rec').textContent=`${r.w}-${r.d}-${r.l}`;
+  document.getElementById('br-gd').textContent=fGD(r.gd);
+  document.getElementById('br-gf').textContent=`${r.gf} for, ${r.ga} against`;
+  // group position
+  const groupTeams=COUNTRIES.filter(c=>c.g==='C'),s={};
+  groupTeams.forEach(t=>s[t.api]={n:t.n,pts:0,gd:0});
+  MA.filter(m=>m.status==='FINISHED').forEach(m=>{
+    const hk=Object.keys(s).find(k=>(m.home_team||'').includes(k)),ak=Object.keys(s).find(k=>(m.away_team||'').includes(k));
+    if(hk){s[hk].gd+=(m.home_score-m.away_score);}if(ak){s[ak].gd+=(m.away_score-m.home_score);}
+    if(m.home_score>m.away_score){if(hk)s[hk].pts+=3;}else if(m.home_score===m.away_score){if(hk)s[hk].pts++;if(ak)s[ak].pts++;}else{if(ak)s[ak].pts+=3;}
+  });
+  const ranked=Object.values(s).sort((a,b)=>b.pts-a.pts||b.gd-a.gd);
+  const pos=ranked.findIndex(t=>t.n==='Brazil')+1;
+  const ord=['','1st','2nd','3rd','4th'][pos]||'--';
+  document.getElementById('br-pos').textContent=r.played>0?ord:'--';
+
+  // match tracker
+  const bm=teamMatches('Brazil'),pl=bm.filter(m=>m.status==='FINISHED');
+  const up=bm.filter(m=>m.status!=='FINISHED').slice(0,3);
+  document.getElementById('br-matches').innerHTML=[...pl,...up].map(m=>{
+    const h=(m.home_team||'').includes('Brazil'),opp=h?m.away_team:m.home_team;
+    const bg=h?m.home_score:m.away_score,ag=h?m.away_score:m.home_score;
+    let cls='rT',lbl='TBD',sc='Upcoming';
+    if(m.status==='FINISHED'){const rv=bg>ag?'W':bg===ag?'D':'L';cls=`r${rv}`;lbl=rv;sc=`${bg}\u2013${ag}`;}
+    return `<div class="match-item hi"><span class="mr ${cls}">${lbl} ${sc}</span><div class="mt">Brazil vs ${opp||'TBD'}</div><div class="mm">${fDate(m.date)}</div></div>`;
+  }).join('')||'<div class="loading">No matches found</div>';
+
+  // group standings table (reuse existing builder)
+  buildGroupStandings('C','br-group','Brazil');
+
+  // goals chart: Brazil scored vs conceded per match
+  buildBrazilGoals(pl);
+}
+function buildBrazilGoals(pl){
+  const ctx=document.getElementById('br-goals-chart');
+  if(!ctx)return;
+  if(!pl.length){if(brC){brC.destroy();brC=null;}return;}
+  const labels=pl.map(m=>{const h=(m.home_team||'').includes('Brazil');const opp=(h?m.away_team:m.home_team)||'???';return opp.substring(0,3).toUpperCase();});
+  const scored=pl.map(m=>{const h=(m.home_team||'').includes('Brazil');return h?m.home_score:m.away_score;});
+  const conceded=pl.map(m=>{const h=(m.home_team||'').includes('Brazil');return h?m.away_score:m.home_score;});
+  if(brC)brC.destroy();
+  brC=new Chart(ctx.getContext('2d'),{
+    type:'bar',
+    data:{labels,datasets:[
+      {label:'Brazil scored',data:scored,backgroundColor:'#3CAC3BCC',borderColor:'#3CAC3B',borderWidth:1.5,borderRadius:3},
+      {label:'Conceded',data:conceded,backgroundColor:'#E61D25CC',borderColor:'#E61D25',borderWidth:1.5,borderRadius:3}
+    ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:true,position:'bottom',labels:{font:{size:11},boxWidth:12}},
+        tooltip:{callbacks:{title:i=>'vs '+(pl[i[0].dataIndex]&&((pl[i[0].dataIndex].home_team||'').includes('Brazil')?pl[i[0].dataIndex].away_team:pl[i[0].dataIndex].home_team)||'')}}},
+      scales:{x:{grid:{display:false},ticks:{font:{size:11},color:'#6B7280'}},
+              y:{beginAtZero:true,grid:{color:'#EEEEEC'},ticks:{font:{size:11},stepSize:1}}}}
+  });
+}
+
 
 // ── Confederation Scoreboard (live, multi-metric) ──────────────────────
 function buildScoreboard(targetId){
@@ -1056,7 +1148,7 @@ async function load(){
   try{
     const[sb,ma]=await Promise.all([fJSON(`${RAW}/scoreboard.json`),fJSON(`${RAW}/latest_matches.json`)]);
     SB=sb;MA=ma;
-    buildOV();renderConf();buildCountries();buildVenues();buildBracket();
+    buildOV();buildBrazil();renderConf();buildCountries();buildVenues();buildBracket();
   }catch(e){
     console.error(e);
     document.getElementById('updated-badge').textContent='Error loading data';
