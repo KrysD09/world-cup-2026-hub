@@ -47,10 +47,12 @@ def elo_win_prob(elo_a, elo_b):
 
 def expected_group_points(team, group_opponents):
     """Estimate expected points for a team across 3 group games."""
+    team = NAME_ALIASES.get(team, team)
     if team not in ELO:
         return 4.5  # fallback: league average
     total = 0
     for opp in group_opponents:
+        opp = NAME_ALIASES.get(opp, opp)
         opp_elo = ELO.get(opp, 1700)
         wp = elo_win_prob(ELO[team], opp_elo)
         dp = 2 * wp * (1 - wp)  # rough draw probability
@@ -74,6 +76,28 @@ CONFEDERATION = {
     'Panama':'CONCACAF','Haiti':'CONCACAF','Curaçao':'CONCACAF',
     'New Zealand':'OFC',
 }
+
+# The football-data.org API returns some country names differently from the
+# canonical keys above. Normalize incoming names to the dictionary's spelling
+# so confederation lookups don't fall through to 'Unknown'.
+NAME_ALIASES = {
+    'Czechia':                 'Czech Republic',
+    'Bosnia-Herzegovina':      'Bosnia and Herzegovina',
+    'Bosnia and Herzegovina':  'Bosnia and Herzegovina',
+    'United States':           'USA',
+    'Cape Verde Islands':      'Cabo Verde',
+    'Cape Verde':              'Cabo Verde',
+    'Congo DR':                'DR Congo',
+    'Korea Republic':          'South Korea',
+    'Türkiye':                 'Turkey',
+    "Côte d'Ivoire":           'Ivory Coast',
+    'Curacao':                 'Curaçao',
+}
+
+def conf_of(team_name):
+    """Confederation for a team, tolerant of API name variants."""
+    canonical = NAME_ALIASES.get(team_name, team_name)
+    return CONFEDERATION.get(canonical, 'Unknown')
 
 def build_scoreboard():
     """Build confederation-level performance scoreboard."""
@@ -102,7 +126,7 @@ def build_scoreboard():
                 'gf':       row['goals_for'],
                 'ga':       row['goals_against'],
                 'points':   row['points'],
-                'conf':     CONFEDERATION.get(row['team'], 'Unknown'),
+                'conf':     conf_of(row['team']),
             }
 
     # Confederation aggregates
