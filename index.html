@@ -1,13 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-H1Z4M1L7P5"></script>
+<!-- Google tag (gtag.js) — loaded only after user consent -->
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-H1Z4M1L7P5');
+  var GA_ID = 'G-H1Z4M1L7P5';
+  function loadGA(){
+    if(window.__gaLoaded) return;
+    window.__gaLoaded = true;
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+    document.head.appendChild(s);
+    gtag('js', new Date());
+    gtag('config', GA_ID);
+  }
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -156,6 +164,24 @@ footer{text-align:center;padding:20px;font-size:11px;color:var(--gray);border-to
 footer a{color:var(--blue);text-decoration:none;}
 .loading{text-align:center;padding:20px;color:var(--gray);font-size:13px;}
 .err{background:#FDE8E8;color:#7B1F1F;padding:10px 14px;border-radius:8px;font-size:12px;}
+/* Cookie consent banner */
+.cc-banner{position:fixed;left:0;right:0;bottom:0;z-index:2000;
+  background:var(--dark);color:#fff;padding:14px 20px;
+  display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:center;
+  box-shadow:0 -2px 12px rgba(0,0,0,.18);transform:translateY(100%);
+  transition:transform .3s ease;}
+.cc-banner.show{transform:translateY(0);}
+.cc-text{font-size:12.5px;line-height:1.5;max-width:640px;color:#E8EAF2;}
+.cc-text a{color:#9DBDF0;text-decoration:underline;}
+.cc-actions{display:flex;gap:8px;flex-shrink:0;}
+.cc-btn{padding:8px 18px;border-radius:8px;font-size:12.5px;font-weight:600;
+  cursor:pointer;border:1px solid transparent;font-family:inherit;transition:all .15s;}
+.cc-accept{background:var(--green);color:#fff;}
+.cc-accept:hover{background:#2f8c2f;}
+.cc-decline{background:transparent;color:#E8EAF2;border-color:#4A5179;}
+.cc-decline:hover{background:rgba(255,255,255,.08);}
+@media(max-width:680px){.cc-banner{flex-direction:column;align-items:stretch;gap:12px;text-align:center;}
+  .cc-actions{justify-content:center;}}
 /* Confederation Scoreboard */
 .sb-legend{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:14px;font-size:11px;color:var(--gray);}
 .sb-legend span{display:inline-flex;align-items:center;gap:5px;}
@@ -365,9 +391,39 @@ Updated daily via GitHub Actions &middot;
 <a href="https://signalandstructurehq.substack.com/s/the-beautiful-data" target="_blank">The Beautiful Data</a> &middot;
 <a href="https://github.com/KrysD09/world-cup-2026-hub" target="_blank">View source</a></footer>
 
+<!-- Cookie consent banner -->
+<div class="cc-banner" id="cc-banner" role="dialog" aria-label="Cookie consent">
+  <div class="cc-text">This site uses Google Analytics to understand which sections visitors find useful.
+    Analytics cookies are only set if you accept. See how it works at
+    <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener">Google's data practices</a>.</div>
+  <div class="cc-actions">
+    <button class="cc-btn cc-decline" onclick="setConsent(false)">Decline</button>
+    <button class="cc-btn cc-accept" onclick="setConsent(true)">Accept</button>
+  </div>
+</div>
+
 <script>
 // ── Config ─────────────────────────────────────────────────────────────
 const GU='KrysD09',GR='world-cup-2026-hub';
+
+// ── Cookie consent ─────────────────────────────────────────────────────
+function setConsent(accepted){
+  try{localStorage.setItem('wc2026-consent',accepted?'granted':'denied');}catch(e){}
+  document.getElementById('cc-banner').classList.remove('show');
+  if(accepted&&typeof loadGA==='function')loadGA();
+}
+(function initConsent(){
+  let c=null;
+  try{c=localStorage.getItem('wc2026-consent');}catch(e){}
+  if(c==='granted'){if(typeof loadGA==='function')loadGA();}
+  else if(c==='denied'){/* respect prior decline, do nothing */}
+  else{
+    // first visit — show banner once DOM is ready
+    const show=()=>{const b=document.getElementById('cc-banner');if(b)setTimeout(()=>b.classList.add('show'),600);};
+    if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',show);else show();
+  }
+})();
+
 const RAW=`https://raw.githubusercontent.com/${GU}/${GR}/main/data/processed`;
 const CC={UEFA:'#185FA5',CONMEBOL:'#3CAC3B',CAF:'#BA7517',AFC:'#A32D2D',CONCACAF:'#534AB7',OFC:'#888888'};
 const GC={A:'#E61D25',B:'#2A398D',C:'#3CAC3B',D:'#534AB7',E:'#185FA5',F:'#BA7517',G:'#A32D2D',H:'#C9A227',I:'#185FA5',J:'#3CAC3B',K:'#E61D25',L:'#2A398D'};
@@ -531,7 +587,7 @@ function switchTab(n,btn){
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('tab-'+n).classList.add('active');
   if(btn)btn.classList.add('active');
-  if(typeof gtag==='function'){gtag('event','page_view',{
+  if(window.__gaLoaded && typeof gtag==='function'){gtag('event','page_view',{
     page_title:'Beautiful Data — '+n.charAt(0).toUpperCase()+n.slice(1),
     page_location:location.href.split('#')[0]+'#'+n,
     page_path:'/'+n
