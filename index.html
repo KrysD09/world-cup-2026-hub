@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Beautiful Data — 2026 FIFA World Cup Dashboard</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  /* ── Reset & base ─────────────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --red:   #E61D25;
+    --blue:  #2A398D;
+    --green: #3CAC3B;
+    --gold:  #C9A227;
+    --dark:  #12183A;
+    --gray:  #6B7280;
+    --lgray: #F3F4F6;
+    --white: #FFFFFF;
+    --bg:    #FAFAF7;
+    --border:#E5E5E0;
+    --card-shadow: 0 1px 8px rgba(0,0,0,.06);
+  }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+         background: var(--bg); color: var(--dark); font-size: 14px; line-height: 1.5; }
+
+  /* ── Color bar ────────────────────────────────────────────────── */
+  .color-bar { height: 5px; display: flex; }
+  .color-bar span { flex: 1; }
+
+  /* ── Header ───────────────────────────────────────────────────── */
+  header { background: var(--white); border-bottom: 1px solid var(--border);
+           padding: 18px 24px 14px; }
+  .header-row { display: flex; justify-content: space-between;
+                align-items: flex-start; flex-wrap: wrap; gap: 10px; }
+  .header-left h1 { font-size: 22px; font-weight: 600; color: var(--dark); }
+  .header-left p  { font-size: 13px; color: var(--gray); margin-top: 2px; }
+  .header-right   { text-align: right; font-size: 12px; color: var(--gray); }
+  .header-right a { color: var(--blue); text-decoration: none; }
+  .updated-badge  { display: inline-block; padding: 3px 10px; border-radius: 999px;
+                    background: var(--lgray); font-size: 11px; color: var(--gray);
+                    margin-top: 4px; }
+
+  /* ── Progress bar ─────────────────────────────────────────────── */
+  .progress-wrap  { margin-top: 12px; }
+  .progress-label { display: flex; justify-content: space-between;
+                    font-size: 11px; color: var(--gray); margin-bottom: 4px; }
+  .progress-track { height: 6px; background: var(--lgray); border-radius: 3px; overflow: hidden; }
+  .progress-fill  { height: 100%; background: var(--blue); border-radius: 3px;
+                    transition: width .4s ease; }
+
+  /* ── Main layout ──────────────────────────────────────────────── */
+  main { max-width: 1100px; margin: 0 auto; padding: 20px 16px 40px; }
+
+  /* ── Stat cards ───────────────────────────────────────────────── */
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px,1fr));
+               gap: 10px; margin-bottom: 20px; }
+  .stat-card { background: var(--white); border: 1px solid var(--border);
+               border-radius: 12px; padding: 14px 16px;
+               box-shadow: var(--card-shadow); }
+  .stat-label { font-size: 11px; font-weight: 500; color: var(--gray);
+                text-transform: uppercase; letter-spacing: .04em; margin-bottom: 4px; }
+  .stat-value { font-size: 26px; font-weight: 600; color: var(--dark); }
+  .stat-sub   { font-size: 11px; color: var(--gray); margin-top: 2px; }
+
+  /* ── Section cards ────────────────────────────────────────────── */
+  .card { background: var(--white); border: 1px solid var(--border);
+          border-radius: 12px; padding: 18px 20px; margin-bottom: 16px;
+          box-shadow: var(--card-shadow); }
+  .card-title { font-size: 14px; font-weight: 600; color: var(--dark);
+                margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .card-title .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  /* ── Two column layout ────────────────────────────────────────── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 680px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* ── Confederation table ──────────────────────────────────────── */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { font-size: 11px; font-weight: 500; color: var(--gray); text-align: left;
+       padding: 6px 8px; border-bottom: 1px solid var(--border);
+       text-transform: uppercase; letter-spacing: .04em; }
+  td { padding: 9px 8px; border-bottom: 1px solid var(--lgray); vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--lgray); }
+  .conf-pill { display: inline-block; font-size: 11px; font-weight: 500;
+               padding: 2px 8px; border-radius: 999px; color: #fff; }
+  .pts-bar-wrap { background: var(--lgray); border-radius: 3px;
+                  height: 6px; width: 80px; overflow: hidden; }
+  .pts-bar-fill { height: 100%; border-radius: 3px; }
+  .leader-row td { font-weight: 500; }
+
+  /* ── Brazil tracker ───────────────────────────────────────────── */
+  .match-list { display: flex; flex-direction: column; gap: 8px; }
+  .match-item { display: flex; align-items: center; gap: 10px;
+                padding: 10px 12px; border-radius: 8px;
+                border: 1px solid var(--border); background: var(--white); }
+  .match-item.brazil { border-left: 3px solid var(--green); }
+  .match-result { font-size: 13px; font-weight: 600; min-width: 36px; text-align: center;
+                  padding: 3px 6px; border-radius: 6px; }
+  .result-W { background: #D4FAE2; color: #0A5C35; }
+  .result-D { background: #FEF3CC; color: #6B4C00; }
+  .result-L { background: #FDE8E8; color: #7B1F1F; }
+  .result-TBD { background: var(--lgray); color: var(--gray); font-size: 11px; }
+  .match-teams { flex: 1; font-size: 13px; color: var(--dark); }
+  .match-meta  { font-size: 11px; color: var(--gray); text-align: right; }
+
+  /* ── Group C standings ────────────────────────────────────────── */
+  .standings-table th, .standings-table td { padding: 7px 8px; }
+  .brazil-row td { color: var(--green); font-weight: 500; }
+
+  /* ── Chart container ──────────────────────────────────────────── */
+  .chart-wrap { position: relative; height: 220px; }
+
+  /* ── Loading / error ──────────────────────────────────────────── */
+  .loading { text-align: center; padding: 30px; color: var(--gray); font-size: 13px; }
+  .error   { background: #FDE8E8; color: #7B1F1F; padding: 10px 14px;
+             border-radius: 8px; font-size: 12px; }
+
+  /* ── Footer ───────────────────────────────────────────────────── */
+  footer { text-align: center; padding: 20px; font-size: 11px; color: var(--gray);
+           border-top: 1px solid var(--border); margin-top: 8px; }
+  footer a { color: var(--blue); text-decoration: none; }
+</style>
+</head>
+<body>
+
+<div class="color-bar">
+  <span style="background:var(--red)"></span>
+  <span style="background:var(--blue)"></span>
+  <span style="background:var(--green)"></span>
+  <span style="background:var(--gold);flex:.3"></span>
+</div>
+
+<header>
+  <div class="header-row">
+    <div class="header-left">
+      <h1>The Beautiful Data</h1>
+      <p>2026 FIFA World Cup Analytics Dashboard &nbsp;·&nbsp; Signal &amp; Structure by Krystie Dickson</p>
+    </div>
+    <div class="header-right">
+      <div>
+        <a href="https://signalandstructurehq.substack.com/s/the-beautiful-data" target="_blank">Substack</a>
+        &nbsp;·&nbsp;
+        <a href="https://github.com/kadickson/world-cup-2026-hub" target="_blank">GitHub</a>
+      </div>
+      <div class="updated-badge" id="updated-badge">Loading...</div>
+    </div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-label">
+      <span id="progress-label-left">Matches played</span>
+      <span id="progress-label-right">of 104</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- Stat cards -->
+  <div class="stat-grid" id="stat-grid">
+    <div class="stat-card">
+      <div class="stat-label">Matches played</div>
+      <div class="stat-value" id="stat-played">—</div>
+      <div class="stat-sub">of 104 total</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Goals scored</div>
+      <div class="stat-value" id="stat-goals">—</div>
+      <div class="stat-sub" id="stat-gpg">— per game</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Top confederation</div>
+      <div class="stat-value" id="stat-top-conf" style="font-size:18px">—</div>
+      <div class="stat-sub" id="stat-top-pts">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Brazil</div>
+      <div class="stat-value" id="stat-brazil" style="font-size:18px">—</div>
+      <div class="stat-sub" id="stat-brazil-sub">Group C</div>
+    </div>
+  </div>
+
+  <!-- Confederation scoreboard + chart -->
+  <div class="card">
+    <div class="card-title">
+      <div class="dot" style="background:var(--blue)"></div>
+      Confederation Scoreboard
+    </div>
+    <div class="two-col">
+      <div>
+        <table id="conf-table">
+          <thead>
+            <tr>
+              <th>Confederation</th>
+              <th>GP</th>
+              <th>Pts</th>
+              <th>Wins</th>
+              <th>GD</th>
+              <th>Pts/Game</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="conf-tbody">
+            <tr><td colspan="7" class="loading">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <div class="chart-wrap">
+          <canvas id="conf-chart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Brazil tracker + Group C -->
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">
+        <div class="dot" style="background:var(--green)"></div>
+        Brazil 2026 — Match Tracker
+      </div>
+      <div class="match-list" id="brazil-matches">
+        <div class="loading">Loading...</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">
+        <div class="dot" style="background:var(--gold)"></div>
+        Group C Standings
+      </div>
+      <table class="standings-table">
+        <thead>
+          <tr><th>Team</th><th>GP</th><th>W</th><th>D</th><th>L</th><th>GD</th><th>Pts</th></tr>
+        </thead>
+        <tbody id="group-c-tbody">
+          <tr><td colspan="7" class="loading">Loading...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Upcoming matches -->
+  <div class="card">
+    <div class="card-title">
+      <div class="dot" style="background:var(--gold)"></div>
+      Upcoming Matches
+    </div>
+    <div class="match-list" id="upcoming-list">
+      <div class="loading">Loading...</div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <p>
+    Data: <a href="https://www.football-data.org" target="_blank">football-data.org</a> API · 
+    Updated daily via GitHub Actions · 
+    <a href="https://signalandstructurehq.substack.com/s/the-beautiful-data" target="_blank">The Beautiful Data on Substack</a> · 
+    <a href="https://github.com/kadickson/world-cup-2026-hub" target="_blank">View source on GitHub</a>
+  </p>
+</footer>
+
+<script>
+// ── Config — update GITHUB_USER if your username changes ──────────────────
+const GITHUB_USER = 'kadickson';
+const GITHUB_REPO = 'world-cup-2026-hub';
+const RAW = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/main/data/processed`;
+
+const CONF_COLOR = {
+  UEFA:'#185FA5', CONMEBOL:'#3CAC3B', CAF:'#BA7517',
+  AFC:'#A32D2D',  CONCACAF:'#534AB7', OFC:'#888888'
+};
+
+// ── Fetch helpers ─────────────────────────────────────────────────────────
+async function fetchJSON(url) {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`HTTP ${r.status}`);
+  return r.json();
+}
+
+// ── Format helpers ────────────────────────────────────────────────────────
+function fmtGD(n) { return n > 0 ? `+${n}` : String(n); }
+function fmtDate(s) {
+  if (!s) return '';
+  const d = new Date(s);
+  return d.toLocaleDateString('en-US', {month:'short', day:'numeric'});
+}
+
+let confChart = null;
+
+// ── Build confederation table ─────────────────────────────────────────────
+function buildConfTable(confs) {
+  const order = ['UEFA','AFC','CAF','CONCACAF','CONMEBOL','OFC'];
+  const sorted = order
+    .filter(c => confs[c])
+    .map(c => ({ name: c, ...confs[c] }))
+    .sort((a, b) => (b.points/Math.max(b.played,1)) - (a.points/Math.max(a.played,1)));
+
+  const maxPts = Math.max(...sorted.map(c => c.points), 1);
+
+  const tbody = document.getElementById('conf-tbody');
+  tbody.innerHTML = sorted.map((c, i) => {
+    const ppg = c.played > 0 ? (c.points / c.played).toFixed(2) : '—';
+    const barW = Math.round((c.points / maxPts) * 100);
+    const isLeader = i === 0;
+    return `<tr class="${isLeader ? 'leader-row' : ''}">
+      <td><span class="conf-pill" style="background:${CONF_COLOR[c.name]}">${c.name}</span></td>
+      <td style="color:var(--gray)">${c.played}</td>
+      <td><strong>${c.points}</strong></td>
+      <td>${c.wins}</td>
+      <td style="color:${c.gd>=0?'var(--green)':'var(--red)'}">${fmtGD(c.gd)}</td>
+      <td><strong>${ppg}</strong></td>
+      <td><div class="pts-bar-wrap"><div class="pts-bar-fill" style="width:${barW}%;background:${CONF_COLOR[c.name]}"></div></div></td>
+    </tr>`;
+  }).join('');
+
+  // Chart
+  const labels = sorted.map(c => c.name);
+  const ppgVals = sorted.map(c => c.played > 0 ? +(c.points / c.played).toFixed(2) : 0);
+  const colors  = sorted.map(c => CONF_COLOR[c.name]);
+
+  if (confChart) confChart.destroy();
+  const ctx = document.getElementById('conf-chart').getContext('2d');
+  confChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Points per game',
+        data: ppgVals,
+        backgroundColor: colors.map(c => c + 'CC'),
+        borderColor: colors,
+        borderWidth: 1.5,
+        borderRadius: 4,
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => ` ${ctx.parsed.x} pts/game`
+          }
+        }
+      },
+      scales: {
+        x: { beginAtZero: true, grid: { color: '#EEEEEC' },
+             ticks: { font: { size: 11 }, color: '#6B7280' } },
+        y: { grid: { display: false },
+             ticks: { font: { size: 12 }, color: '#12183A' } }
+      }
+    }
+  });
+
+  // Top confederation stat
+  if (sorted.length > 0) {
+    const top = sorted[0];
+    document.getElementById('stat-top-conf').textContent = top.name;
+    document.getElementById('stat-top-pts').textContent =
+      `${top.points} pts · ${top.played} games`;
+  }
+}
+
+// ── Build Brazil tracker ──────────────────────────────────────────────────
+function buildBrazilTracker(matches) {
+  const brazil = matches.filter(m =>
+    (m.home_team||'').includes('Brazil') || (m.away_team||'').includes('Brazil')
+  );
+
+  const played  = brazil.filter(m => m.status === 'FINISHED');
+  const upcoming = brazil.filter(m => m.status !== 'FINISHED').slice(0, 3);
+
+  // Brazil stat
+  const pts = played.reduce((acc, m) => {
+    const isBH = (m.home_team||'').includes('Brazil');
+    const bg = isBH ? m.home_score : m.away_score;
+    const ag = isBH ? m.away_score : m.home_score;
+    return acc + (bg > ag ? 3 : bg === ag ? 1 : 0);
+  }, 0);
+  const gd = played.reduce((acc, m) => {
+    const isBH = (m.home_team||'').includes('Brazil');
+    return acc + (isBH ? m.home_score - m.away_score : m.away_score - m.home_score);
+  }, 0);
+  document.getElementById('stat-brazil').textContent = `${pts} pts`;
+  document.getElementById('stat-brazil-sub').textContent =
+    `${played.length} played · GD ${fmtGD(gd)}`;
+
+  // Match list
+  const all = [...played, ...upcoming];
+  const html = all.map(m => {
+    const isBH = (m.home_team||'').includes('Brazil');
+    const opp  = isBH ? m.away_team : m.home_team;
+    const bg   = isBH ? m.home_score : m.away_score;
+    const ag   = isBH ? m.away_score : m.home_score;
+    let res = 'TBD', resClass = 'result-TBD', scoreStr = 'Upcoming';
+
+    if (m.status === 'FINISHED') {
+      scoreStr = `${bg}–${ag}`;
+      res = bg > ag ? 'W' : bg === ag ? 'D' : 'L';
+      resClass = `result-${res}`;
+    }
+
+    return `<div class="match-item brazil">
+      <span class="match-result ${resClass}">${res === 'TBD' ? 'TBD' : `${res} ${scoreStr}`}</span>
+      <div class="match-teams">Brazil vs ${opp||'TBD'}</div>
+      <div class="match-meta">${fmtDate(m.date)}</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('brazil-matches').innerHTML =
+    html || '<div class="loading">No Brazil matches found</div>';
+}
+
+// ── Group C standings ─────────────────────────────────────────────────────
+function buildGroupC(matches) {
+  const groupC = ['Brazil','Morocco','Haiti','Scotland'];
+  const stats  = {};
+  groupC.forEach(t => { stats[t] = {gp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0}; });
+
+  matches.filter(m => m.status === 'FINISHED').forEach(m => {
+    const ht = m.home_team, at = m.away_team;
+    const hg = m.home_score, ag = m.away_score;
+    if (!groupC.includes(ht) && !groupC.includes(at)) return;
+
+    [ht, at].forEach(t => { if (stats[t]) stats[t].gp++; });
+    if (stats[ht]) { stats[ht].gf += hg; stats[ht].ga += ag; }
+    if (stats[at]) { stats[at].gf += ag; stats[at].ga += hg; }
+
+    if (hg > ag) {
+      if (stats[ht]) { stats[ht].w++; stats[ht].pts += 3; }
+      if (stats[at]) stats[at].l++;
+    } else if (hg === ag) {
+      if (stats[ht]) { stats[ht].d++; stats[ht].pts++; }
+      if (stats[at]) { stats[at].d++; stats[at].pts++; }
+    } else {
+      if (stats[at]) { stats[at].w++; stats[at].pts += 3; }
+      if (stats[ht]) stats[ht].l++;
+    }
+  });
+
+  const sorted = Object.entries(stats)
+    .sort((a,b) => b[1].pts - a[1].pts || (b[1].gf-b[1].ga) - (a[1].gf-a[1].ga));
+
+  document.getElementById('group-c-tbody').innerHTML = sorted.map(([team, s]) =>
+    `<tr class="${team==='Brazil'?'brazil-row':''}">
+      <td>${team}</td>
+      <td>${s.gp}</td><td>${s.w}</td><td>${s.d}</td><td>${s.l}</td>
+      <td>${fmtGD(s.gf-s.ga)}</td>
+      <td><strong>${s.pts}</strong></td>
+    </tr>`
+  ).join('');
+}
+
+// ── Upcoming matches ──────────────────────────────────────────────────────
+function buildUpcoming(matches) {
+  const upcoming = matches
+    .filter(m => m.status === 'TIMED' || m.status === 'SCHEDULED')
+    .slice(0, 6);
+
+  if (!upcoming.length) {
+    document.getElementById('upcoming-list').innerHTML =
+      '<div class="loading">No upcoming matches in data yet</div>';
+    return;
+  }
+
+  document.getElementById('upcoming-list').innerHTML = upcoming.map(m => {
+    const isBrazil = (m.home_team||'').includes('Brazil') ||
+                     (m.away_team||'').includes('Brazil');
+    return `<div class="match-item ${isBrazil?'brazil':''}">
+      <span class="match-result result-TBD">TBD</span>
+      <div class="match-teams">${m.home_team||'TBD'} vs ${m.away_team||'TBD'}
+        ${isBrazil ? '<span style="color:var(--green);font-size:11px"> ★ Brazil</span>':''}
+      </div>
+      <div class="match-meta">${fmtDate(m.date)}</div>
+    </div>`;
+  }).join('');
+}
+
+// ── Main data load ────────────────────────────────────────────────────────
+async function loadAll() {
+  try {
+    const [sb, matches] = await Promise.all([
+      fetchJSON(`${RAW}/scoreboard.json`),
+      fetchJSON(`${RAW}/latest_matches.json`),
+    ]);
+
+    // Header
+    const ts = new Date(sb.last_updated);
+    document.getElementById('updated-badge').textContent =
+      `Updated ${ts.toLocaleDateString('en-US',{month:'short',day:'numeric'})} at ${ts.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'})}`;
+
+    // Progress
+    const played = sb.matches_played || 0;
+    document.getElementById('stat-played').textContent = played;
+    document.getElementById('progress-label-left').textContent = `${played} matches played`;
+    document.getElementById('progress-fill').style.width = `${(played/104*100).toFixed(1)}%`;
+
+    // Goals
+    document.getElementById('stat-goals').textContent = sb.total_goals || '—';
+    const gpg = sb.total_goals && played ? (sb.total_goals/played).toFixed(2) : '—';
+    document.getElementById('stat-gpg').textContent = `${gpg} per game`;
+
+    // Confederation table + chart
+    if (sb.confederations) buildConfTable(sb.confederations);
+
+    // Brazil tracker
+    buildBrazilTracker(matches);
+
+    // Group C
+    buildGroupC(matches);
+
+    // Upcoming
+    buildUpcoming(matches);
+
+  } catch (err) {
+    console.error(err);
+    document.getElementById('updated-badge').textContent = 'Could not load data';
+    document.getElementById('conf-tbody').innerHTML =
+      `<tr><td colspan="7" class="error">
+        Could not load data from GitHub. Make sure your repo is public and 
+        data/processed/ files have been committed.
+        <br><br>Error: ${err.message}
+       </td></tr>`;
+  }
+}
+
+loadAll();
+// Auto-refresh every 10 minutes
+setInterval(loadAll, 10 * 60 * 1000);
+</script>
+</body>
+</html>
