@@ -717,7 +717,10 @@ function renderConf(){
     ].map(([l,v,s])=>`<div class="stat-card"><div class="stat-label">${l}</div><div class="stat-value" style="font-size:22px">${v}</div><div class="stat-sub">${s}</div></div>`).join('');
     const ct=Object.entries(ts).filter(([,v])=>v.conf===curConf).map(([name,v])=>{
       const p2=v.played>0?v.points/v.played:0,tier=TIER[name]||'C',exp=TPPG[tier]||0.6,delta=p2-exp;
-      return{name,tier,p2,delta,grp:(v.group||'').replace('GROUP_',''),...v,gd:(v.gf||0)-(v.ga||0)};
+      const gf=v.gf!=null?v.gf:(v.goals_for!=null?v.goals_for:0);
+      const ga=v.ga!=null?v.ga:(v.goals_against!=null?v.goals_against:0);
+      const gdVal=v.gd!=null?v.gd:(v.goal_diff!=null?v.goal_diff:gf-ga);
+      return{name,tier,p2,delta,grp:(v.group||'').replace('GROUP_',''),...v,gd:gdVal};
     }).sort((a,b)=>b.points-a.points||b.gd-a.gd);
     document.getElementById('team-tb').innerHTML=ct.map(t=>{
       const pb=t.played===0?`<span class="badge bgr">Not played</span>`:
@@ -733,7 +736,11 @@ function renderConf(){
         <td>${pb}</td></tr>`;
     }).join('')||'<tr><td colspan="11" class="loading">No data yet</td></tr>';
     const pt=ct.filter(t=>t.played>0);
-    if(pt.length)buildChart(pt.map(t=>t.name),pt.map(t=>parseFloat(t.p2.toFixed(2))),pt.map(()=>CC[curConf]));
+    if(pt.length){
+      // Show all teams; played teams full color, unplayed faded at 0
+      buildChart(ct.map(t=>t.name),ct.map(t=>parseFloat(t.p2.toFixed(2))),
+        ct.map(t=>t.played>0?CC[curConf]:CC[curConf]+'33'));
+    }
     document.getElementById('cc-title').textContent=`${curConf} -- Points per game`;
   }
   buildUpsets();
