@@ -67,6 +67,23 @@ def resolve_city(schedule, date_str, home_team, away_team):
             return city
     return None
 
+def local_match_date(utc_iso, tz_name):
+    """Convert an API UTC kickoff timestamp to the LOCAL calendar date at the
+    venue. The API stores e.g. a 9pm-ET game as 01:00 UTC the *next* day, so
+    taking utcDate[:10] shows the wrong date in the Americas. We convert to the
+    venue's timezone and use that date. Falls back to the raw UTC date if the
+    timezone is unknown or conversion fails."""
+    fallback = (utc_iso or '')[:10]
+    if not utc_iso or not tz_name:
+        return fallback
+    try:
+        from datetime import datetime
+        from zoneinfo import ZoneInfo
+        dt = datetime.fromisoformat(utc_iso.replace('Z', '+00:00'))
+        return dt.astimezone(ZoneInfo(tz_name)).strftime('%Y-%m-%d')
+    except Exception:
+        return fallback
+
 # Confederation lookup (for scoreboard)
 CONFEDERATION = {
     # UEFA
@@ -134,9 +151,17 @@ def parse_matches(raw_matches, schedule=None, venues=None):
         else:
             result = None
 
+        # Resolve venue first (schedule is keyed roughly by UTC date), then use
+        # that venue's timezone to compute the correct LOCAL match date.
+        utc_date = m['utcDate'][:10]
+        city = resolve_city(schedule, utc_date, home, away)
+        vinfo = venues.get(city or '', {}) or {}
+        match_date = local_match_date(m.get('utcDate'), vinfo.get('tz'))
+
         records.append({
             'match_id':    m['id'],
-            'date':        m['utcDate'][:10],
+            'date':        match_date,
+            'utc_date':    utc_date,              # keep raw UTC date for reference
             'status':      m['status'],           # TIMED / IN_PLAY / FINISHED
             'stage':       m['stage'],            # GROUP_STAGE / ROUND_OF_32 / etc
             'group':       m.get('group'),        # GROUP_A through GROUP_L
@@ -148,8 +173,8 @@ def parse_matches(raw_matches, schedule=None, venues=None):
             'home_result': result,
             'home_conf':   CONFEDERATION.get(home, 'Unknown'),
             'away_conf':   CONFEDERATION.get(away, 'Unknown'),
-            'city':        resolve_city(schedule, m['utcDate'][:10], home, away),
-            'venue':       (venues.get(resolve_city(schedule, m['utcDate'][:10], home, away) or '', {}) or {}).get('stadium'),
+            'city':        city,
+            'venue':       vinfo.get('stadium'),
             'collected_at': datetime.now(timezone.utc).isoformat(),
         })
 
