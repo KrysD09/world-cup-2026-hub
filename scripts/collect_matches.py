@@ -12,7 +12,7 @@ Requires:
     Free key at: https://www.football-data.org/client/register
 """
 
-import os, json, requests, pandas as pd
+import os, json, time, requests, pandas as pd
 from datetime import datetime, timezone
 from pathlib import Path
 from dotenv import load_dotenv
@@ -26,6 +26,7 @@ WC_CODE  = 'WC'   # football-data.org code for FIFA World Cup
 
 RAW_DIR       = Path('data/raw/matches')
 PROCESSED_DIR = Path('data/processed')
+VENUE_CACHE   = PROCESSED_DIR / 'venues_by_match.json'   # match_id -> venue, persisted
 
 # Confederation lookup (for scoreboard)
 CONFEDERATION = {
@@ -75,10 +76,54 @@ def fetch_standings():
     data = api_get(f'competitions/{WC_CODE}/standings')
     return data.get('standings', [])
 
+def load_venue_cache():
+    """Load previously-fetched venues so we never re-fetch the same match."""
+    if VENUE_CACHE.exists():
+        try:
+            return json.loads(VENUE_CACHE.read_text())
+        except Exception:
+            return {}
+    return {}
+
+def save_venue_cache(cache):
+    VENUE_CACHE.write_text(json.dumps(cache, indent=2))
+
+def enrich_venues(raw_matches, cache, max_fetch=8, throttle=7.0):
+    """
+    The list endpoint does NOT return venue (v4 folds 'deep' fields out of
+    list views). Venue is only available on the single-match resource
+    /matches/{id}. So for FINISHED matches we don't already have cached,
+    fetch them individually, gently, to respect the 10 req/min free tier.
+
+    max_fetch caps how many NEW matches we look up per run, so a backlog
+    gets filled in over a few runs rather than blowing the rate limit.
+    """
+    finished = [m for m in raw_matches
+                if m.get('status') == 'FINISHED' and str(m['id']) not in cache]
+    if not finished:
+        print("Venues: all finished matches already cached.")
+        return cache
+
+    to_fetch = finished[:max_fetch]
+    print(f"Venues: fetching {len(to_fetch)} new match(es) "
+          f"({len(finished)-len(to_fetch)} will fill in on later runs)...")
+    for m in to_fetch:
+        mid = m['id']
+        try:
+            detail = api_get(f'matches/{mid}')
+            cache[str(mid)] = detail.get('venue')   # may be None if API lacks it
+            print(f"  {mid}: {cache[str(mid)] or 'no venue listed'}")
+        except Exception as e:
+            print(f"  {mid}: fetch failed ({e})")
+        time.sleep(throttle)   # stay under 10 req/min
+    save_venue_cache(cache)
+    return cache
+
 # ── Processing ────────────────────────────────────────────────────────────
-def parse_matches(raw_matches):
+def parse_matches(raw_matches, venue_cache=None):
     """Convert raw API response to clean DataFrame."""
     records = []
+    venue_cache = venue_cache or {}
     for m in raw_matches:
         home = m['homeTeam'].get('name', 'TBD')
         away = m['awayTeam'].get('name', 'TBD')
@@ -107,7 +152,7 @@ def parse_matches(raw_matches):
             'home_result': result,
             'home_conf':   CONFEDERATION.get(home, 'Unknown'),
             'away_conf':   CONFEDERATION.get(away, 'Unknown'),
-            'venue':       m.get('venue'),
+            'venue':       venue_cache.get(str(m['id'])) or m.get('venue'),
             'collected_at': datetime.now(timezone.utc).isoformat(),
         })
 
@@ -186,7 +231,10 @@ if __name__ == '__main__':
     raw_matches   = fetch_matches()
     raw_standings = fetch_standings()
 
-    matches_df   = parse_matches(raw_matches)
+    venue_cache  = load_venue_cache()
+    venue_cache  = enrich_venues(raw_matches, venue_cache)
+
+    matches_df   = parse_matches(raw_matches, venue_cache)
     standings_df = parse_standings(raw_standings)
 
     save_all(matches_df, standings_df)
