@@ -1,17 +1,17 @@
 {
-  "last_updated": "2026-06-16T17:43:45.582520+00:00",
-  "matches_played": 16,
+  "last_updated": "2026-06-16T21:39:58.009207+00:00",
+  "matches_played": 17,
   "total_matches": 104,
-  "total_goals": 46,
+  "total_goals": 50,
   "confederations": {
     "UEFA": {
       "teams": 16,
-      "played": 8,
-      "wins": 3,
-      "points": 13,
-      "gf": 17,
-      "ga": 8,
-      "gd": 9
+      "played": 9,
+      "wins": 4,
+      "points": 16,
+      "gf": 20,
+      "ga": 9,
+      "gd": 11
     },
     "CONMEBOL": {
       "teams": 6,
@@ -24,12 +24,12 @@
     },
     "CAF": {
       "teams": 10,
-      "played": 5,
+      "played": 6,
       "wins": 1,
       "points": 5,
-      "gf": 4,
-      "ga": 9,
-      "gd": -5
+      "gf": 5,
+      "ga": 12,
+      "gd": -7
     },
     "AFC": {
       "teams": 9,
@@ -414,13 +414,13 @@
     },
     "France": {
       "group": "Group I",
-      "played": 0,
-      "won": 0,
+      "played": 1,
+      "won": 1,
       "drawn": 0,
       "lost": 0,
-      "gf": 0,
-      "ga": 0,
-      "points": 0,
+      "gf": 3,
+      "ga": 1,
+      "points": 3,
       "conf": "UEFA"
     },
     "Iraq": {
@@ -447,12 +447,12 @@
     },
     "Senegal": {
       "group": "Group I",
-      "played": 0,
+      "played": 1,
       "won": 0,
       "drawn": 0,
-      "lost": 0,
-      "gf": 0,
-      "ga": 0,
+      "lost": 1,
+      "gf": 1,
+      "ga": 3,
       "points": 0,
       "conf": "CAF"
     },
