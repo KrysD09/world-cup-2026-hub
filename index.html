@@ -421,6 +421,18 @@ footer a{color:var(--blue);text-decoration:none;}
       <span><span class="goals-live">Goals: live</span> Updates after each match</span>
     </div>
   </div>
+  <div class="two-col">
+    <div class="card"><div class="card-title"><div class="dot" style="background:var(--red)"></div>Goals per Game by Stadium
+        <span style="font-size:11px;font-weight:400;color:var(--gray);margin-left:4px">finished matches only</span>
+      </div>
+      <div class="chart-wrap" id="venue-goals-wrap" style="height:300px"><canvas id="venue-goals-chart"></canvas></div>
+      <p style="font-size:11px;color:var(--gray);margin-top:8px">Number in parentheses = games played at that venue. Early-tournament figures are noisy with few games each.</p>
+    </div>
+    <div class="card"><div class="card-title"><div class="dot" style="background:var(--blue)"></div>Goals vs Altitude</div>
+      <div class="chart-wrap" id="venue-alt-wrap" style="height:300px"><canvas id="venue-alt-chart"></canvas></div>
+      <p style="font-size:11px;color:var(--gray);margin-top:8px">Does thinner air mean more goals? Each point is a venue; x = altitude, y = goals/game.</p>
+    </div>
+  </div>
   <div class="venue-grid" id="venue-grid"><div class="loading">Loading venue data...</div></div>
 </main></div>
 
@@ -629,7 +641,7 @@ const ROUNDS=[
 // ── State ──────────────────────────────────────────────────────────────
 let SB=null,MA=null,curConf='ALL',sortK='ppg',sortD=-1,cChart=null;
 let countryConf='ALL',selectedCountry=null;
-let ovC1=null,ovC2=null,ovC3=null,ovC4=null,brC=null,dGC=null;
+let ovC1=null,ovC2=null,ovC3=null,ovC4=null,brC=null,dGC=null,vGC=null,vAC=null;
 
 // ── Helpers ────────────────────────────────────────────────────────────
 const fGD=n=>n>0?`+${n}`:String(n);
@@ -1154,6 +1166,74 @@ function buildVenues(){
       </div>
     </div>`;
   }).join('');
+  buildVenueCharts();
+}
+
+function buildVenueCharts(){
+  const gWrap=document.getElementById('venue-goals-wrap');
+  const aWrap=document.getElementById('venue-alt-wrap');
+  if(!gWrap||!aWrap)return;
+  // Aggregate goals per stadium from finished matches. Match data's `venue`
+  // is the stadium name, which equals VENUES[].sta — join on that.
+  const agg={};
+  (MA||[]).filter(m=>m.status==='FINISHED'&&m.venue).forEach(m=>{
+    const key=m.venue;
+    if(!agg[key])agg[key]={goals:0,games:0};
+    agg[key].goals+=(m.home_score||0)+(m.away_score||0);
+    agg[key].games++;
+  });
+  const rows=Object.entries(agg).map(([sta,d])=>{
+    const v=VENUES.find(x=>x.sta===sta||sta.includes(x.sta)||(x.sta&&x.sta.includes(sta)));
+    return{sta,city:v?v.city:sta,alt:v?v.alt:null,gpg:d.goals/d.games,games:d.games};
+  });
+
+  // ── Chart 1: goals/game by stadium (sorted high→low) ──
+  if(vGC)vGC.destroy();
+  if(!rows.length){gWrap.innerHTML='<div class="loading">No finished matches yet</div>';}
+  else{
+    if(!document.getElementById('venue-goals-chart')){gWrap.innerHTML='<canvas id="venue-goals-chart"></canvas>';}
+    const sorted=[...rows].sort((a,b)=>b.gpg-a.gpg);
+    vGC=new Chart(document.getElementById('venue-goals-chart').getContext('2d'),{
+      type:'bar',
+      data:{labels:sorted.map(r=>`${r.city} (${r.games})`),datasets:[{
+        label:'Goals/game',data:sorted.map(r=>parseFloat(r.gpg.toFixed(2))),
+        backgroundColor:sorted.map(r=>r.alt>1500?'#A32D2DCC':r.alt>500?'#BA7517CC':'#185FA5CC'),
+        borderColor:sorted.map(r=>r.alt>1500?'#A32D2D':r.alt>500?'#BA7517':'#185FA5'),
+        borderWidth:1.5,borderRadius:4
+      }]},
+      options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{display:false},tooltip:{callbacks:{
+          title:i=>sorted[i[0].dataIndex].sta,
+          label:i=>` ${i.parsed.x} goals/game over ${sorted[i.dataIndex].games} game(s)`}}},
+        scales:{x:{beginAtZero:true,grid:{color:'#EEEEEC'},ticks:{font:{size:11},color:'#6B7280'}},
+                y:{grid:{display:false},ticks:{font:{size:10},color:'#12183A'}}}}
+    });
+  }
+
+  // ── Chart 2: goals/game vs altitude (scatter) ──
+  if(vAC)vAC.destroy();
+  const pts=rows.filter(r=>r.alt!=null);
+  if(!pts.length){aWrap.innerHTML='<div class="loading">No data yet</div>';}
+  else{
+    if(!document.getElementById('venue-alt-chart')){aWrap.innerHTML='<canvas id="venue-alt-chart"></canvas>';}
+    vAC=new Chart(document.getElementById('venue-alt-chart').getContext('2d'),{
+      type:'scatter',
+      data:{datasets:[{
+        label:'Venues',
+        data:pts.map(r=>({x:r.alt,y:parseFloat(r.gpg.toFixed(2)),sta:r.sta,city:r.city,games:r.games})),
+        backgroundColor:pts.map(r=>r.alt>1500?'#A32D2D':r.alt>500?'#BA7517':'#185FA5'),
+        pointRadius:6,pointHoverRadius:8
+      }]},
+      options:{responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{display:false},tooltip:{callbacks:{
+          label:i=>{const d=i.raw;return `${d.city}: ${d.y} g/game @ ${d.x}m (${d.games} game${d.games>1?'s':''})`;}}}},
+        scales:{
+          x:{title:{display:true,text:'Altitude (m)',font:{size:11},color:'#6B7280'},
+             beginAtZero:true,grid:{color:'#EEEEEC'},ticks:{font:{size:10},color:'#6B7280'}},
+          y:{title:{display:true,text:'Goals per game',font:{size:11},color:'#6B7280'},
+             beginAtZero:true,grid:{color:'#EEEEEC'},ticks:{font:{size:11},color:'#6B7280'}}}}
+    });
+  }
 }
 
 // ── Bracket ────────────────────────────────────────────────────────────
