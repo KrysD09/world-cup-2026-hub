@@ -148,6 +148,26 @@ footer{text-align:center;padding:20px;font-size:11px;color:var(--gray);border-to
 footer a{color:var(--blue);text-decoration:none;}
 .loading{text-align:center;padding:20px;color:var(--gray);font-size:13px;}
 .err{background:#FDE8E8;color:#7B1F1F;padding:10px 14px;border-radius:8px;font-size:12px;}
+/* Confederation Scoreboard */
+.sb-legend{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:14px;font-size:11px;color:var(--gray);}
+.sb-legend span{display:inline-flex;align-items:center;gap:5px;}
+.sb-legend i{width:11px;height:11px;border-radius:2px;display:inline-block;}
+.sb-table{display:grid;grid-template-columns:90px repeat(6,1fr);gap:0;}
+.sb-head{font-size:10px;font-weight:600;color:var(--gray);text-transform:uppercase;letter-spacing:.04em;
+  padding:0 8px 8px;border-bottom:1px solid var(--border);}
+.sb-head.sb-rowlabel{padding-left:0;}
+.sb-row{display:contents;}
+.sb-name{font-size:13px;font-weight:600;color:var(--dark);display:flex;align-items:center;
+  padding:10px 8px 10px 0;border-bottom:1px solid var(--lgray);}
+.sb-cell{padding:8px;border-bottom:1px solid var(--lgray);display:flex;align-items:center;}
+.sb-bar{position:relative;width:100%;height:30px;background:var(--lgray);border-radius:4px;overflow:hidden;}
+.sb-fill{position:absolute;top:0;bottom:0;border-radius:4px;min-width:3px;}
+.sb-val{position:absolute;top:0;bottom:0;display:flex;align-items:center;padding:0 8px;
+  font-size:12px;font-weight:600;color:var(--dark);z-index:2;}
+@media(max-width:680px){
+  .sb-table{grid-template-columns:64px repeat(6,1fr);font-size:11px;}
+  .sb-name{font-size:11px;}.sb-head{font-size:8px;}.sb-val{font-size:10px;padding:0 4px;}
+}
 </style>
 </head>
 <body>
@@ -188,17 +208,12 @@ footer a{color:var(--blue);text-decoration:none;}
     <div class="stat-card"><div class="stat-label">Matches played</div><div class="stat-value" id="ov-p">--</div><div class="stat-sub">of 104 total</div></div>
     <div class="stat-card"><div class="stat-label">Goals scored</div><div class="stat-value" id="ov-g">--</div><div class="stat-sub" id="ov-gpg">-- per game</div></div>
     <div class="stat-card"><div class="stat-label">Leading conf.</div><div class="stat-value" id="ov-tc" style="font-size:17px">--</div><div class="stat-sub" id="ov-ts">--</div></div>
-    <div class="stat-card"><div class="stat-label">Brazil</div><div class="stat-value" id="ov-br" style="font-size:17px">--</div><div class="stat-sub" id="ov-bs">Group C</div></div>
+    <div class="stat-card"><div class="stat-label">Upcoming</div><div class="stat-value" id="ov-up-count">--</div><div class="stat-sub" id="ov-up-next">matches scheduled</div></div>
   </div>
-  <div class="two-col">
-    <div class="card"><div class="card-title"><div class="dot" style="background:var(--green)"></div>Brazil Match Tracker</div>
-      <div class="match-list" id="ov-bm"><div class="loading">Loading...</div></div></div>
-    <div class="card"><div class="card-title"><div class="dot" style="background:var(--gold)"></div>Group C Standings</div>
-      <table><thead><tr><th>Team</th><th>GP</th><th>W</th><th>D</th><th>L</th><th>GD</th><th>Pts</th></tr></thead>
-      <tbody id="ov-gc"><tr><td colspan="7" class="loading">Loading...</td></tr></tbody></table></div>
-  </div>
-  <div class="card"><div class="card-title"><div class="dot" style="background:var(--gold)"></div>Upcoming Matches</div>
-    <div class="match-list" id="ov-up"><div class="loading">Loading...</div></div></div>
+  <div class="card"><div class="card-title"><div class="dot" style="background:var(--blue)"></div>Confederation Scoreboard
+      <span style="font-size:11px;font-weight:400;color:var(--gray);margin-left:4px">live standings across all six confederations</span>
+    </div>
+    <div id="ov-scoreboard"><div class="loading">Loading...</div></div></div>
 
   <div class="two-col">
     <div class="card">
@@ -226,6 +241,9 @@ footer a{color:var(--blue);text-decoration:none;}
       <div class="chart-wrap" style="height:200px"><canvas id="ov-group-goals"></canvas></div>
     </div>
   </div>
+
+  <div class="card"><div class="card-title"><div class="dot" style="background:var(--gold)"></div>Upcoming Matches</div>
+    <div class="match-list" id="ov-up"><div class="loading">Loading...</div></div></div>
 </main></div>
 
 <!-- CONFEDERATIONS -->
@@ -240,6 +258,10 @@ footer a{color:var(--blue);text-decoration:none;}
     <button class="cs-btn" data-c="OFC" onclick="selConf('OFC',this)">OFC</button>
   </div>
   <div id="conf-sumcards" style="display:none" class="stat-grid"></div>
+  <div class="card"><div class="card-title"><div class="dot" style="background:var(--blue)"></div>Confederation Scoreboard
+      <span style="font-size:11px;font-weight:400;color:var(--gray);margin-left:4px">live standings across all six confederations</span>
+    </div>
+    <div id="conf-scoreboard"><div class="loading">Loading...</div></div></div>
   <div class="two-col">
     <div class="card"><div class="card-title"><div class="dot" style="background:var(--blue)"></div><span id="ct-title">Confederation Scoreboard</span></div>
       <table><thead><tr><th onclick="srtC('name')">Confederation</th><th onclick="srtC('teams')">Teams</th>
@@ -628,7 +650,7 @@ function buildOV(){
   const cs=SB.confederations||{};
   const top=Object.entries(cs).filter(([,v])=>v.played>0).sort((a,b)=>(b[1].points/b[1].played)-(a[1].points/a[1].played));
   if(top.length){document.getElementById('ov-tc').textContent=top[0][0];document.getElementById('ov-ts').textContent=`${top[0][1].points} pts &middot; ${ppg(top[0][1].points,top[0][1].played)}/game`;}
-  buildBR();buildGC();buildUP();
+  buildScoreboard('ov-scoreboard');buildUP();
   buildGoalsPerMatch();buildOutcomesChart();buildConfPPGOverview();buildGoalsByGroup();
 }
 
@@ -640,19 +662,50 @@ function teamRecord(api){
   return{played:pl.length,w,d,l,gf,ga,gd:gf-ga,pts};
 }
 
-function buildBR(){
-  const bm=teamMatches('Brazil'),pl=bm.filter(m=>m.status==='FINISHED');
-  const r=teamRecord('Brazil');
-  document.getElementById('ov-br').textContent=`${r.pts} pts`;
-  document.getElementById('ov-bs').textContent=`${r.played} played &middot; GD ${fGD(r.gd)} &middot; Group C`;
-  const all=[...pl,...bm.filter(m=>m.status!=='FINISHED').slice(0,3)];
-  document.getElementById('ov-bm').innerHTML=all.map(m=>{
-    const h=(m.home_team||'').includes('Brazil'),opp=h?m.away_team:m.home_team;
-    const bg=h?m.home_score:m.away_score,ag=h?m.away_score:m.home_score;
-    let cls='rT',lbl='TBD',sc='Upcoming';
-    if(m.status==='FINISHED'){const rv=bg>ag?'W':bg===ag?'D':'L';cls=`r${rv}`;lbl=rv;sc=`${bg}--${ag}`;}
-    return `<div class="match-item hi"><span class="mr ${cls}">${lbl} ${sc}</span><div class="mt">Brazil vs ${opp||'TBD'}</div><div class="mm">${fDate(m.date)}</div></div>`;
-  }).join('')||'<div class="loading">No matches found</div>';
+// ── Confederation Scoreboard (live, multi-metric) ──────────────────────
+function buildScoreboard(targetId){
+  const el=document.getElementById(targetId);
+  if(!el)return;
+  const cs=SB.confederations||{};
+  const ORDER=['AFC','UEFA','CAF','CONCACAF','CONMEBOL','OFC'];
+  const rows=ORDER.filter(c=>cs[c]).map(c=>{
+    const d=cs[c];const played=d.played||0;
+    return{n:c,teams:d.teams||0,played,points:d.points||0,wins:d.wins||0,
+      gd:d.gd!=null?d.gd:0,ppg:played>0?d.points/played:0};
+  });
+  if(!rows.length){el.innerHTML='<div class="loading">No data yet</div>';return;}
+  const METRICS=[
+    {k:'teams',label:'Teams',color:CC.UEFA},
+    {k:'played',label:'GP',color:'#185FA5'},
+    {k:'points',label:'Points',color:'#C9A227'},
+    {k:'wins',label:'Wins',color:'#3CAC3B'},
+    {k:'gd',label:'GD',color:'#3A8DBF'},
+    {k:'ppg',label:'Pts/Game',color:'#7FC4E8'},
+  ];
+  // scale ranges per metric (GD can be negative)
+  const ranges=METRICS.map(m=>{
+    const vals=rows.map(r=>r[m.k]);
+    const min=Math.min(0,...vals),max=Math.max(0,...vals,0.01);
+    return{min,max,span:(max-min)||1};
+  });
+  const fmt=(k,v)=>k==='ppg'?(Math.round(v*100)/100).toString():k==='gd'?fGD(v):String(v);
+  const legend=`<div class="sb-legend">${METRICS.map(m=>
+    `<span><i style="background:${m.color}"></i>${m.label}</span>`).join('')}</div>`;
+  const head=`<div class="sb-head sb-rowlabel"></div>`+
+    METRICS.map(m=>`<div class="sb-head">${m.label}</div>`).join('');
+  const body=rows.map(r=>{
+    const cells=METRICS.map((m,i)=>{
+      const v=r[m.k],rg=ranges[i];
+      // width of fill relative to span; for negatives, fill from left baseline
+      const w=Math.max(3,Math.round(Math.abs(v-Math.min(0,rg.min))/rg.span*100));
+      const fill=v<0?m.color+'BB':m.color;
+      return `<div class="sb-cell"><div class="sb-bar">
+        <div class="sb-fill" style="left:0;width:${Math.min(100,w)}%;background:${fill}"></div>
+        <div class="sb-val">${fmt(m.k,v)}</div></div></div>`;
+    }).join('');
+    return `<div class="sb-row"><div class="sb-name">${r.n}</div>${cells}</div>`;
+  }).join('');
+  el.innerHTML=legend+`<div class="sb-table">${head}${body}</div>`;
 }
 
 function buildGroupStandings(group,tbodyId,highlightTeam){
@@ -673,9 +726,15 @@ function buildGroupStandings(group,tbodyId,highlightTeam){
     `<tr class="${v.n===highlightTeam?'brazil-row':''}"><td>${v.n}</td><td>${v.gp}</td><td>${v.w}</td><td>${v.d}</td><td>${v.l}</td><td>${fGD(v.gf-v.ga)}</td><td><strong>${v.pts}</strong></td></tr>`).join('');
 }
 
-function buildGC(){buildGroupStandings('C','ov-gc','Brazil');}
 function buildUP(){
-  const up=MA.filter(m=>m.status==='TIMED'||m.status==='SCHEDULED').slice(0,6);
+  const allUp=MA.filter(m=>m.status==='TIMED'||m.status==='SCHEDULED');
+  const up=allUp.slice(0,6);
+  const cntEl=document.getElementById('ov-up-count');
+  if(cntEl){
+    cntEl.textContent=allUp.length;
+    const next=allUp[0];
+    document.getElementById('ov-up-next').textContent=next?`next ${fDate(next.date)}`:'matches scheduled';
+  }
   document.getElementById('ov-up').innerHTML=up.length?up.map(m=>{
     const isBR=(m.home_team||'').includes('Brazil')||(m.away_team||'').includes('Brazil');
     return `<div class="match-item ${isBR?'hi':''}"><span class="mr rT">TBD</span><div class="mt">${m.home_team||'TBD'} vs ${m.away_team||'TBD'}${isBR?' <span style="color:var(--green);font-size:11px">&#9733;</span>':''}</div><div class="mm">${fDate(m.date)}</div></div>`;
@@ -690,6 +749,7 @@ function selConf(c,btn){
   if(SB&&MA)renderConf();
 }
 function renderConf(){
+  buildScoreboard('conf-scoreboard');
   const cs=SB.confederations||{},ts=SB.team_standings||{};
   const ORDER=['UEFA','AFC','CAF','CONCACAF','CONMEBOL','OFC'];
   let rows=ORDER.filter(c=>cs[c]).map(c=>({n:c,...cs[c],ppg:cs[c].played>0?cs[c].points/cs[c].played:0}));
