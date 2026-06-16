@@ -115,10 +115,11 @@ def fetch_standings():
     data = api_get(f'competitions/{WC_CODE}/standings')
     return data.get('standings', [])
 
-def parse_matches(raw_matches, venue_cache=None):
+def parse_matches(raw_matches, schedule=None, venues=None):
     """Convert raw API response to clean DataFrame."""
     records = []
-    venue_cache = venue_cache or {}
+    schedule = schedule or {}
+    venues = venues or {}
     for m in raw_matches:
         home = m['homeTeam'].get('name', 'TBD')
         away = m['awayTeam'].get('name', 'TBD')
@@ -147,7 +148,8 @@ def parse_matches(raw_matches, venue_cache=None):
             'home_result': result,
             'home_conf':   CONFEDERATION.get(home, 'Unknown'),
             'away_conf':   CONFEDERATION.get(away, 'Unknown'),
-            'venue':       venue_cache.get(str(m['id'])) or m.get('venue'),
+            'city':        resolve_city(schedule, m['utcDate'][:10], home, away),
+            'venue':       (venues.get(resolve_city(schedule, m['utcDate'][:10], home, away) or '', {}) or {}).get('stadium'),
             'collected_at': datetime.now(timezone.utc).isoformat(),
         })
 
@@ -226,7 +228,8 @@ if __name__ == '__main__':
     raw_matches   = fetch_matches()
     raw_standings = fetch_standings()
 
-    matches_df   = parse_matches(raw_matches, venue_cache)
+    schedule, venues = load_venue_schedule()
+    matches_df   = parse_matches(raw_matches, schedule, venues)
     standings_df = parse_standings(raw_standings)
 
     save_all(matches_df, standings_df)
