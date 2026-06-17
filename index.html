@@ -377,14 +377,13 @@ footer a{color:var(--blue);text-decoration:none;}
   <div class="card"><div class="card-title"><div class="dot" style="background:var(--gold)"></div>Goals per Game by Group
       <span style="font-size:11px;font-weight:400;color:var(--gray);margin-left:4px">which groups are wild, which are cagey</span>
     </div>
+    <div class="sb-legend" style="margin-bottom:10px">
+      <span><i style="background:#A32D2D"></i>High-scoring (3.5+ goals/game)</span>
+      <span><i style="background:#BA7517"></i>Medium (2&ndash;3.5)</span>
+      <span><i style="background:#185FA5"></i>Cagey (under 2)</span>
+    </div>
     <div class="chart-wrap" style="height:300px"><canvas id="grp-goals-chart"></canvas></div>
     <div class="takeaway" id="cap-grp-goals" style="display:none"></div>
-  </div>
-
-  <div class="card"><div class="card-title"><div class="dot" style="background:var(--blue)"></div>How open is each group?
-      <span style="font-size:11px;font-weight:400;color:var(--gray);margin-left:4px">tighter = anyone can still advance</span>
-    </div>
-    <div id="grp-tightness"><div class="loading">Loading...</div></div>
   </div>
 
   <h3 style="font-size:15px;color:var(--dark);margin:24px 0 4px">All 12 Group Standings</h3>
@@ -1084,33 +1083,6 @@ function buildGroups(){
       `while <b>Group ${lo.L}</b> is the tightest at ${lo.gpg.toFixed(1)}. `+
       `Most groups have only played 2 of 6 games, so this will shift.`);
   } else {setCap('cap-grp-goals','');}
-
-  // 3. Tightness — gap between 2nd and 3rd place points (smaller = more open)
-  const tight=GROUP_LETTERS.map(L=>{
-    const st=groupStats(L);
-    if(st.finished===0)return{L,spread:null};
-    const pts=st.teams.map(t=>t.pts);
-    const spread=pts[0]-pts[pts.length-1]; // leader minus last
-    return{L,spread,pts,finished:st.finished};
-  }).filter(r=>r.spread!==null&&r.finished>0);
-  const tEl=document.getElementById('grp-tightness');
-  if(tEl){
-    if(!tight.length){tEl.innerHTML='<div class="loading">No games played yet</div>';}
-    else{
-      // sort most open (smallest spread) first
-      tight.sort((a,b)=>a.spread-b.spread);
-      const maxSpread=Math.max(...tight.map(t=>t.spread),1);
-      tEl.innerHTML=tight.map(t=>{
-        const openPct=100-(t.spread/maxSpread*100);
-        const tag=t.spread<=1?'Wide open':t.spread<=3?'Competitive':'Clear leader';
-        const col=t.spread<=1?'#3CAC3B':t.spread<=3?'#BA7517':'#A32D2D';
-        return `<div class="tight-row">
-          <span class="tight-label">Group ${t.L}</span>
-          <div class="tight-bar-wrap"><div class="tight-bar" style="width:${Math.max(8,openPct)}%;background:${col}"></div></div>
-          <span class="tight-tag" style="color:${col}">${tag}</span></div>`;
-      }).join('');
-    }
-  }
 }
 function buildGroupStandings(group,tbodyId,highlightTeam){
   const groupTeams=COUNTRIES.filter(c=>c.g===group),s={};
