@@ -125,10 +125,15 @@ tr:hover td{background:var(--lgray);}
 .detail-stat .l{font-size:10px;color:var(--gray);margin-top:2px;}
 /* Venues */
 .venue-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;}
-.venue-card{border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--white);box-shadow:var(--shadow);}
+.venue-card{border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--white);box-shadow:var(--shadow);cursor:pointer;transition:transform .15s,box-shadow .15s;}
+.venue-card:hover{transform:translateY(-3px);box-shadow:0 6px 18px rgba(0,0,0,.12);}
 .venue-img{width:100%;height:160px;object-fit:cover;display:block;background:var(--lgray);}
-.venue-img-placeholder{width:100%;height:160px;display:flex;align-items:center;justify-content:center;
-  font-size:32px;background:linear-gradient(135deg,var(--lgray),#e8e8e0);}
+.venue-img-placeholder{width:100%;height:160px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-size:30px;color:#fff;gap:6px;}
+.venue-img-placeholder .vp-name{font-size:13px;font-weight:600;opacity:.95;}
+.vp-high{background:linear-gradient(135deg,#7B1F1F,#A32D2D);}
+.vp-mid{background:linear-gradient(135deg,#6B4C00,#BA7517);}
+.vp-low{background:linear-gradient(135deg,#12183A,#2A398D);}
 .venue-body{padding:12px 14px;}
 .venue-name{font-size:13px;font-weight:600;color:var(--dark);margin-bottom:2px;}
 .venue-city{font-size:12px;color:var(--gray);margin-bottom:8px;}
@@ -139,6 +144,32 @@ tr:hover td{background:var(--lgray);}
 .alt-mid{background:#FEF3CC;color:#6B4C00;}
 .alt-low{background:#E6F1FB;color:#1B4FD8;}
 .goals-live{font-size:11px;font-weight:500;padding:3px 8px;border-radius:6px;background:#D4FAE2;color:#0A5C35;}
+.venue-tap{font-size:10px;color:var(--blue);margin-top:8px;display:block;}
+/* Venue detail modal */
+.vm-overlay{position:fixed;inset:0;background:rgba(10,15,35,.55);z-index:3000;
+  display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .2s;}
+.vm-overlay.show{opacity:1;pointer-events:auto;}
+.vm-modal{background:#fff;border-radius:16px;max-width:540px;width:100%;max-height:88vh;overflow-y:auto;
+  box-shadow:0 12px 40px rgba(0,0,0,.3);transform:translateY(12px);transition:transform .2s;}
+.vm-overlay.show .vm-modal{transform:translateY(0);}
+.vm-hero{position:relative;height:180px;background:var(--lgray);}
+.vm-hero img{width:100%;height:100%;object-fit:cover;display:block;}
+.vm-hero-fallback{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;gap:8px;font-size:40px;}
+.vm-close{position:absolute;top:12px;right:12px;background:rgba(0,0,0,.45);color:#fff;border:none;
+  width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;}
+.vm-close:hover{background:rgba(0,0,0,.65);}
+.vm-body{padding:18px 22px 22px;}
+.vm-title{font-size:19px;font-weight:700;color:var(--dark);margin:0 0 2px;}
+.vm-sub{font-size:13px;color:var(--gray);margin-bottom:16px;}
+.vm-statrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-bottom:18px;}
+.vm-stat{background:var(--lgray);border-radius:10px;padding:10px 12px;}
+.vm-stat .vm-k{font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:var(--gray);}
+.vm-stat .vm-v{font-size:17px;font-weight:700;color:var(--dark);}
+.vm-matches-title{font-size:12px;font-weight:600;color:var(--dark);text-transform:uppercase;letter-spacing:.03em;margin:0 0 8px;}
+.vm-match{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--lgray);font-size:13px;}
+.vm-match:last-child{border-bottom:none;}
+.vm-match .vm-score{font-weight:700;color:var(--dark);}
+.vm-empty{font-size:13px;color:var(--gray);font-style:italic;padding:8px 0;}
 /* Bracket */
 .bracket-rounds{overflow-x:auto;padding-bottom:10px;}
 .bracket-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:0;min-width:800px;}
@@ -464,6 +495,11 @@ Updated daily via GitHub Actions &middot;
 <a href="https://signalandstructurehq.substack.com/s/the-beautiful-data" target="_blank">The Beautiful Data</a> &middot;
 <a href="https://github.com/KrysD09/world-cup-2026-hub" target="_blank">View source</a></footer>
 
+<!-- Venue detail modal -->
+<div class="vm-overlay" id="vm-overlay" onclick="if(event.target===this)hideVenue()">
+  <div class="vm-modal" id="vm-content"></div>
+</div>
+
 <!-- Cookie consent banner -->
 <div class="cc-banner" id="cc-banner" role="dialog" aria-label="Cookie consent">
   <div class="cc-text">This site uses Google Analytics to understand which sections visitors find useful.
@@ -585,37 +621,37 @@ const COUNTRIES=[
 // Venues
 const VENUES=[
   {city:'Mexico City',sta:'Estadio Azteca',country:'Mexico',flag:'&#127474;&#127485;',alt:2240,cap:87523,roof:'Open',
-   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Estadio_Azteca_2015.jpg/480px-Estadio_Azteca_2015.jpg'},
+   img:'https://commons.wikimedia.org/wiki/Special:FilePath/Estadio_Azteca_2015.jpg?width=480'},
   {city:'Guadalajara',sta:'Estadio Akron',country:'Mexico',flag:'&#127474;&#127485;',alt:1566,cap:46232,roof:'Open',
-   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Akron_stadium_chivas.jpg/480px-Akron_stadium_chivas.jpg'},
+   img:'https://commons.wikimedia.org/wiki/Special:FilePath/Akron_stadium_chivas.jpg?width=480'},
   {city:'Monterrey',sta:'Estadio BBVA',country:'Mexico',flag:'&#127474;&#127485;',alt:538,cap:53500,roof:'Open',
-   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/EstadioMTY.jpg/480px-EstadioMTY.jpg'},
+   img:'https://commons.wikimedia.org/wiki/Special:FilePath/EstadioMTY.jpg?width=480'},
   {city:'Toronto',sta:'BMO Field',country:'Canada',flag:'&#127464;&#127462;',alt:76,cap:30000,roof:'Retractable',
-   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/BMO_Field_Toronto.jpg/480px-BMO_Field_Toronto.jpg'},
+   img:'https://commons.wikimedia.org/wiki/Special:FilePath/BMO_Field_Toronto.jpg?width=480'},
   {city:'Vancouver',sta:'BC Place',country:'Canada',flag:'&#127464;&#127462;',alt:3,cap:54500,roof:'Retractable',
-   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/BC_Place_stadium_2011.jpg/480px-BC_Place_stadium_2011.jpg'},
+   img:'https://commons.wikimedia.org/wiki/Special:FilePath/BC_Place_stadium_2011.jpg?width=480'},
   {city:'Los Angeles',sta:'SoFi Stadium',country:'USA',flag:'&#127482;&#127480;',alt:71,cap:70240,roof:'Covered',
-   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/SoFi_Stadium_-_2020.jpg/480px-SoFi_Stadium_-_2020.jpg'},
+   img:'https://commons.wikimedia.org/wiki/Special:FilePath/SoFi_Stadium_-_2020.jpg?width=480'},
   {city:'New York/NJ',sta:'MetLife Stadium',country:'USA',flag:'&#127482;&#127480;',alt:9,cap:82500,roof:'Open',
-   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/MetLife_Stadium_NJSP.jpg/480px-MetLife_Stadium_NJSP.jpg'},
+   img:'https://commons.wikimedia.org/wiki/Special:FilePath/MetLife_Stadium_NJSP.jpg?width=480'},
   {city:'Dallas',sta:'AT&T Stadium',country:'USA',flag:'&#127482;&#127480;',alt:195,cap:80000,roof:'Retractable',
-   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/AT%26T_Stadium_2014.jpg/480px-AT%26T_Stadium_2014.jpg'},
+   img:'https://commons.wikimedia.org/wiki/Special:FilePath/AT%26T_Stadium_2014.jpg?width=480'},
   {city:'Houston',sta:'NRG Stadium',country:'USA',flag:'&#127482;&#127480;',alt:13,cap:72220,roof:'Retractable',
-   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/NRG_Stadium_-_Houston%2C_TX.jpg/480px-NRG_Stadium_-_Houston%2C_TX.jpg'},
+   img:'https://commons.wikimedia.org/wiki/Special:FilePath/NRG_Stadium_-_Houston%2C_TX.jpg?width=480'},
   {city:'Philadelphia',sta:'Lincoln Financial Field',country:'USA',flag:'&#127482;&#127480;',alt:4,cap:69796,roof:'Open',
-   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Lincoln_Financial_Field_2017.jpg/480px-Lincoln_Financial_Field_2017.jpg'},
+   img:'https://commons.wikimedia.org/wiki/Special:FilePath/Lincoln_Financial_Field_2017.jpg?width=480'},
   {city:'Seattle',sta:'Lumen Field',country:'USA',flag:'&#127482;&#127480;',alt:11,cap:68740,roof:'Partial',
-   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Lumen_Field_2020.jpg/480px-Lumen_Field_2020.jpg'},
+   img:'https://commons.wikimedia.org/wiki/Special:FilePath/Lumen_Field_2020.jpg?width=480'},
   {city:'Miami',sta:'Hard Rock Stadium',country:'USA',flag:'&#127482;&#127480;',alt:2,cap:65326,roof:'Partial',
-   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Hard_Rock_Stadium_2018.jpg/480px-Hard_Rock_Stadium_2018.jpg'},
+   img:'https://commons.wikimedia.org/wiki/Special:FilePath/Hard_Rock_Stadium_2018.jpg?width=480'},
   {city:'Atlanta',sta:'Mercedes-Benz Stadium',country:'USA',flag:'&#127482;&#127480;',alt:294,cap:71000,roof:'Retractable',
-   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Mercedes-Benz_Stadium.jpg/480px-Mercedes-Benz_Stadium.jpg'},
+   img:'https://commons.wikimedia.org/wiki/Special:FilePath/Mercedes-Benz_Stadium.jpg?width=480'},
   {city:'Kansas City',sta:'Arrowhead Stadium',country:'USA',flag:'&#127482;&#127480;',alt:265,cap:76416,roof:'Open',
-   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Arrowhead_Stadium_2013.jpg/480px-Arrowhead_Stadium_2013.jpg'},
+   img:'https://commons.wikimedia.org/wiki/Special:FilePath/Arrowhead_Stadium_2013.jpg?width=480'},
   {city:'San Francisco',sta:"Levi's Stadium",country:'USA',flag:'&#127482;&#127480;',alt:15,cap:68500,roof:'Open',
-   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Levi%27s_Stadium.jpg/480px-Levi%27s_Stadium.jpg'},
+   img:'https://commons.wikimedia.org/wiki/Special:FilePath/Levi%27s_Stadium.jpg?width=480'},
   {city:'Boston',sta:'Gillette Stadium',country:'USA',flag:'&#127482;&#127480;',alt:17,cap:65878,roof:'Open',
-   img:'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Gillette_Stadium_2012.jpg/480px-Gillette_Stadium_2012.jpg'},
+   img:'https://commons.wikimedia.org/wiki/Special:FilePath/Gillette_Stadium_2012.jpg?width=480'},
 ];
 
 // Bracket rounds
@@ -1189,15 +1225,17 @@ function buildVenues(){
       }
     });
   }
-  document.getElementById('venue-grid').innerHTML=VENUES.map(v=>{
+  document.getElementById('venue-grid').innerHTML=VENUES.map((v,i)=>{
     const ac=v.alt>1500?'alt-high':v.alt>500?'alt-mid':'alt-low';
     const al=v.alt>1500?'High altitude':v.alt>500?'Mid altitude':'Sea level';
+    const vp=v.alt>1500?'vp-high':v.alt>500?'vp-mid':'vp-low';
     const vg=venueGoals[v.city];
     const glabel=vg&&vg.games>0?`<span class="goals-live">${(vg.goals/vg.games).toFixed(1)} goals/game (${vg.games})</span>`:'';
-    return `<div class="venue-card">
+    return `<div class="venue-card" onclick="showVenue(${i})">
       <img class="venue-img" src="${v.img}" alt="${v.sta}" loading="lazy"
         onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-      <div class="venue-img-placeholder" style="display:none">${v.flag}</div>
+      <div class="venue-img-placeholder ${vp}" style="display:none">
+        <span>${v.flag}</span><span class="vp-name">${v.sta}</span></div>
       <div class="venue-body">
         <div class="venue-name">${v.sta}</div>
         <div class="venue-city">${v.flag} ${v.city}, ${v.country}</div>
@@ -1207,11 +1245,52 @@ function buildVenues(){
           <span class="venue-stat">${v.roof}</span>
           ${glabel}
         </div>
+        <span class="venue-tap">&#128065; Click for matches &amp; details</span>
       </div>
     </div>`;
   }).join('');
   buildVenueCharts();
 }
+
+// ── Venue detail modal ─────────────────────────────────────────────────
+function venueMatches(v){
+  // finished matches played at this venue (match by stadium or city)
+  return (MA||[]).filter(m=>m.status==='FINISHED'&&m.venue&&
+    (m.venue===v.sta||m.venue.includes(v.sta)||m.venue.includes(v.city)));
+}
+function showVenue(i){
+  const v=VENUES[i];if(!v)return;
+  const matches=venueMatches(v);
+  const goals=matches.reduce((s,m)=>s+(m.home_score||0)+(m.away_score||0),0);
+  const gpg=matches.length?(goals/matches.length).toFixed(1):'--';
+  const vp=v.alt>1500?'vp-high':v.alt>500?'vp-mid':'vp-low';
+  const al=v.alt>1500?'High altitude':v.alt>500?'Mid altitude':'Sea level';
+  const matchHtml=matches.length?matches.map(m=>{
+    const sc=`${m.home_score}\u2013${m.away_score}`;
+    return `<div class="vm-match"><span>${m.home_team} vs ${m.away_team}</span><span class="vm-score">${sc}</span></div>`;
+  }).join(''):'<div class="vm-empty">No matches played here yet.</div>';
+  document.getElementById('vm-content').innerHTML=`
+    <div class="vm-hero">
+      <img src="${v.img}" alt="${v.sta}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="vm-hero-fallback ${vp}" style="display:none"><span>${v.flag}</span></div>
+      <button class="vm-close" onclick="hideVenue()">&times;</button>
+    </div>
+    <div class="vm-body">
+      <h3 class="vm-title">${v.sta}</h3>
+      <div class="vm-sub">${v.flag} ${v.city}, ${v.country}</div>
+      <div class="vm-statrow">
+        <div class="vm-stat"><div class="vm-k">Capacity</div><div class="vm-v">${v.cap.toLocaleString()}</div></div>
+        <div class="vm-stat"><div class="vm-k">Altitude</div><div class="vm-v">${v.alt.toLocaleString()}m</div></div>
+        <div class="vm-stat"><div class="vm-k">Roof</div><div class="vm-v" style="font-size:14px">${v.roof}</div></div>
+        <div class="vm-stat"><div class="vm-k">Goals/game</div><div class="vm-v">${gpg}</div></div>
+      </div>
+      <div class="vm-matches-title">Matches played here (${matches.length})</div>
+      ${matchHtml}
+    </div>`;
+  document.getElementById('vm-overlay').classList.add('show');
+}
+function hideVenue(){document.getElementById('vm-overlay').classList.remove('show');}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')hideVenue();});
 
 function buildVenueCharts(){
   const gWrap=document.getElementById('venue-goals-wrap');
