@@ -145,6 +145,22 @@ tr:hover td{background:var(--lgray);}
 .alt-low{background:#E6F1FB;color:#1B4FD8;}
 .goals-live{font-size:11px;font-weight:500;padding:3px 8px;border-radius:6px;background:#D4FAE2;color:#0A5C35;}
 .venue-tap{font-size:10px;color:var(--blue);margin-top:8px;display:block;}
+/* Groups tab */
+.group-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;}
+.group-card{border:1px solid var(--border);border-radius:12px;background:var(--white);
+  box-shadow:var(--shadow);overflow:hidden;}
+.group-card h4{margin:0;padding:10px 14px;font-size:13px;background:var(--dark);color:#fff;
+  display:flex;justify-content:space-between;align-items:center;}
+.group-card h4 span{font-size:11px;font-weight:400;color:#AEB6D4;}
+.group-card table{margin:0;}
+.group-card table th{font-size:10px;}
+.group-card .qualified td:first-child::before{content:"\2713 ";color:var(--green);font-weight:700;}
+.tight-row{display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--lgray);}
+.tight-row:last-child{border-bottom:none;}
+.tight-label{font-size:13px;font-weight:600;color:var(--dark);width:64px;flex-shrink:0;}
+.tight-bar-wrap{flex:1;height:22px;background:var(--lgray);border-radius:5px;overflow:hidden;position:relative;}
+.tight-bar{height:100%;border-radius:5px;}
+.tight-tag{font-size:11px;font-weight:600;width:96px;flex-shrink:0;text-align:right;}
 /* Venue detail modal */
 .vm-overlay{position:fixed;inset:0;background:rgba(10,15,35,.55);z-index:3000;
   display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .2s;}
@@ -289,6 +305,7 @@ footer a{color:var(--blue);text-decoration:none;}
 
 <div class="tab-nav">
   <button class="tab-btn active" onclick="switchTab('overview',this)">Overview</button>
+  <button class="tab-btn" onclick="switchTab('groups',this)">Groups</button>
   <button class="tab-btn" onclick="switchTab('confederations',this)">Confederations</button>
   <button class="tab-btn" onclick="switchTab('countries',this)">Countries</button>
   <button class="tab-btn" onclick="switchTab('venues',this)">Venues</button>
@@ -304,6 +321,7 @@ footer a{color:var(--blue);text-decoration:none;}
     <p>This is a live tracker for the 2026 FIFA World Cup &mdash; scores, standings, and the stories in the numbers, refreshed automatically as matches finish. New to it? Each tab below is a different way to explore. Pick wherever your curiosity goes.</p>
     <div class="intro-guide">
       <div class="intro-item"><b>Overview</b><span>The big picture: goals, top teams, and tournament-wide trends.</span></div>
+      <div class="intro-item"><b>Groups</b><span>All 12 group standings, which groups are wide open, and where the goals are.</span></div>
       <div class="intro-item"><b>Confederations</b><span>Which regions are dominating (UEFA = Europe, CONMEBOL = South America, etc.).</span></div>
       <div class="intro-item"><b>Countries</b><span>Tap any nation to see its results and group standing.</span></div>
       <div class="intro-item"><b>Venues</b><span>Stadiums, altitude, and where the goals are happening.</span></div>
@@ -351,6 +369,30 @@ footer a{color:var(--blue);text-decoration:none;}
 
   <div class="card"><div class="card-title"><div class="dot" style="background:var(--gold)"></div>Upcoming Matches</div>
     <div class="match-list" id="ov-up"><div class="loading">Loading...</div></div></div>
+</main></div>
+
+
+<!-- GROUPS -->
+<div id="tab-groups" class="tab-panel"><main>
+  <div class="card"><div class="card-title"><div class="dot" style="background:var(--gold)"></div>Goals per Game by Group
+      <span style="font-size:11px;font-weight:400;color:var(--gray);margin-left:4px">which groups are wild, which are cagey</span>
+    </div>
+    <div class="chart-wrap" style="height:300px"><canvas id="grp-goals-chart"></canvas></div>
+    <div class="takeaway" id="cap-grp-goals" style="display:none"></div>
+  </div>
+
+  <div class="card"><div class="card-title"><div class="dot" style="background:var(--blue)"></div>How open is each group?
+      <span style="font-size:11px;font-weight:400;color:var(--gray);margin-left:4px">tighter = anyone can still advance</span>
+    </div>
+    <div id="grp-tightness"><div class="loading">Loading...</div></div>
+  </div>
+
+  <h3 style="font-size:15px;color:var(--dark);margin:24px 0 4px">All 12 Group Standings</h3>
+  <div class="abbr-key" style="border:none;margin:0 0 14px;padding:0">
+    <span><b>GP</b>Games played</span><span><b>W</b>Won</span><span><b>D</b>Drawn</span>
+    <span><b>L</b>Lost</span><span><b>GD</b>Goal difference</span><span><b>Pts</b>Points</span>
+  </div>
+  <div class="group-grid" id="group-tables"></div>
 </main></div>
 
 
@@ -557,11 +599,11 @@ const CC={UEFA:'#185FA5',CONMEBOL:'#3CAC3B',CAF:'#BA7517',AFC:'#A32D2D',CONCACAF
 const GC={A:'#E61D25',B:'#2A398D',C:'#3CAC3B',D:'#534AB7',E:'#185FA5',F:'#BA7517',G:'#A32D2D',H:'#C9A227',I:'#185FA5',J:'#3CAC3B',K:'#E61D25',L:'#2A398D'};
 const TIER={France:'S',England:'S',Spain:'S',Brazil:'S',Argentina:'S',Portugal:'S',Germany:'S',Netherlands:'S',
   Belgium:'A',Uruguay:'A',Croatia:'A',Colombia:'A',Morocco:'A',Japan:'A',Mexico:'A','United States':'A',
-  Austria:'A',Switzerland:'A',Norway:'A',Ecuador:'B',Australia:'B',Senegal:'B','Korea Republic':'B',
-  'Turkiye':'B','Sweden':'B',"Cote d'Ivoire":'B',Algeria:'B',Iran:'B',Ghana:'B',Tunisia:'B',Egypt:'B',
+  Austria:'A',Switzerland:'A',Norway:'A',Ecuador:'B',Australia:'B',Senegal:'B','South Korea':'B',
+  'Turkey':'B','Sweden':'B','Ivory Coast':'B',Algeria:'B',Iran:'B',Ghana:'B',Tunisia:'B',Egypt:'B',
   Scotland:'B',Canada:'B','South Africa':'B','Saudi Arabia':'C',Paraguay:'C',Iraq:'C',Czechia:'C',
-  'Bosnia and Herzegovina':'C',Jordan:'C','New Zealand':'C',Uzbekistan:'C',Panama:'C','Cabo Verde':'C',
-  Qatar:'C',Haiti:'D','Curacao':'D','Congo DR':'D'};
+  'Bosnia-Herzegovina':'C',Jordan:'C','New Zealand':'C',Uzbekistan:'C',Panama:'C','Cape Verde Islands':'C',
+  Qatar:'C',Haiti:'D','Curaçao':'D','Congo DR':'D'};
 const TC={S:'#185FA5',A:'#3CAC3B',B:'#BA7517',C:'#888888',D:'#BBBBBB'};
 const TPPG={S:2.0,A:1.5,B:1.0,C:0.6,D:0.3};
 const TO={S:5,A:4,B:3,C:2,D:1};
@@ -570,10 +612,10 @@ const TO={S:5,A:4,B:3,C:2,D:1};
 const COUNTRIES=[
   {n:'Mexico',api:'Mexico',f:'&#127474;&#127485;',g:'A',c:'CONCACAF',t:'B',titles:0},
   {n:'South Africa',api:'South Africa',f:'&#127487;&#127462;',g:'A',c:'CAF',t:'C',titles:0},
-  {n:'South Korea',api:'Korea Republic',f:'&#127472;&#127479;',g:'A',c:'AFC',t:'B',titles:0},
+  {n:'South Korea',api:'South Korea',f:'&#127472;&#127479;',g:'A',c:'AFC',t:'B',titles:0},
   {n:'Czech Republic',api:'Czechia',f:'&#127464;&#127487;',g:'A',c:'UEFA',t:'C',titles:0},
   {n:'Canada',api:'Canada',f:'&#127464;&#127462;',g:'B',c:'CONCACAF',t:'B',titles:0},
-  {n:'Bosnia-Herzegovina',api:'Bosnia and Herzegovina',f:'&#127463;&#127462;',g:'B',c:'UEFA',t:'C',titles:0},
+  {n:'Bosnia-Herzegovina',api:'Bosnia-Herzegovina',f:'&#127463;&#127462;',g:'B',c:'UEFA',t:'C',titles:0},
   {n:'Qatar',api:'Qatar',f:'&#127478;&#127462;',g:'B',c:'AFC',t:'C',titles:0},
   {n:'Switzerland',api:'Switzerland',f:'&#127464;&#127469;',g:'B',c:'UEFA',t:'A',titles:0},
   {n:'Brazil',api:'Brazil',f:'&#127463;&#127479;',g:'C',c:'CONMEBOL',t:'S',titles:5},
@@ -583,10 +625,10 @@ const COUNTRIES=[
   {n:'USA',api:'United States',f:'&#127482;&#127480;',g:'D',c:'CONCACAF',t:'A',titles:0},
   {n:'Paraguay',api:'Paraguay',f:'&#127477;&#127486;',g:'D',c:'CONMEBOL',t:'C',titles:0},
   {n:'Australia',api:'Australia',f:'&#127462;&#127482;',g:'D',c:'AFC',t:'B',titles:0},
-  {n:'Turkey',api:'Turkiye',f:'&#127481;&#127479;',g:'D',c:'UEFA',t:'B',titles:0},
+  {n:'Turkey',api:'Turkey',f:'&#127481;&#127479;',g:'D',c:'UEFA',t:'B',titles:0},
   {n:'Germany',api:'Germany',f:'&#127465;&#127466;',g:'E',c:'UEFA',t:'S',titles:4},
-  {n:'Curacao',api:'Curacao',f:'&#127464;&#127484;',g:'E',c:'CONCACAF',t:'D',titles:0},
-  {n:'Ivory Coast',api:"Cote d'Ivoire",f:'&#127464;&#127470;',g:'E',c:'CAF',t:'B',titles:0},
+  {n:'Curaçao',api:'Curaçao',f:'&#127464;&#127484;',g:'E',c:'CONCACAF',t:'D',titles:0},
+  {n:'Ivory Coast',api:'Ivory Coast',f:'&#127464;&#127470;',g:'E',c:'CAF',t:'B',titles:0},
   {n:'Ecuador',api:'Ecuador',f:'&#127466;&#127464;',g:'E',c:'CONMEBOL',t:'B',titles:0},
   {n:'Netherlands',api:'Netherlands',f:'&#127475;&#127473;',g:'F',c:'UEFA',t:'S',titles:0},
   {n:'Japan',api:'Japan',f:'&#127471;&#127477;',g:'F',c:'AFC',t:'A',titles:0},
@@ -597,7 +639,7 @@ const COUNTRIES=[
   {n:'Iran',api:'Iran',f:'&#127470;&#127479;',g:'G',c:'AFC',t:'C',titles:0},
   {n:'New Zealand',api:'New Zealand',f:'&#127475;&#127487;',g:'G',c:'OFC',t:'C',titles:0},
   {n:'Spain',api:'Spain',f:'&#127466;&#127480;',g:'H',c:'UEFA',t:'S',titles:1},
-  {n:'Cape Verde',api:'Cabo Verde',f:'&#127464;&#127483;',g:'H',c:'CAF',t:'D',titles:0},
+  {n:'Cape Verde',api:'Cape Verde Islands',f:'&#127464;&#127483;',g:'H',c:'CAF',t:'D',titles:0},
   {n:'Saudi Arabia',api:'Saudi Arabia',f:'&#127480;&#127462;',g:'H',c:'AFC',t:'C',titles:0},
   {n:'Uruguay',api:'Uruguay',f:'&#127482;&#127486;',g:'H',c:'CONMEBOL',t:'A',titles:2},
   {n:'France',api:'France',f:'&#127467;&#127479;',g:'I',c:'UEFA',t:'S',titles:2},
@@ -980,6 +1022,96 @@ function buildScoreboard(targetId){
   el.innerHTML=legend+`<div class="sb-table">${head}${body}</div>`;
 }
 
+// ── Groups tab ─────────────────────────────────────────────────────────
+const GROUP_LETTERS=['A','B','C','D','E','F','G','H','I','J','K','L'];
+function groupStats(letter){
+  // returns {teams:[{n,gp,w,d,l,gf,ga,pts}], goals, finished}
+  const groupTeams=COUNTRIES.filter(c=>c.g===letter),s={};
+  groupTeams.forEach(t=>s[t.api]={n:t.n,gp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0});
+  let goals=0,finished=0;
+  MA.filter(m=>m.status==='FINISHED'&&(m.group||'').replace('GROUP_','')===letter).forEach(m=>{
+    const hk=Object.keys(s).find(k=>(m.home_team||'').includes(k));
+    const ak=Object.keys(s).find(k=>(m.away_team||'').includes(k));
+    const hg=m.home_score||0,ag=m.away_score||0;
+    goals+=hg+ag;finished++;
+    if(s[hk]){s[hk].gp++;s[hk].gf+=hg;s[hk].ga+=ag;}
+    if(s[ak]){s[ak].gp++;s[ak].gf+=ag;s[ak].ga+=hg;}
+    if(hg>ag){if(s[hk]){s[hk].w++;s[hk].pts+=3;}if(s[ak])s[ak].l++;}
+    else if(hg===ag){if(s[hk]){s[hk].d++;s[hk].pts++;}if(s[ak]){s[ak].d++;s[ak].pts++;}}
+    else{if(s[ak]){s[ak].w++;s[ak].pts+=3;}if(s[hk])s[hk].l++;}
+  });
+  const teams=Object.values(s).sort((a,b)=>b.pts-a.pts||(b.gf-b.ga)-(a.gf-a.ga));
+  return{teams,goals,finished};
+}
+let grpChart=null;
+function buildGroups(){
+  // 1. All 12 standings tables
+  const grid=document.getElementById('group-tables');
+  if(grid){
+    grid.innerHTML=GROUP_LETTERS.map(L=>{
+      const st=groupStats(L);
+      return `<div class="group-card">
+        <h4>Group ${L}<span>${st.finished}/6 played</span></h4>
+        <table><thead><tr><th>Team</th><th>GP</th><th>W</th><th>D</th><th>L</th><th>GD</th><th>Pts</th></tr></thead>
+        <tbody>${st.teams.map((v,idx)=>
+          `<tr class="${idx<2&&st.finished>0?'':''}"><td>${v.n}</td><td>${v.gp}</td><td>${v.w}</td><td>${v.d}</td><td>${v.l}</td><td>${fGD(v.gf-v.ga)}</td><td><strong>${v.pts}</strong></td></tr>`
+        ).join('')}</tbody></table></div>`;
+    }).join('');
+  }
+  // 2. Goals per game by group chart
+  const rows=GROUP_LETTERS.map(L=>{const st=groupStats(L);
+    return{L,gpg:st.finished?st.goals/st.finished:0,finished:st.finished,goals:st.goals};})
+    .filter(r=>r.finished>0).sort((a,b)=>b.gpg-a.gpg);
+  if(grpChart)grpChart.destroy();
+  if(rows.length){
+    grpChart=new Chart(document.getElementById('grp-goals-chart').getContext('2d'),{
+      type:'bar',
+      data:{labels:rows.map(r=>`Group ${r.L}`),datasets:[{
+        label:'Goals/game',data:rows.map(r=>parseFloat(r.gpg.toFixed(2))),
+        backgroundColor:rows.map(r=>r.gpg>=3.5?'#A32D2DCC':r.gpg>=2?'#BA7517CC':'#185FA5CC'),
+        borderColor:rows.map(r=>r.gpg>=3.5?'#A32D2D':r.gpg>=2?'#BA7517':'#185FA5'),
+        borderWidth:1.5,borderRadius:4}]},
+      options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{display:false},tooltip:{callbacks:{
+          label:c=>` ${c.parsed.x} goals/game (${rows[c.dataIndex].goals} in ${rows[c.dataIndex].finished} games)`}}},
+        scales:{x:{beginAtZero:true,grid:{color:'#EEEEEC'},ticks:{font:{size:11},color:'#6B7280'}},
+                y:{grid:{display:false},ticks:{font:{size:11},color:'#12183A'}}}}
+    });
+    // caption
+    const hi=rows[0],lo=rows[rows.length-1];
+    setCap('cap-grp-goals',
+      `<b>Group ${hi.L}</b> is the most explosive so far at <b>${hi.gpg.toFixed(1)} goals/game</b>, `+
+      `while <b>Group ${lo.L}</b> is the tightest at ${lo.gpg.toFixed(1)}. `+
+      `Most groups have only played 2 of 6 games, so this will shift.`);
+  } else {setCap('cap-grp-goals','');}
+
+  // 3. Tightness — gap between 2nd and 3rd place points (smaller = more open)
+  const tight=GROUP_LETTERS.map(L=>{
+    const st=groupStats(L);
+    if(st.finished===0)return{L,spread:null};
+    const pts=st.teams.map(t=>t.pts);
+    const spread=pts[0]-pts[pts.length-1]; // leader minus last
+    return{L,spread,pts,finished:st.finished};
+  }).filter(r=>r.spread!==null&&r.finished>0);
+  const tEl=document.getElementById('grp-tightness');
+  if(tEl){
+    if(!tight.length){tEl.innerHTML='<div class="loading">No games played yet</div>';}
+    else{
+      // sort most open (smallest spread) first
+      tight.sort((a,b)=>a.spread-b.spread);
+      const maxSpread=Math.max(...tight.map(t=>t.spread),1);
+      tEl.innerHTML=tight.map(t=>{
+        const openPct=100-(t.spread/maxSpread*100);
+        const tag=t.spread<=1?'Wide open':t.spread<=3?'Competitive':'Clear leader';
+        const col=t.spread<=1?'#3CAC3B':t.spread<=3?'#BA7517':'#A32D2D';
+        return `<div class="tight-row">
+          <span class="tight-label">Group ${t.L}</span>
+          <div class="tight-bar-wrap"><div class="tight-bar" style="width:${Math.max(8,openPct)}%;background:${col}"></div></div>
+          <span class="tight-tag" style="color:${col}">${tag}</span></div>`;
+      }).join('');
+    }
+  }
+}
 function buildGroupStandings(group,tbodyId,highlightTeam){
   const groupTeams=COUNTRIES.filter(c=>c.g===group),s={};
   groupTeams.forEach(t=>s[t.api]={n:t.n,gp:0,w:0,d:0,l:0,gf:0,ga:0,pts:0});
@@ -1401,7 +1533,7 @@ async function load(){
   try{
     const[sb,ma]=await Promise.all([fJSON(`${RAW}/scoreboard.json`),fJSON(`${RAW}/latest_matches.json`)]);
     SB=sb;MA=ma;
-    buildOV();renderConf();buildCountries();buildVenues();buildBracket();
+    buildOV();renderConf();buildCountries();buildVenues();buildBracket();buildGroups();
     buildCaptions();
   }catch(e){
     console.error(e);
