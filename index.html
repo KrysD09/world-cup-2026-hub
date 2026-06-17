@@ -873,18 +873,20 @@ function captionVenues(rows){
     (totalGames<20?`It's early — most venues have only hosted a game or two, so these numbers will shift a lot.`
       :`Bars are colored by altitude: red = high, gold = mid, blue = sea level.`));
 
-  // Altitude takeaway — compare high vs low, but hedge hard on small samples
-  const hi=rows.filter(r=>r.alt!=null&&r.alt>500);
+  // Altitude takeaway — use the SAME >1500m threshold the chart uses to color
+  // dots red, so the caption and the visual agree. (Mid-altitude 500-1500m
+  // venues are their own tier and shouldn't be lumped in as "high".)
+  const hi=rows.filter(r=>r.alt!=null&&r.alt>1500);
   const lo=rows.filter(r=>r.alt!=null&&r.alt<=500);
   if(hi.length&&lo.length){
     const avg=a=>a.reduce((s,r)=>s+r.gpg,0)/a.length;
     const ah=avg(hi),al=avg(lo),diff=ah-al;
-    const dir=diff>0.3?'more':diff<-0.3?'fewer':'about the same';
+    const dir=diff>0.3?'more':diff<-0.3?'fewer':'about the same number of';
     let msg;
-    if(dir==='about the same'){
-      msg=`High-altitude and sea-level venues are scoring at <b>about the same rate</b> so far — no clear altitude effect yet.`;
+    if(dir==='about the same number of'){
+      msg=`High-altitude venues and sea-level venues are scoring at <b>about the same rate</b> so far (${ah.toFixed(1)} vs ${al.toFixed(1)}) — no clear altitude effect yet.`;
     }else{
-      msg=`High-altitude venues are averaging <b>${dir} goals</b> (${ah.toFixed(1)} vs ${al.toFixed(1)} at sea level)`;
+      msg=`High-altitude venues are actually averaging <b>${dir} goals</b> than sea level so far (${ah.toFixed(1)} vs ${al.toFixed(1)})${diff<0?' — the opposite of what the "thin air" theory predicts.':'.'}`;
     }
     setCap('cap-venue-alt',
       msg+` <span style="color:var(--gray)">Based on only ${hi.length} high-altitude venue(s) so far — treat as an early hint, not a conclusion.</span>`);
