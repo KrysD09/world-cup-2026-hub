@@ -203,6 +203,29 @@ footer a{color:var(--blue);text-decoration:none;}
 .sb-fill{position:absolute;top:0;bottom:0;border-radius:4px;min-width:3px;}
 .sb-val{position:absolute;top:0;bottom:0;display:flex;align-items:center;padding:0 8px;
   font-size:12px;font-weight:600;color:var(--dark);z-index:2;}
+/* Welcome / intro card */
+.intro{background:linear-gradient(135deg,#12183A,#1d2a5c);color:#fff;border-radius:14px;
+  padding:22px 24px;margin-bottom:18px;position:relative;}
+.intro h2{font-size:20px;margin:0 0 6px;color:#fff;}
+.intro p{font-size:13.5px;line-height:1.6;color:#D7DCEC;margin:0 0 14px;max-width:680px;}
+.intro-guide{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:4px;}
+.intro-item{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);
+  border-radius:9px;padding:10px 12px;}
+.intro-item b{display:block;font-size:12.5px;color:#fff;margin-bottom:2px;}
+.intro-item span{font-size:11.5px;color:#AEB6D4;line-height:1.4;}
+.intro-close{position:absolute;top:14px;right:16px;background:rgba(255,255,255,.12);
+  border:none;color:#fff;width:26px;height:26px;border-radius:50%;cursor:pointer;
+  font-size:15px;line-height:1;display:flex;align-items:center;justify-content:center;}
+.intro-close:hover{background:rgba(255,255,255,.22);}
+.intro-reopen{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--blue);
+  background:none;border:none;cursor:pointer;margin-bottom:14px;padding:0;}
+.intro-reopen:hover{text-decoration:underline;}
+@media(max-width:680px){.intro{padding:18px;}.intro h2{font-size:17px;}}
+/* Plain-language chart takeaways (auto-generated from live data) */
+.takeaway{background:#F4F7FB;border-left:3px solid var(--blue);border-radius:0 8px 8px 0;
+  padding:9px 13px;margin-top:12px;font-size:12.5px;line-height:1.5;color:#2A3550;}
+.takeaway b{color:var(--dark);}
+.takeaway::before{content:"\1F4A1";margin-right:6px;}
 @media(max-width:680px){
   .sb-table{grid-template-columns:64px repeat(6,1fr);font-size:11px;}
   .sb-name{font-size:11px;}.sb-head{font-size:8px;}.sb-val{font-size:10px;padding:0 4px;}
@@ -235,7 +258,6 @@ footer a{color:var(--blue);text-decoration:none;}
 
 <div class="tab-nav">
   <button class="tab-btn active" onclick="switchTab('overview',this)">Overview</button>
-  <button class="tab-btn" onclick="switchTab('brazil',this)">Brazil</button>
   <button class="tab-btn" onclick="switchTab('confederations',this)">Confederations</button>
   <button class="tab-btn" onclick="switchTab('countries',this)">Countries</button>
   <button class="tab-btn" onclick="switchTab('venues',this)">Venues</button>
@@ -244,6 +266,19 @@ footer a{color:var(--blue);text-decoration:none;}
 
 <!-- OVERVIEW -->
 <div id="tab-overview" class="tab-panel active"><main>
+  <button class="intro-reopen" id="intro-reopen" onclick="toggleIntro(true)" style="display:none">&#9432; What is this site?</button>
+  <div class="intro" id="intro-card">
+    <button class="intro-close" onclick="toggleIntro(false)" title="Hide">&times;</button>
+    <h2>Welcome &#9917; Here's how to use this site</h2>
+    <p>This is a live tracker for the 2026 FIFA World Cup &mdash; scores, standings, and the stories in the numbers, refreshed automatically as matches finish. New to it? Each tab below is a different way to explore. Pick wherever your curiosity goes.</p>
+    <div class="intro-guide">
+      <div class="intro-item"><b>Overview</b><span>The big picture: goals, top teams, and tournament-wide trends.</span></div>
+      <div class="intro-item"><b>Confederations</b><span>Which regions are dominating (UEFA = Europe, CONMEBOL = South America, etc.).</span></div>
+      <div class="intro-item"><b>Countries</b><span>Tap any nation to see its results and group standing.</span></div>
+      <div class="intro-item"><b>Venues</b><span>Stadiums, altitude, and where the goals are happening.</span></div>
+      <div class="intro-item"><b>Bracket</b><span>The knockout path to the final.</span></div>
+    </div>
+  </div>
   <div class="stat-grid">
     <div class="stat-card"><div class="stat-label">Matches played</div><div class="stat-value" id="ov-p">--</div><div class="stat-sub">of 104 total</div></div>
     <div class="stat-card"><div class="stat-label">Goals scored</div><div class="stat-value" id="ov-g">--</div><div class="stat-sub" id="ov-gpg">-- per game</div></div>
@@ -253,7 +288,8 @@ footer a{color:var(--blue);text-decoration:none;}
   <div class="card"><div class="card-title"><div class="dot" style="background:var(--blue)"></div>Confederation Scoreboard
       <span style="font-size:11px;font-weight:400;color:var(--gray);margin-left:4px">live standings across all six confederations</span>
     </div>
-    <div id="ov-scoreboard"><div class="loading">Loading...</div></div></div>
+    <div id="ov-scoreboard"><div class="loading">Loading...</div></div>
+    <div class="takeaway" id="cap-scoreboard" style="display:none"></div></div>
 
   <div class="two-col">
     <div class="card">
@@ -286,39 +322,6 @@ footer a{color:var(--blue);text-decoration:none;}
     <div class="match-list" id="ov-up"><div class="loading">Loading...</div></div></div>
 </main></div>
 
-<!-- BRAZIL -->
-<div id="tab-brazil" class="tab-panel"><main>
-  <div class="stat-grid" id="br-stats">
-    <div class="stat-card"><div class="stat-label">Points</div><div class="stat-value" id="br-pts">--</div><div class="stat-sub" id="br-pts-sub">Group C</div></div>
-    <div class="stat-card"><div class="stat-label">Record</div><div class="stat-value" id="br-rec" style="font-size:20px">--</div><div class="stat-sub">W &middot; D &middot; L</div></div>
-    <div class="stat-card"><div class="stat-label">Goal difference</div><div class="stat-value" id="br-gd">--</div><div class="stat-sub" id="br-gf">-- for, -- against</div></div>
-    <div class="stat-card"><div class="stat-label">Group position</div><div class="stat-value" id="br-pos">--</div><div class="stat-sub" id="br-pos-sub">in Group C</div></div>
-  </div>
-
-  <div class="two-col">
-    <div class="card"><div class="card-title"><div class="dot" style="background:var(--green)"></div>Brazil Match Tracker
-        <span style="font-size:11px;font-weight:400;color:var(--gray);margin-left:4px">2026 results &amp; upcoming</span>
-      </div>
-      <div class="match-list" id="br-matches"><div class="loading">Loading...</div></div></div>
-    <div class="card"><div class="card-title"><div class="dot" style="background:var(--gold)"></div>Group C Standings</div>
-      <table><thead><tr><th>Team</th><th>GP</th><th>W</th><th>D</th><th>L</th><th>GD</th><th>Pts</th></tr></thead>
-      <tbody id="br-group"><tr><td colspan="7" class="loading">Loading...</td></tr></tbody></table>
-      <div class="abbr-key">
-        <span><b>GP</b>Games played</span><span><b>W</b>Won</span><span><b>D</b>Drawn</span>
-        <span><b>L</b>Lost</span><span><b>GD</b>Goal difference</span><span><b>Pts</b>Points</span>
-      </div>
-      <p style="font-size:11px;color:var(--gray);margin-top:10px">Brazil highlighted in green.</p></div>
-  </div>
-
-  <div class="card"><div class="card-title"><div class="dot" style="background:var(--blue)"></div>Goals — Brazil vs Opponents</div>
-    <div class="chart-wrap" style="height:220px"><canvas id="br-goals-chart"></canvas></div></div>
-
-  <div class="card" style="background:#fbfbf8;border-style:dashed">
-    <div class="card-title"><div class="dot" style="background:var(--gold)"></div>Looking for the historical deep dives?</div>
-    <p style="font-size:13px;color:var(--gray);line-height:1.6">Brazil's all-time World Cup performance and the quarterfinal-exit pattern live in
-      <a href="https://signalandstructurehq.substack.com/s/the-beautiful-data" target="_blank" style="color:var(--blue);text-decoration:none;font-weight:500">The Beautiful Data</a> on Substack.
-      This tab tracks the live 2026 campaign.</p></div>
-</main></div>
 
 <!-- CONFEDERATIONS -->
 <div id="tab-confederations" class="tab-panel"><main>
@@ -426,10 +429,12 @@ footer a{color:var(--blue);text-decoration:none;}
         <span style="font-size:11px;font-weight:400;color:var(--gray);margin-left:4px">finished matches only</span>
       </div>
       <div class="chart-wrap" id="venue-goals-wrap" style="height:300px"><canvas id="venue-goals-chart"></canvas></div>
+      <div class="takeaway" id="cap-venue-goals" style="display:none"></div>
       <p style="font-size:11px;color:var(--gray);margin-top:8px">Number in parentheses = games played at that venue. Early-tournament figures are noisy with few games each.</p>
     </div>
     <div class="card"><div class="card-title"><div class="dot" style="background:var(--blue)"></div>Goals vs Altitude</div>
       <div class="chart-wrap" id="venue-alt-wrap" style="height:300px"><canvas id="venue-alt-chart"></canvas></div>
+      <div class="takeaway" id="cap-venue-alt" style="display:none"></div>
       <p style="font-size:11px;color:var(--gray);margin-top:8px">Does thinner air mean more goals? Each point is a venue; x = altitude, y = goals/game.</p>
     </div>
   </div>
@@ -472,6 +477,25 @@ Updated daily via GitHub Actions &middot;
 <script>
 // ── Config ─────────────────────────────────────────────────────────────
 const GU='KrysD09',GR='world-cup-2026-hub';
+
+// ── Welcome intro card (dismissible, remembered) ───────────────────────
+function toggleIntro(show){
+  const card=document.getElementById('intro-card');
+  const reopen=document.getElementById('intro-reopen');
+  if(!card||!reopen)return;
+  card.style.display=show?'':'none';
+  reopen.style.display=show?'none':'inline-flex';
+  try{localStorage.setItem('wc2026-intro',show?'open':'closed');}catch(e){}
+}
+(function initIntro(){
+  let s=null;
+  try{s=localStorage.getItem('wc2026-intro');}catch(e){}
+  // Default: show for first-time visitors, stay hidden if they closed it before.
+  const show=(s!=='closed');
+  const apply=()=>toggleIntro(show);
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',apply);else apply();
+})();
+
 
 // ── Cookie consent ─────────────────────────────────────────────────────
 function setConsent(accepted){
@@ -641,7 +665,7 @@ const ROUNDS=[
 // ── State ──────────────────────────────────────────────────────────────
 let SB=null,MA=null,curConf='ALL',sortK='ppg',sortD=-1,cChart=null;
 let countryConf='ALL',selectedCountry=null;
-let ovC1=null,ovC2=null,ovC3=null,ovC4=null,brC=null,dGC=null,vGC=null,vAC=null;
+let ovC1=null,ovC2=null,ovC3=null,ovC4=null,dGC=null,vGC=null,vAC=null;
 
 // ── Helpers ────────────────────────────────────────────────────────────
 const fGD=n=>n>0?`+${n}`:String(n);
@@ -805,67 +829,65 @@ function teamRecord(api){
   return{played:pl.length,w,d,l,gf,ga,gd:gf-ga,pts};
 }
 
-// ── Brazil tab ─────────────────────────────────────────────────────────
-function buildBrazil(){
-  const r=teamRecord('Brazil');
-  document.getElementById('br-pts').textContent=r.pts;
-  document.getElementById('br-pts-sub').textContent=`${r.played} played \u00B7 Group C`;
-  document.getElementById('br-rec').textContent=`${r.w}-${r.d}-${r.l}`;
-  document.getElementById('br-gd').textContent=fGD(r.gd);
-  document.getElementById('br-gf').textContent=`${r.gf} for, ${r.ga} against`;
-  // group position
-  const groupTeams=COUNTRIES.filter(c=>c.g==='C'),s={};
-  groupTeams.forEach(t=>s[t.api]={n:t.n,pts:0,gd:0});
-  MA.filter(m=>m.status==='FINISHED').forEach(m=>{
-    const hk=Object.keys(s).find(k=>(m.home_team||'').includes(k)),ak=Object.keys(s).find(k=>(m.away_team||'').includes(k));
-    if(hk){s[hk].gd+=(m.home_score-m.away_score);}if(ak){s[ak].gd+=(m.away_score-m.home_score);}
-    if(m.home_score>m.away_score){if(hk)s[hk].pts+=3;}else if(m.home_score===m.away_score){if(hk)s[hk].pts++;if(ak)s[ak].pts++;}else{if(ak)s[ak].pts+=3;}
-  });
-  const ranked=Object.values(s).sort((a,b)=>b.pts-a.pts||b.gd-a.gd);
-  const pos=ranked.findIndex(t=>t.n==='Brazil')+1;
-  const ord=['','1st','2nd','3rd','4th'][pos]||'--';
-  document.getElementById('br-pos').textContent=r.played>0?ord:'--';
 
-  // match tracker
-  const bm=teamMatches('Brazil'),pl=bm.filter(m=>m.status==='FINISHED');
-  const up=bm.filter(m=>m.status!=='FINISHED').slice(0,3);
-  document.getElementById('br-matches').innerHTML=[...pl,...up].map(m=>{
-    const h=(m.home_team||'').includes('Brazil'),opp=h?m.away_team:m.home_team;
-    const bg=h?m.home_score:m.away_score,ag=h?m.away_score:m.home_score;
-    let cls='rT',lbl='TBD',sc='Upcoming';
-    if(m.status==='FINISHED'){const rv=bg>ag?'W':bg===ag?'D':'L';cls=`r${rv}`;lbl=rv;sc=`${bg}\u2013${ag}`;}
-    return `<div class="match-item hi"><span class="mr ${cls}">${lbl} ${sc}</span><div class="mt">Brazil vs ${opp||'TBD'}</div><div class="mm">${fDate(m.date)}</div></div>`;
-  }).join('')||'<div class="loading">No matches found</div>';
 
-  // group standings table (reuse existing builder)
-  buildGroupStandings('C','br-group','Brazil');
-
-  // goals chart: Brazil scored vs conceded per match
-  buildBrazilGoals(pl);
+// ── Plain-language takeaways (computed live, never hardcoded) ───────────
+function setCap(id,html){
+  const el=document.getElementById(id);
+  if(!el)return;
+  if(html){el.innerHTML=html;el.style.display='';}
+  else{el.style.display='none';}
 }
-function buildBrazilGoals(pl){
-  const ctx=document.getElementById('br-goals-chart');
-  if(!ctx)return;
-  if(!pl.length){if(brC){brC.destroy();brC=null;}return;}
-  const labels=pl.map(m=>{const h=(m.home_team||'').includes('Brazil');const opp=(h?m.away_team:m.home_team)||'???';return opp.substring(0,3).toUpperCase();});
-  const scored=pl.map(m=>{const h=(m.home_team||'').includes('Brazil');return h?m.home_score:m.away_score;});
-  const conceded=pl.map(m=>{const h=(m.home_team||'').includes('Brazil');return h?m.away_score:m.home_score;});
-  if(brC)brC.destroy();
-  brC=new Chart(ctx.getContext('2d'),{
-    type:'bar',
-    data:{labels,datasets:[
-      {label:'Brazil scored',data:scored,backgroundColor:'#3CAC3BCC',borderColor:'#3CAC3B',borderWidth:1.5,borderRadius:3},
-      {label:'Conceded',data:conceded,backgroundColor:'#E61D25CC',borderColor:'#E61D25',borderWidth:1.5,borderRadius:3}
-    ]},
-    options:{responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:true,position:'bottom',labels:{font:{size:11},boxWidth:12}},
-        tooltip:{callbacks:{title:i=>'vs '+(pl[i[0].dataIndex]&&((pl[i[0].dataIndex].home_team||'').includes('Brazil')?pl[i[0].dataIndex].away_team:pl[i[0].dataIndex].home_team)||'')}}},
-      scales:{x:{grid:{display:false},ticks:{font:{size:11},color:'#6B7280'}},
-              y:{beginAtZero:true,grid:{color:'#EEEEEC'},ticks:{font:{size:11},stepSize:1}}}}
-  });
+function buildCaptions(){
+  // 1. Confederation scoreboard takeaway
+  const cs=SB.confederations||{};
+  const REGION={UEFA:'Europe',CONMEBOL:'South America',CAF:'Africa',
+    AFC:'Asia',CONCACAF:'North & Central America',OFC:'Oceania'};
+  const played=Object.entries(cs).filter(([k,v])=>(v.played||0)>0);
+  if(!played.length){setCap('cap-scoreboard','');}
+  else{
+    // Leader by points per game (min 1 game)
+    const byPPG=played.map(([k,v])=>({k,ppg:v.points/v.played,pts:v.points,n:v.played}))
+      .sort((a,b)=>b.ppg-a.ppg);
+    const top=byPPG[0];
+    const region=REGION[top.k]||top.k;
+    setCap('cap-scoreboard',
+      `<b>${region} (${top.k})</b> is setting the pace so far, averaging `+
+      `<b>${top.ppg.toFixed(2)} points per game</b>. Bars show how each region is doing `+
+      `across wins, goals, and points — longer is better.`);
+  }
+
+  // 2 & 3 handled by buildVenueCharts via captionVenues(), since they share its data
 }
+function captionVenues(rows){
+  // rows: [{sta,city,alt,gpg,games}]
+  if(!rows||!rows.length){setCap('cap-venue-goals','');setCap('cap-venue-alt','');return;}
+  const totalGames=rows.reduce((s,r)=>s+r.games,0);
+  const top=[...rows].sort((a,b)=>b.gpg-a.gpg)[0];
+  setCap('cap-venue-goals',
+    `So far <b>${top.city}</b> has seen the most goals per game (<b>${top.gpg.toFixed(1)}</b>). `+
+    (totalGames<20?`It's early — most venues have only hosted a game or two, so these numbers will shift a lot.`
+      :`Bars are colored by altitude: red = high, gold = mid, blue = sea level.`));
 
-
+  // Altitude takeaway — compare high vs low, but hedge hard on small samples
+  const hi=rows.filter(r=>r.alt!=null&&r.alt>500);
+  const lo=rows.filter(r=>r.alt!=null&&r.alt<=500);
+  if(hi.length&&lo.length){
+    const avg=a=>a.reduce((s,r)=>s+r.gpg,0)/a.length;
+    const ah=avg(hi),al=avg(lo),diff=ah-al;
+    const dir=diff>0.3?'more':diff<-0.3?'fewer':'about the same';
+    let msg;
+    if(dir==='about the same'){
+      msg=`High-altitude and sea-level venues are scoring at <b>about the same rate</b> so far — no clear altitude effect yet.`;
+    }else{
+      msg=`High-altitude venues are averaging <b>${dir} goals</b> (${ah.toFixed(1)} vs ${al.toFixed(1)} at sea level)`;
+    }
+    setCap('cap-venue-alt',
+      msg+` <span style="color:var(--gray)">Based on only ${hi.length} high-altitude venue(s) so far — treat as an early hint, not a conclusion.</span>`);
+  } else {
+    setCap('cap-venue-alt','');
+  }
+}
 // ── Confederation Scoreboard (live, multi-metric) ──────────────────────
 function buildScoreboard(targetId){
   const el=document.getElementById(targetId);
@@ -1202,6 +1224,7 @@ function buildVenueCharts(){
     const v=VENUES.find(x=>x.sta===sta||sta.includes(x.sta)||(x.sta&&x.sta.includes(sta)));
     return{sta,city:v?v.city:sta,alt:v?v.alt:null,gpg:d.goals/d.games,games:d.games};
   });
+  captionVenues(rows);
 
   // ── Chart 1: goals/game by stadium (sorted high→low) ──
   if(vGC)vGC.destroy();
@@ -1293,7 +1316,8 @@ async function load(){
   try{
     const[sb,ma]=await Promise.all([fJSON(`${RAW}/scoreboard.json`),fJSON(`${RAW}/latest_matches.json`)]);
     SB=sb;MA=ma;
-    buildOV();buildBrazil();renderConf();buildCountries();buildVenues();buildBracket();
+    buildOV();renderConf();buildCountries();buildVenues();buildBracket();
+    buildCaptions();
   }catch(e){
     console.error(e);
     document.getElementById('updated-badge').textContent='Error loading data';
