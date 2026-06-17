@@ -299,7 +299,7 @@ footer a{color:var(--blue);text-decoration:none;}
       <div class="chart-wrap" style="height:200px"><canvas id="ov-goals-match"></canvas></div>
     </div>
     <div class="card">
-      <div class="card-title"><div class="dot" style="background:var(--gold)"></div>Match Outcomes</div>
+      <div class="card-title"><div class="dot" style="background:var(--gold)"></div>Winners vs Draws</div>
       <div style="display:flex;align-items:center;gap:16px">
         <div class="chart-wrap" style="height:180px;width:180px;flex-shrink:0"><canvas id="ov-outcomes"></canvas></div>
         <div id="ov-outcomes-stats" style="font-size:12px;color:var(--gray);line-height:2"></div>
@@ -338,7 +338,8 @@ footer a{color:var(--blue);text-decoration:none;}
   <div class="card"><div class="card-title"><div class="dot" style="background:var(--blue)"></div>Confederation Scoreboard
       <span style="font-size:11px;font-weight:400;color:var(--gray);margin-left:4px">live standings across all six confederations</span>
     </div>
-    <div id="conf-scoreboard"><div class="loading">Loading...</div></div></div>
+    <div id="conf-scoreboard"><div class="loading">Loading...</div></div>
+    <div class="takeaway" id="cap-conf-scoreboard" style="display:none"></div></div>
   <div class="two-col">
     <div class="card"><div class="card-title"><div class="dot" style="background:var(--blue)"></div><span id="ct-title">Confederation Scoreboard</span></div>
       <table><thead><tr><th onclick="srtC('name')">Confederation</th><th onclick="srtC('teams')">Teams</th>
@@ -728,20 +729,24 @@ function buildGoalsPerMatch(){
 function buildOutcomesChart(){
   const fin=MA.filter(m=>m.status==='FINISHED');
   if(!fin.length)return;
-  let hw=0,aw=0,dr=0;
-  fin.forEach(m=>{if(m.home_score>m.away_score)hw++;else if(m.home_score<m.away_score)aw++;else dr++;});
+  let decisive=0,draws=0;
+  fin.forEach(m=>{if(m.home_score===m.away_score)draws++;else decisive++;});
   const tot=fin.length;
+  const dpct=Math.round(decisive/tot*100),drpct=Math.round(draws/tot*100);
   document.getElementById('ov-outcomes-stats').innerHTML=
-    `<div><span style="color:#3CAC3B;font-weight:500">${hw}</span> Home wins (${Math.round(hw/tot*100)}%)</div>
-     <div><span style="color:#2A398D;font-weight:500">${aw}</span> Away wins (${Math.round(aw/tot*100)}%)</div>
-     <div><span style="color:#C9A227;font-weight:500">${dr}</span> Draws (${Math.round(dr/tot*100)}%)</div>
-     <div style="margin-top:4px;padding-top:4px;border-top:1px solid #eee;color:#444">${tot} matches played</div>`;
+    `<div><span style="color:#3CAC3B;font-weight:600;font-size:14px">${decisive}</span> ended with a winner (${dpct}%)</div>
+     <div><span style="color:#C9A227;font-weight:600;font-size:14px">${draws}</span> ended in a draw (${drpct}%)</div>
+     <div style="margin-top:6px;padding-top:6px;border-top:1px solid #eee;color:#444">${tot} matches played</div>
+     <div style="margin-top:8px;color:#555;line-height:1.5;font-size:11.5px">${
+       drpct>=40?`Lots of stalemates so far — ${drpct}% of games have finished level.`
+       :drpct<=20?`Decisive tournament so far — most games are producing a clear winner.`
+       :`A fairly even split between clear winners and draws.`}</div>`;
   if(ovC2)ovC2.destroy();
   ovC2=new Chart(document.getElementById('ov-outcomes').getContext('2d'),{
     type:'doughnut',
     data:{
-      labels:['Home Win','Away Win','Draw'],
-      datasets:[{data:[hw,aw,dr],backgroundColor:['#3CAC3B','#2A398D','#C9A227'],borderColor:'#FFFFFF',borderWidth:3}]
+      labels:['Won by a team','Draw'],
+      datasets:[{data:[decisive,draws],backgroundColor:['#3CAC3B','#C9A227'],borderColor:'#FFFFFF',borderWidth:3}]
     },
     options:{responsive:true,maintainAspectRatio:false,cutout:'68%',
       plugins:{legend:{display:false},tooltip:{callbacks:{label:i=>` ${i.raw} (${Math.round(i.raw/tot*100)}%)`}}}
@@ -839,25 +844,24 @@ function setCap(id,html){
   else{el.style.display='none';}
 }
 function buildCaptions(){
-  // 1. Confederation scoreboard takeaway
+  scoreboardCaption('cap-scoreboard');
+  scoreboardCaption('cap-conf-scoreboard');
+  // venue captions handled by buildVenueCharts via captionVenues()
+}
+function scoreboardCaption(targetId){
   const cs=SB.confederations||{};
   const REGION={UEFA:'Europe',CONMEBOL:'South America',CAF:'Africa',
     AFC:'Asia',CONCACAF:'North & Central America',OFC:'Oceania'};
   const played=Object.entries(cs).filter(([k,v])=>(v.played||0)>0);
-  if(!played.length){setCap('cap-scoreboard','');}
-  else{
-    // Leader by points per game (min 1 game)
-    const byPPG=played.map(([k,v])=>({k,ppg:v.points/v.played,pts:v.points,n:v.played}))
-      .sort((a,b)=>b.ppg-a.ppg);
-    const top=byPPG[0];
-    const region=REGION[top.k]||top.k;
-    setCap('cap-scoreboard',
-      `<b>${region} (${top.k})</b> is setting the pace so far, averaging `+
-      `<b>${top.ppg.toFixed(2)} points per game</b>. Bars show how each region is doing `+
-      `across wins, goals, and points — longer is better.`);
-  }
-
-  // 2 & 3 handled by buildVenueCharts via captionVenues(), since they share its data
+  if(!played.length){setCap(targetId,'');return;}
+  const byPPG=played.map(([k,v])=>({k,ppg:v.points/v.played}))
+    .sort((a,b)=>b.ppg-a.ppg);
+  const top=byPPG[0];
+  const region=REGION[top.k]||top.k;
+  setCap(targetId,
+    `<b>${region} (${top.k})</b> is setting the pace so far, averaging `+
+    `<b>${top.ppg.toFixed(2)} points per game</b>. Bars show how each region is doing `+
+    `across wins, goals, and points — longer is better.`);
 }
 function captionVenues(rows){
   // rows: [{sta,city,alt,gpg,games}]
