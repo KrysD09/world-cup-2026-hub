@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-06-17T06:20:20.295935+00:00",
+  "last_updated": "2026-06-17T09:03:28.611962+00:00",
   "matches_played": 20,
   "total_matches": 104,
   "total_goals": 62,
@@ -9,9 +9,9 @@
       "played": 11,
       "wins": 6,
       "points": 22,
-      "gf": 26,
+      "gf": 27,
       "ga": 11,
-      "gd": 15
+      "gd": 16
     },
     "CONMEBOL": {
       "teams": 6,
@@ -37,8 +37,8 @@
       "wins": 2,
       "points": 10,
       "gf": 12,
-      "ga": 13,
-      "gd": -1
+      "ga": 14,
+      "gd": -2
     },
     "CONCACAF": {
       "teams": 6,
@@ -473,7 +473,7 @@
       "won": 1,
       "drawn": 0,
       "lost": 0,
-      "gf": 2,
+      "gf": 3,
       "ga": 1,
       "points": 3,
       "conf": "UEFA"
@@ -485,7 +485,7 @@
       "drawn": 0,
       "lost": 1,
       "gf": 1,
-      "ga": 2,
+      "ga": 3,
       "points": 0,
       "conf": "AFC"
     },
