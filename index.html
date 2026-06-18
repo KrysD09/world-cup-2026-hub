@@ -161,6 +161,22 @@ tr:hover td{background:var(--lgray);}
 .tight-bar-wrap{flex:1;height:22px;background:var(--lgray);border-radius:5px;overflow:hidden;position:relative;}
 .tight-bar{height:100%;border-radius:5px;}
 .tight-tag{font-size:11px;font-weight:600;width:96px;flex-shrink:0;text-align:right;}
+/* Overview fan cards */
+.standout-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;}
+.standout{background:var(--lgray);border-radius:10px;padding:14px;border-left:3px solid var(--red);}
+.standout .so-label{font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:var(--gray);margin-bottom:4px;}
+.standout .so-main{font-size:15px;font-weight:700;color:var(--dark);line-height:1.3;}
+.standout .so-sub{font-size:11.5px;color:var(--gray);margin-top:3px;}
+.topteam{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--lgray);}
+.topteam:last-child{border-bottom:none;}
+.topteam .tt-rank{font-size:13px;font-weight:700;color:var(--gray);width:20px;}
+.topteam .tt-name{flex:1;font-size:13px;font-weight:600;color:var(--dark);}
+.topteam .tt-stat{font-size:12px;color:var(--gray);}
+.topteam .tt-pts{font-size:14px;font-weight:700;color:var(--dark);width:42px;text-align:right;}
+.result-item{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--lgray);font-size:13px;}
+.result-item:last-child{border-bottom:none;}
+.result-item .ri-score{font-weight:700;color:var(--dark);}
+.result-item .ri-date{font-size:11px;color:var(--gray);}
 /* Venue detail modal */
 .vm-overlay{position:fixed;inset:0;background:rgba(10,15,35,.55);z-index:3000;
   display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .2s;}
@@ -334,11 +350,21 @@ footer a{color:var(--blue);text-decoration:none;}
     <div class="stat-card"><div class="stat-label">Leading conf.</div><div class="stat-value" id="ov-tc" style="font-size:17px">--</div><div class="stat-sub" id="ov-ts">--</div></div>
     <div class="stat-card"><div class="stat-label">Upcoming</div><div class="stat-value" id="ov-up-count">--</div><div class="stat-sub" id="ov-up-next">matches scheduled</div></div>
   </div>
-  <div class="card"><div class="card-title"><div class="dot" style="background:var(--blue)"></div>Confederation Scoreboard
-      <span style="font-size:11px;font-weight:400;color:var(--gray);margin-left:4px">live standings across all six confederations</span>
+  <div class="two-col">
+    <div class="card"><div class="card-title"><div class="dot" style="background:var(--green)"></div>Latest Results
+        <span style="font-size:11px;font-weight:400;color:var(--gray);margin-left:4px">most recent finished matches</span>
+      </div>
+      <div class="match-list" id="ov-results"><div class="loading">Loading...</div></div></div>
+    <div class="card"><div class="card-title"><div class="dot" style="background:var(--gold)"></div>Top Teams Right Now
+        <span style="font-size:11px;font-weight:400;color:var(--gray);margin-left:4px">by points, then goal difference</span>
+      </div>
+      <div id="ov-topteams"><div class="loading">Loading...</div></div></div>
+  </div>
+
+  <div class="card"><div class="card-title"><div class="dot" style="background:var(--red)"></div>Standout Moments
+      <span style="font-size:11px;font-weight:400;color:var(--gray);margin-left:4px">the biggest stories so far</span>
     </div>
-    <div id="ov-scoreboard"><div class="loading">Loading...</div></div>
-    <div class="takeaway" id="cap-scoreboard" style="display:none"></div></div>
+    <div id="ov-standouts" class="standout-grid"><div class="loading">Loading...</div></div></div>
 
   <div class="two-col">
     <div class="card">
@@ -366,6 +392,12 @@ footer a{color:var(--blue);text-decoration:none;}
       <div class="chart-wrap" style="height:200px"><canvas id="ov-group-goals"></canvas></div>
     </div>
   </div>
+
+  <div class="card"><div class="card-title"><div class="dot" style="background:var(--blue)"></div>Confederation Scoreboard
+      <span style="font-size:11px;font-weight:400;color:var(--gray);margin-left:4px">live standings across all six confederations</span>
+    </div>
+    <div id="ov-scoreboard"><div class="loading">Loading...</div></div>
+    <div class="takeaway" id="cap-scoreboard" style="display:none"></div></div>
 
   <div class="card"><div class="card-title"><div class="dot" style="background:var(--gold)"></div>Upcoming Matches</div>
     <div class="match-list" id="ov-up"><div class="loading">Loading...</div></div></div>
@@ -899,8 +931,75 @@ function buildOV(){
   const cs=SB.confederations||{};
   const top=Object.entries(cs).filter(([,v])=>v.played>0).sort((a,b)=>(b[1].points/b[1].played)-(a[1].points/a[1].played));
   if(top.length){document.getElementById('ov-tc').textContent=top[0][0];document.getElementById('ov-ts').textContent=`${top[0][1].points} pts \u00B7 ${ppg(top[0][1].points,top[0][1].played)}/game`;}
-  buildScoreboard('ov-scoreboard');buildUP();
+  buildScoreboard('ov-scoreboard');buildUP();buildFanCards();
   buildGoalsPerMatch();buildOutcomesChart();buildConfPPGOverview();buildGoalsByGroup();
+}
+
+// ── Overview fan cards: Latest Results, Top Teams, Standouts ────────────
+function buildFanCards(){
+  const fin=MA.filter(m=>m.status==='FINISHED');
+
+  // Latest Results — most recent finished matches (by date desc)
+  const recent=[...fin].sort((a,b)=>(b.date||'').localeCompare(a.date||'')).slice(0,6);
+  const rEl=document.getElementById('ov-results');
+  if(rEl){
+    rEl.innerHTML=recent.length?recent.map(m=>
+      `<div class="result-item"><span>${m.home_team} vs ${m.away_team}</span>
+        <span><span class="ri-score">${m.home_score}\u2013${m.away_score}</span>
+        <span class="ri-date">&nbsp; ${fDate(m.date)}</span></span></div>`
+    ).join(''):'<div class="loading">No matches yet</div>';
+  }
+
+  // Top Teams — every team's record, ranked by pts then GD
+  const teams={};
+  fin.forEach(m=>{
+    const h=m.home_team,a=m.away_team,hs=m.home_score||0,as_=m.away_score||0;
+    [h,a].forEach(t=>{if(t&&!teams[t])teams[t]={n:t,pts:0,gf:0,ga:0,gp:0};});
+    if(h&&teams[h]){teams[h].gp++;teams[h].gf+=hs;teams[h].ga+=as_;}
+    if(a&&teams[a]){teams[a].gp++;teams[a].gf+=as_;teams[a].ga+=hs;}
+    if(hs>as_){if(teams[h])teams[h].pts+=3;}
+    else if(hs===as_){if(teams[h])teams[h].pts++;if(teams[a])teams[a].pts++;}
+    else{if(teams[a])teams[a].pts+=3;}
+  });
+  const ranked=Object.values(teams).sort((a,b)=>b.pts-a.pts||(b.gf-b.ga)-(a.gf-a.ga)||b.gf-a.gf).slice(0,6);
+  const tEl=document.getElementById('ov-topteams');
+  if(tEl){
+    tEl.innerHTML=ranked.length?ranked.map((t,i)=>
+      `<div class="topteam"><span class="tt-rank">${i+1}</span>
+        <span class="tt-name">${t.n}</span>
+        <span class="tt-stat">GD ${fGD(t.gf-t.ga)}</span>
+        <span class="tt-pts">${t.pts} pts</span></div>`
+    ).join(''):'<div class="loading">No matches yet</div>';
+  }
+
+  // Standouts — biggest win, highest-scoring game, cleanest/notable
+  const sEl=document.getElementById('ov-standouts');
+  if(sEl){
+    if(!fin.length){sEl.innerHTML='<div class="loading">No matches yet</div>';}
+    else{
+      const byMargin=[...fin].sort((a,b)=>Math.abs((b.home_score||0)-(b.away_score||0))-Math.abs((a.home_score||0)-(a.away_score||0)));
+      const byGoals=[...fin].sort((a,b)=>((b.home_score||0)+(b.away_score||0))-((a.home_score||0)+(a.away_score||0)));
+      const bigWin=byMargin[0], highScore=byGoals[0];
+      const totGoals=fin.reduce((s,m)=>s+(m.home_score||0)+(m.away_score||0),0);
+      const cards=[];
+      if(bigWin){
+        const win=(bigWin.home_score>bigWin.away_score?bigWin.home_team:bigWin.away_team);
+        const sc=`${Math.max(bigWin.home_score,bigWin.away_score)}\u2013${Math.min(bigWin.home_score,bigWin.away_score)}`;
+        cards.push(`<div class="standout"><div class="so-label">Biggest Win</div>
+          <div class="so-main">${win} ${sc}</div>
+          <div class="so-sub">${bigWin.home_team} vs ${bigWin.away_team}</div></div>`);
+      }
+      if(highScore){
+        cards.push(`<div class="standout"><div class="so-label">Most Goals in a Game</div>
+          <div class="so-main">${(highScore.home_score||0)+(highScore.away_score||0)} goals</div>
+          <div class="so-sub">${highScore.home_team} ${highScore.home_score}\u2013${highScore.away_score} ${highScore.away_team}</div></div>`);
+      }
+      cards.push(`<div class="standout"><div class="so-label">Tournament So Far</div>
+        <div class="so-main">${totGoals} goals</div>
+        <div class="so-sub">across ${fin.length} matches (${(totGoals/fin.length).toFixed(1)} per game)</div></div>`);
+      sEl.innerHTML=cards.join('');
+    }
+  }
 }
 
 function teamMatches(api){return MA.filter(m=>(m.home_team||'').includes(api)||(m.away_team||'').includes(api));}
