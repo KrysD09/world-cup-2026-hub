@@ -177,6 +177,24 @@ tr:hover td{background:var(--lgray);}
 .result-item:last-child{border-bottom:none;}
 .result-item .ri-score{font-weight:700;color:var(--dark);}
 .result-item .ri-date{font-size:11px;color:var(--gray);}
+/* Matches tab */
+.match-filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;}
+.mf-select{padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:var(--white);
+  font-size:13px;color:var(--dark);font-family:inherit;cursor:pointer;}
+.mf-select:focus{outline:none;border-color:var(--blue);}
+.match-day-head{font-size:12px;font-weight:600;color:var(--gray);text-transform:uppercase;
+  letter-spacing:.03em;margin:16px 0 8px;padding-bottom:4px;border-bottom:1px solid var(--lgray);}
+.match-day-head:first-child{margin-top:0;}
+.mrow{display:flex;align-items:center;gap:10px;padding:11px 12px;border:1px solid var(--border);
+  border-radius:10px;margin-bottom:8px;cursor:pointer;transition:background .12s,border-color .12s;}
+.mrow:hover{background:var(--lgray);border-color:var(--blue);}
+.mrow .mr-teams{flex:1;font-size:13.5px;color:var(--dark);font-weight:500;}
+.mrow .mr-meta{font-size:11px;color:var(--gray);}
+.mrow .mr-score{font-size:15px;font-weight:700;color:var(--dark);min-width:48px;text-align:center;}
+.mrow .mr-live{font-size:10px;font-weight:700;color:#fff;background:var(--red);padding:2px 7px;border-radius:5px;}
+.mrow .mr-time{font-size:11px;color:var(--blue);font-weight:600;min-width:48px;text-align:center;}
+.mrow .mr-tag{font-size:10px;background:var(--lgray);padding:2px 7px;border-radius:5px;color:var(--gray);}
+.match-empty{padding:30px;text-align:center;color:var(--gray);font-size:13px;}
 /* Venue detail modal */
 .vm-overlay{position:fixed;inset:0;background:rgba(10,15,35,.55);z-index:3000;
   display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .2s;}
@@ -321,6 +339,7 @@ footer a{color:var(--blue);text-decoration:none;}
 
 <div class="tab-nav">
   <button class="tab-btn active" onclick="switchTab('overview',this)">Overview</button>
+  <button class="tab-btn" onclick="switchTab('matches',this)">Matches</button>
   <button class="tab-btn" onclick="switchTab('groups',this)">Groups</button>
   <button class="tab-btn" onclick="switchTab('confederations',this)">Confederations</button>
   <button class="tab-btn" onclick="switchTab('countries',this)">Countries</button>
@@ -337,6 +356,7 @@ footer a{color:var(--blue);text-decoration:none;}
     <p>This is a live tracker for the 2026 FIFA World Cup &mdash; scores, standings, and the stories in the numbers, refreshed automatically as matches finish. New to it? Each tab below is a different way to explore. Pick wherever your curiosity goes.</p>
     <div class="intro-guide">
       <div class="intro-item"><b>Overview</b><span>The big picture: goals, top teams, and tournament-wide trends.</span></div>
+      <div class="intro-item"><b>Matches</b><span>Every game, past and upcoming. Filter and click for details.</span></div>
       <div class="intro-item"><b>Groups</b><span>All 12 group standings, which groups are wide open, and where the goals are.</span></div>
       <div class="intro-item"><b>Confederations</b><span>Which regions are dominating (UEFA = Europe, CONMEBOL = South America, etc.).</span></div>
       <div class="intro-item"><b>Countries</b><span>Tap any nation to see its results and group standing.</span></div>
@@ -424,6 +444,36 @@ footer a{color:var(--blue);text-decoration:none;}
     <span><b>L</b>Lost</span><span><b>GD</b>Goal difference</span><span><b>Pts</b>Points</span>
   </div>
   <div class="group-grid" id="group-tables"></div>
+</main></div>
+
+
+<!-- MATCHES -->
+<div id="tab-matches" class="tab-panel"><main>
+  <div class="card">
+    <div class="card-title"><div class="dot" style="background:var(--green)"></div>All Matches
+      <span style="font-size:11px;font-weight:400;color:var(--gray);margin-left:4px" id="match-count"></span>
+    </div>
+    <div class="match-filters">
+      <select id="filter-status" class="mf-select" onchange="buildMatches()">
+        <option value="all">All matches</option>
+        <option value="upcoming">Upcoming only</option>
+        <option value="finished">Finished only</option>
+      </select>
+      <select id="filter-group" class="mf-select" onchange="buildMatches()">
+        <option value="all">All groups</option>
+      </select>
+      <select id="filter-conf" class="mf-select" onchange="buildMatches()">
+        <option value="all">All confederations</option>
+        <option value="UEFA">UEFA (Europe)</option>
+        <option value="CONMEBOL">CONMEBOL (S. America)</option>
+        <option value="CAF">CAF (Africa)</option>
+        <option value="AFC">AFC (Asia)</option>
+        <option value="CONCACAF">CONCACAF (N. America)</option>
+        <option value="OFC">OFC (Oceania)</option>
+      </select>
+    </div>
+    <div id="matches-list"><div class="loading">Loading...</div></div>
+  </div>
 </main></div>
 
 
@@ -1142,6 +1192,99 @@ function groupStats(letter){
   return{teams,goals,finished};
 }
 let grpChart=null;
+// ── Matches tab ────────────────────────────────────────────────────────
+function buildMatches(){
+  // populate group filter once
+  const gSel=document.getElementById('filter-group');
+  if(gSel&&gSel.options.length<=1){
+    'ABCDEFGHIJKL'.split('').forEach(L=>{
+      const o=document.createElement('option');o.value=L;o.textContent='Group '+L;gSel.appendChild(o);
+    });
+  }
+  const fStatus=document.getElementById('filter-status').value;
+  const fGroup=document.getElementById('filter-group').value;
+  const fConf=document.getElementById('filter-conf').value;
+  let list=(MA||[]).slice();
+  // status filter
+  if(fStatus==='finished')list=list.filter(m=>m.status==='FINISHED');
+  else if(fStatus==='upcoming')list=list.filter(m=>m.status!=='FINISHED');
+  // group filter
+  if(fGroup!=='all')list=list.filter(m=>(m.group||'').replace('GROUP_','')===fGroup);
+  // confederation filter
+  if(fConf!=='all')list=list.filter(m=>m.home_conf===fConf||m.away_conf===fConf);
+  // sort: finished by date desc, upcoming by date asc — but simplest is by date asc overall
+  list.sort((a,b)=>(a.date||'').localeCompare(b.date||''));
+
+  document.getElementById('match-count').textContent=`${list.length} match${list.length!==1?'es':''}`;
+  const el=document.getElementById('matches-list');
+  if(!list.length){el.innerHTML='<div class="match-empty">No matches fit these filters.</div>';return;}
+
+  // group by date
+  let html='',curDate='';
+  list.forEach(m=>{
+    if(m.date!==curDate){curDate=m.date;html+=`<div class="match-day-head">${fDateFull(m.date)}</div>`;}
+    const idx=MA.indexOf(m);
+    const fin=m.status==='FINISHED';
+    const live=m.status==='IN_PLAY';
+    let right;
+    if(fin)right=`<span class="mr-score">${m.home_score}\u2013${m.away_score}</span>`;
+    else if(live)right=`<span class="mr-live">LIVE</span>`;
+    else right=`<span class="mr-time">${m.matchday?'MD'+m.matchday:'\u2014'}</span>`;
+    const grp=(m.group||'').replace('GROUP_','');
+    html+=`<div class="mrow" onclick="showMatch(${idx})">
+      <div class="mr-teams">${m.home_team||'TBD'} <span style="color:var(--gray)">vs</span> ${m.away_team||'TBD'}
+        <div class="mr-meta">${m.city||''}${grp?' \u00B7 Group '+grp:''}</div></div>
+      ${right}</div>`;
+  });
+  el.innerHTML=html;
+}
+function fDateFull(s){
+  if(!s)return'';
+  const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(s);
+  const d=m?new Date(+m[1],+m[2]-1,+m[3]):new Date(s);
+  return d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+}
+function showMatch(idx){
+  const m=MA[idx];if(!m)return;
+  const fin=m.status==='FINISHED';
+  const v=VENUES.find(x=>m.venue&&(m.venue===x.sta||m.venue.includes(x.sta)||m.venue.includes(x.city)));
+  // contextual stats for finished matches
+  let context='';
+  if(fin){
+    const finAll=MA.filter(x=>x.status==='FINISHED');
+    const margin=Math.abs((m.home_score||0)-(m.away_score||0));
+    const goals=(m.home_score||0)+(m.away_score||0);
+    const maxMargin=Math.max(...finAll.map(x=>Math.abs((x.home_score||0)-(x.away_score||0))));
+    const maxGoals=Math.max(...finAll.map(x=>(x.home_score||0)+(x.away_score||0)));
+    const notes=[];
+    if(margin===maxMargin&&margin>0)notes.push('Biggest winning margin of the tournament so far');
+    if(goals===maxGoals&&goals>0)notes.push('Highest-scoring game of the tournament so far');
+    if(m.home_score===m.away_score)notes.push('Ended level');
+    if(goals===0)notes.push('Goalless draw');
+    context=notes.length?`<div class="vm-matches-title">Context</div>`+
+      notes.map(n=>`<div class="vm-match"><span>${n}</span></div>`).join(''):'';
+  }
+  const result=fin
+    ?`<div class="vm-stat"><div class="vm-k">Result</div><div class="vm-v">${m.home_score}\u2013${m.away_score}</div></div>`
+    :`<div class="vm-stat"><div class="vm-k">Status</div><div class="vm-v" style="font-size:14px">${m.status==='IN_PLAY'?'Live now':'Upcoming'}</div></div>`;
+  document.getElementById('vm-content').innerHTML=`
+    <div class="vm-hero ${v?'':''}" style="${v?'':'background:linear-gradient(135deg,#12183A,#2A398D)'}">
+      ${v?`<img src="${v.img}" alt="" onerror="this.style.display='none'">`:''}
+      <button class="vm-close" onclick="hideVenue()">&times;</button>
+    </div>
+    <div class="vm-body">
+      <h3 class="vm-title">${m.home_team||'TBD'} vs ${m.away_team||'TBD'}</h3>
+      <div class="vm-sub">${fDateFull(m.date)}${m.city?' \u00B7 '+m.city:''}${m.venue?' \u00B7 '+m.venue:''}</div>
+      <div class="vm-statrow">
+        ${result}
+        <div class="vm-stat"><div class="vm-k">Stage</div><div class="vm-v" style="font-size:13px">${(m.stage||'').replace(/_/g,' ').replace('GROUP STAGE','Group Stage')||'\u2014'}</div></div>
+        <div class="vm-stat"><div class="vm-k">${m.home_team||'Home'}</div><div class="vm-v" style="font-size:13px">${m.home_conf||'\u2014'}</div></div>
+        <div class="vm-stat"><div class="vm-k">${m.away_team||'Away'}</div><div class="vm-v" style="font-size:13px">${m.away_conf||'\u2014'}</div></div>
+      </div>
+      ${context}
+    </div>`;
+  document.getElementById('vm-overlay').classList.add('show');
+}
 function buildGroups(){
   // 1. All 12 standings tables
   const grid=document.getElementById('group-tables');
@@ -1604,7 +1747,7 @@ async function load(){
   try{
     const[sb,ma]=await Promise.all([fJSON(`${RAW}/scoreboard.json`),fJSON(`${RAW}/latest_matches.json`)]);
     SB=sb;MA=ma;
-    buildOV();renderConf();buildCountries();buildVenues();buildBracket();buildGroups();
+    buildOV();renderConf();buildCountries();buildVenues();buildBracket();buildGroups();buildMatches();
     buildCaptions();
   }catch(e){
     console.error(e);
