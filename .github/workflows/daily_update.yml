@@ -38,6 +38,10 @@ jobs:
       - name: Update confederation scoreboard
         run: python scripts/update_scoreboard.py
 
+      - name: Run tournaments simulation
+        run: python scripts/simulate_tournaments.py --sims 10000
+       
+
       - name: Commit and push updated data
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
