@@ -345,6 +345,7 @@ footer a{color:var(--blue);text-decoration:none;}
   <button class="tab-btn" onclick="switchTab('countries',this)">Countries</button>
   <button class="tab-btn" onclick="switchTab('venues',this)">Venues</button>
   <button class="tab-btn" onclick="switchTab('bracket',this)">Bracket</button>
+  <button class="tab-btn" onclick="switchTab('odds',this)">Odds</button>
 </div>
 
 <!-- OVERVIEW -->
@@ -611,6 +612,69 @@ footer a{color:var(--blue);text-decoration:none;}
     <div style="font-size:11px;font-weight:500;color:var(--gold);letter-spacing:.05em;margin-bottom:8px">2026 WORLD CHAMPION</div>
     <input class="champion-input" id="champion-input" placeholder="Your champion pick..." oninput="saveBracket()">
   </div>
+</main></div>
+
+<!-- ODDS (Monte Carlo simulator) -->
+<div id="tab-odds" class="tab-panel"><main>
+  <div class="card" style="background:linear-gradient(135deg,#12183A,#2A398D);color:#fff;border:none">
+    <div class="card-title" style="color:#fff"><div class="dot" style="background:var(--gold)"></div>&#127922; Title Odds &mdash; Monte Carlo Simulator</div>
+    <p style="font-size:12px;color:#D6DCF0;line-height:1.6">
+      We simulate the <b>entire remaining tournament</b> thousands of times. Each unplayed match is decided by a
+      hybrid model &mdash; <b>Elo</b> sets team strength, <b>Poisson</b> turns the Elo gap into realistic scorelines.
+      Matches already played are locked in. The percentages below are how often each team reaches each stage across all simulations.
+    </p>
+    <div id="odds-meta" style="font-size:11px;color:#AEB8E0;margin-top:10px">Loading simulation data&hellip;</div>
+  </div>
+
+  <div id="odds-stats" class="stat-grid"></div>
+
+  <div class="two-col">
+    <div class="card"><div class="card-title"><div class="dot" style="background:var(--gold)"></div>Championship Probability &mdash; Top 12</div>
+      <div class="chart-wrap" style="height:320px"><canvas id="odds-chart"></canvas></div>
+    </div>
+    <div class="card"><div class="card-title"><div class="dot" style="background:var(--green)"></div>Brazil Watch &#127463;&#127479;</div>
+      <div id="odds-brazil"><div class="loading">Loading&hellip;</div></div>
+    </div>
+  </div>
+
+  <div class="card"><div class="card-title"><div class="dot" style="background:var(--blue)"></div>Full Probability Table
+      <span style="font-size:11px;font-weight:400;color:var(--gray);margin-left:4px">click a column to sort</span>
+    </div>
+    <div class="filter-row">
+      <input class="search-box" id="odds-search" placeholder="Search team..." oninput="renderOddsTable()">
+      <button class="cs-btn" id="odds-conf-ALL" onclick="oddsFilterConf('ALL',this)" style="background:var(--dark);color:#fff;border-color:var(--dark)">All</button>
+      <button class="cs-btn" onclick="oddsFilterConf('UEFA',this)">UEFA</button>
+      <button class="cs-btn" onclick="oddsFilterConf('CONMEBOL',this)">CONMEBOL</button>
+      <button class="cs-btn" onclick="oddsFilterConf('CAF',this)">CAF</button>
+      <button class="cs-btn" onclick="oddsFilterConf('AFC',this)">AFC</button>
+      <button class="cs-btn" onclick="oddsFilterConf('CONCACAF',this)">CONCACAF</button>
+      <button class="cs-btn" onclick="oddsFilterConf('OFC',this)">OFC</button>
+    </div>
+    <table><thead><tr>
+      <th onclick="srtOdds('rank')">#</th>
+      <th onclick="srtOdds('team')">Team</th>
+      <th onclick="srtOdds('elo')">Elo</th>
+      <th onclick="srtOdds('qualify')">Qualify</th>
+      <th onclick="srtOdds('reach_qf')">Reach QF</th>
+      <th onclick="srtOdds('reach_sf')">Reach SF</th>
+      <th onclick="srtOdds('final')">Final</th>
+      <th onclick="srtOdds('champion')">Champion</th>
+    </tr></thead>
+    <tbody id="odds-tb"><tr><td colspan="8" class="loading">Loading simulation&hellip;</td></tr></tbody></table>
+    <div class="abbr-key">
+      <span><b>Elo</b>Team strength rating</span>
+      <span><b>Qualify</b>Out of group stage</span>
+      <span><b>Reach QF</b>Quarterfinal</span>
+      <span><b>Reach SF</b>Semifinal</span>
+      <span><b>Champion</b>Wins the tournament</span>
+    </div>
+    <div class="takeaway" id="odds-takeaway" style="display:none"></div>
+  </div>
+
+  <p style="font-size:11px;color:var(--gray);text-align:center;margin-top:6px;line-height:1.6">
+    Early in the tournament these lean on pre-tournament Elo &mdash; the story is how they <b>move</b> as results land.
+    Knockout seeding is a reasonable stand-in, not the exact official bracket.
+  </p>
 </main></div>
 
 <footer>Data: <a href="https://www.football-data.org" target="_blank">football-data.org</a> &middot;
@@ -1742,6 +1806,160 @@ function clearBracket(){
   document.getElementById('bracket-status').textContent='Bracket cleared';
 }
 
+// ── Odds (Monte Carlo simulator) ────────────────────────────────────────
+let ODDS=null, oddsChart=null;
+let oddsSort={key:'champion',dir:-1}, oddsConf='ALL';
+
+function flagFor(team){
+  const c=COUNTRIES.find(x=>x.n===team||x.api===team);
+  return c?c.f:'&#127919;';
+}
+function confFor(team){
+  const c=COUNTRIES.find(x=>x.n===team||x.api===team);
+  return c?c.c:'';
+}
+function pctCell(v){
+  // colour-graded probability cell
+  const val=v||0;
+  let bg='var(--lgray)',col='var(--gray)';
+  if(val>=40){bg='#D4FAE2';col='#0A5C35';}
+  else if(val>=20){bg='#E6F1FB';col='#1B4FD8';}
+  else if(val>=8){bg='#FEF3CC';col='#6B4C00';}
+  return `<span class="badge" style="background:${bg};color:${col};min-width:46px;text-align:center">${val.toFixed(1)}%</span>`;
+}
+
+function buildOdds(){
+  const meta=document.getElementById('odds-meta');
+  if(!ODDS||!ODDS.teams){
+    if(meta)meta.innerHTML='Simulation data not available yet &mdash; it appears after the pipeline runs <code>simulate_tournament.py</code>.';
+    document.getElementById('odds-tb').innerHTML='<tr><td colspan="8" class="loading">No simulation data yet</td></tr>';
+    return;
+  }
+  const when=new Date(ODDS.generated_at);
+  if(meta)meta.innerHTML=`<b>${ODDS.n_sims.toLocaleString()}</b> simulations &middot; `+
+    `<b>${ODDS.matches_played}</b> matches locked in &middot; updated ${when.toLocaleDateString()} ${when.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}`;
+
+  // summary stat cards
+  const fav=ODDS.teams[0];
+  const brazil=ODDS.teams.find(t=>t.team==='Brazil');
+  const brazilRank=brazil?ODDS.teams.indexOf(brazil)+1:'—';
+  document.getElementById('odds-stats').innerHTML=`
+    <div class="stat-card"><div class="stat-label">Favourite</div>
+      <div class="stat-value" style="font-size:18px">${flagFor(fav.team)} ${fav.team}</div>
+      <div class="stat-sub">${fav.champion.toFixed(1)}% to win it all</div></div>
+    <div class="stat-card"><div class="stat-label">Brazil title odds</div>
+      <div class="stat-value">${brazil?brazil.champion.toFixed(1)+'%':'—'}</div>
+      <div class="stat-sub">ranked #${brazilRank} of ${ODDS.teams.length}</div></div>
+    <div class="stat-card"><div class="stat-label">Simulations</div>
+      <div class="stat-value">${(ODDS.n_sims/1000).toFixed(0)}k</div>
+      <div class="stat-sub">tournaments played out</div></div>
+    <div class="stat-card"><div class="stat-label">Matches locked</div>
+      <div class="stat-value">${ODDS.matches_played}</div>
+      <div class="stat-sub">real results, not simulated</div></div>`;
+
+  buildOddsChart();
+  buildOddsBrazil(brazil,brazilRank);
+  renderOddsTable();
+
+  // takeaway
+  const tk=document.getElementById('odds-takeaway');
+  if(tk && ODDS.teams.length>=2){
+    tk.style.display='';
+    const second=ODDS.teams[1];
+    tk.innerHTML=`<b>${fav.team}</b> leads the field at ${fav.champion.toFixed(1)}%, ahead of `+
+      `<b>${second.team}</b> (${second.champion.toFixed(1)}%). `+
+      (ODDS.matches_played<10?`With only ${ODDS.matches_played} matches played, these still lean on pre-tournament ratings &mdash; watch how they shift each matchday.`:`Re-run after each matchday to see the race tighten.`);
+  } else if(tk){
+    tk.style.display='none';
+  }
+}
+
+function buildOddsChart(){
+  const top=ODDS.teams.slice(0,12);
+  if(oddsChart)oddsChart.destroy();
+  const cv=document.getElementById('odds-chart');
+  if(!cv)return;
+  oddsChart=new Chart(cv.getContext('2d'),{
+    type:'bar',
+    data:{labels:top.map(t=>t.team),datasets:[{
+      label:'Champion %',data:top.map(t=>t.champion),
+      backgroundColor:top.map(t=>t.team==='Brazil'?'#C9A227CC':'#2A398DCC'),
+      borderColor:top.map(t=>t.team==='Brazil'?'#C9A227':'#2A398D'),
+      borderWidth:1.5,borderRadius:4
+    }]},
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{
+        label:i=>` ${i.parsed.x.toFixed(1)}% to win the World Cup`}}},
+      scales:{x:{beginAtZero:true,grid:{color:'#EEEEEC'},
+                ticks:{font:{size:11},color:'#6B7280',callback:v=>v+'%'}},
+              y:{grid:{display:false},ticks:{font:{size:11},color:'#12183A'}}}}
+  });
+}
+
+function buildOddsBrazil(brazil,rank){
+  const el=document.getElementById('odds-brazil');
+  if(!el)return;
+  if(!brazil){el.innerHTML='<div class="loading">Brazil not in this dataset</div>';return;}
+  const rows=[
+    ['Win it all',brazil.champion,'var(--gold)'],
+    ['Reach Final',brazil.final,'var(--blue)'],
+    ['Reach Semifinal',brazil.reach_sf,'var(--blue)'],
+    ['Reach Quarterfinal',brazil.reach_qf,'var(--green)'],
+    ['Qualify from group',brazil.qualify,'var(--green)']
+  ];
+  el.innerHTML=rows.map(([lbl,v,c])=>`
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:9px">
+      <div style="font-size:12px;min-width:140px;color:var(--dark)">${lbl}</div>
+      <div class="pts-bw" style="flex:1;width:auto"><div class="pts-bf" style="width:${Math.min(v,100)}%;background:${c}"></div></div>
+      <div style="font-size:12px;font-weight:600;min-width:42px;text-align:right">${v.toFixed(1)}%</div>
+    </div>`).join('')+
+    `<div class="takeaway" style="margin-top:12px">The number to watch is the <b>quarterfinal</b> (${brazil.reach_qf.toFixed(0)}%) &mdash; `+
+    `the exact round where the last four Brazil campaigns ended. Currently ranked <b>#${rank}</b> for the title.</div>`;
+}
+
+function srtOdds(key){
+  if(oddsSort.key===key)oddsSort.dir*=-1;
+  else{oddsSort={key,dir:key==='team'?1:-1};}
+  renderOddsTable();
+}
+function oddsFilterConf(c,btn){
+  oddsConf=c;
+  document.querySelectorAll('#tab-odds .cs-btn').forEach(b=>{b.style.background='var(--white)';b.style.color='var(--gray)';b.style.borderColor='var(--border)';});
+  if(btn){btn.style.background='var(--dark)';btn.style.color='#fff';btn.style.borderColor='var(--dark)';}
+  renderOddsTable();
+}
+function renderOddsTable(){
+  if(!ODDS||!ODDS.teams)return;
+  const q=(document.getElementById('odds-search')?.value||'').toLowerCase();
+  let rows=ODDS.teams.map((t,i)=>({...t,rank:i+1}));
+  if(oddsConf!=='ALL')rows=rows.filter(t=>confFor(t.team)===oddsConf);
+  if(q)rows=rows.filter(t=>t.team.toLowerCase().includes(q));
+  const k=oddsSort.key,d=oddsSort.dir;
+  rows.sort((a,b)=>{
+    let va=a[k],vb=b[k];
+    if(typeof va==='string')return va.localeCompare(vb)*d;
+    return (va-vb)*d;
+  });
+  const tb=document.getElementById('odds-tb');
+  if(!rows.length){tb.innerHTML='<tr><td colspan="8" class="loading">No teams match</td></tr>';return;}
+  tb.innerHTML=rows.map(t=>{
+    const cf=confFor(t.team);
+    const cc=CC[cf]||'var(--gray)';
+    const isBR=t.team==='Brazil';
+    return `<tr${isBR?' class="brazil-row"':''}>
+      <td style="color:var(--gray);font-weight:600">${t.rank}</td>
+      <td><span style="margin-right:5px">${flagFor(t.team)}</span>${t.team}
+        ${cf?`<span class="conf-pill" style="background:${cc};margin-left:6px;font-size:9px">${cf}</span>`:''}</td>
+      <td style="color:var(--gray)">${t.elo}</td>
+      <td>${pctCell(t.qualify)}</td>
+      <td>${pctCell(t.reach_qf)}</td>
+      <td>${pctCell(t.reach_sf)}</td>
+      <td>${pctCell(t.final)}</td>
+      <td>${pctCell(t.champion)}</td>
+    </tr>`;
+  }).join('');
+}
+
 // ── Main load ──────────────────────────────────────────────────────────
 async function load(){
   try{
@@ -1749,6 +1967,9 @@ async function load(){
     SB=sb;MA=ma;
     buildOV();renderConf();buildCountries();buildVenues();buildBracket();buildGroups();buildMatches();
     buildCaptions();
+    // odds load independently so a missing sim file never breaks the rest
+    fJSON(`${RAW}/sim_probabilities.json`).then(o=>{ODDS=o;buildOdds();})
+      .catch(()=>{ODDS=null;buildOdds();});
   }catch(e){
     console.error(e);
     document.getElementById('updated-badge').textContent='Error loading data';
