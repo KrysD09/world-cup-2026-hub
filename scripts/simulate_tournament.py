@@ -63,18 +63,18 @@ FALLBACK_ELO = {
 # ── Default group layout — EDIT to the official draw ────────────────────────
 # Auto-overridden if scoreboard.json encodes a {"groups": {...}} field.
 DEFAULT_GROUPS = {
-    "A": ["Mexico", "Poland", "New Zealand", "Saudi Arabia"],
-    "B": ["Canada", "Belgium", "Morocco", "Haiti"],
-    "C": ["USA", "Switzerland", "Paraguay", "Iran"],
-    "D": ["Argentina", "Australia", "Ivory Coast", "Qatar"],
-    "E": ["France", "Senegal", "Norway", "Jamaica"],
-    "F": ["Brazil", "Japan", "Cameroon", "Panama"],
-    "G": ["Spain", "Uruguay", "Ghana", "Costa Rica"],
-    "H": ["England", "Denmark", "Egypt", "Peru"],
-    "I": ["Portugal", "Colombia", "Tunisia", "South Korea"],
-    "J": ["Netherlands", "Croatia", "Nigeria", "Chile"],
-    "K": ["Germany", "Serbia", "South Africa", "Uzbekistan"],
-    "L": ["Italy", "Austria", "Algeria", "Scotland"],
+    "A": ["Mexico", "South Africa", "South Korea", "Czechia"],
+    "B": ["Canada", "Bosnia-Herzegovina", "Qatar", "Switzerland"],
+    "C": ["Brazil", "Morocco", "Haiti", "Scotland"],
+    "D": ["United States", "Paraguay", "Australia", "Turkey"],
+    "E": ["Germany", "Curaçao", "Ivory Coast", "Ecuador"],
+    "F": ["Netherlands", "Japan", "Sweden", "Tunisia"],
+    "G": ["Belgium", "Egypt", "Iran", "New Zealand"],
+    "H": ["Spain", "Cape Verde Islands", "Saudi Arabia", "Uruguay"],
+    "I": ["France", "Senegal", "Norway", "Iraq"],
+    "J": ["Argentina", "Algeria", "Austria", "Jordan"],
+    "K": ["Portugal", "Congo DR", "England", "Ghana"],
+    "L": ["Panama", "Croatia", "Uzbekistan", "Colombia"],
 }
 
 # Field-name candidates for parsing latest_matches.json
