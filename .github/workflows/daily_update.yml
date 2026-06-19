@@ -39,7 +39,7 @@ jobs:
         run: python scripts/update_scoreboard.py
 
       - name: Run tournaments simulation
-        run: python scripts/simulate_tournaments.py --sims 10000
+        run: python scripts/simulate_tournament.py --sims 10000
        
 
       - name: Commit and push updated data
