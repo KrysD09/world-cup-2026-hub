@@ -16,7 +16,7 @@
     "away_conf":"CAF",
     "city":"Mexico City",
     "venue":"Estadio Azteca",
-    "collected_at":"2026-06-19T09:26:59.806070+00:00"
+    "collected_at":"2026-06-19T20:24:49.025160+00:00"
   },
   {
     "match_id":537328,
@@ -35,7 +35,7 @@
     "away_conf":"Unknown",
     "city":"Guadalajara",
     "venue":"Estadio Akron",
-    "collected_at":"2026-06-19T09:26:59.806473+00:00"
+    "collected_at":"2026-06-19T20:24:49.025442+00:00"
   },
   {
     "match_id":537333,
@@ -54,7 +54,7 @@
     "away_conf":"Unknown",
     "city":"Toronto",
     "venue":"BMO Field",
-    "collected_at":"2026-06-19T09:26:59.824408+00:00"
+    "collected_at":"2026-06-19T20:24:49.025779+00:00"
   },
   {
     "match_id":537345,
@@ -73,7 +73,7 @@
     "away_conf":"CONMEBOL",
     "city":"Los Angeles",
     "venue":"SoFi Stadium",
-    "collected_at":"2026-06-19T09:26:59.882507+00:00"
+    "collected_at":"2026-06-19T20:24:49.026154+00:00"
   },
   {
     "match_id":537334,
@@ -92,7 +92,7 @@
     "away_conf":"UEFA",
     "city":"San Francisco",
     "venue":"Levi's Stadium",
-    "collected_at":"2026-06-19T09:26:59.882556+00:00"
+    "collected_at":"2026-06-19T20:24:49.026178+00:00"
   },
   {
     "match_id":537339,
@@ -111,7 +111,7 @@
     "away_conf":"CAF",
     "city":"New York\/NJ",
     "venue":"MetLife Stadium",
-    "collected_at":"2026-06-19T09:26:59.883100+00:00"
+    "collected_at":"2026-06-19T20:24:49.026540+00:00"
   },
   {
     "match_id":537340,
@@ -130,7 +130,7 @@
     "away_conf":"UEFA",
     "city":"Boston",
     "venue":"Gillette Stadium",
-    "collected_at":"2026-06-19T09:26:59.883171+00:00"
+    "collected_at":"2026-06-19T20:24:49.026586+00:00"
   },
   {
     "match_id":537346,
@@ -149,7 +149,7 @@
     "away_conf":"Unknown",
     "city":"Vancouver",
     "venue":"BC Place",
-    "collected_at":"2026-06-19T09:26:59.888610+00:00"
+    "collected_at":"2026-06-19T20:24:49.027083+00:00"
   },
   {
     "match_id":537351,
@@ -168,7 +168,7 @@
     "away_conf":"CONCACAF",
     "city":"Houston",
     "venue":"NRG Stadium",
-    "collected_at":"2026-06-19T09:26:59.899010+00:00"
+    "collected_at":"2026-06-19T20:24:49.027416+00:00"
   },
   {
     "match_id":537357,
@@ -187,7 +187,7 @@
     "away_conf":"AFC",
     "city":"Dallas",
     "venue":"AT&T Stadium",
-    "collected_at":"2026-06-19T09:26:59.899036+00:00"
+    "collected_at":"2026-06-19T20:24:49.027441+00:00"
   },
   {
     "match_id":537352,
@@ -206,7 +206,7 @@
     "away_conf":"CONMEBOL",
     "city":"Philadelphia",
     "venue":"Lincoln Financial Field",
-    "collected_at":"2026-06-19T09:26:59.899053+00:00"
+    "collected_at":"2026-06-19T20:24:49.027456+00:00"
   },
   {
     "match_id":537358,
@@ -225,7 +225,7 @@
     "away_conf":"CAF",
     "city":"Monterrey",
     "venue":"Estadio BBVA",
-    "collected_at":"2026-06-19T09:26:59.899507+00:00"
+    "collected_at":"2026-06-19T20:24:49.027838+00:00"
   },
   {
     "match_id":537369,
@@ -244,7 +244,7 @@
     "away_conf":"Unknown",
     "city":"Atlanta",
     "venue":"Mercedes-Benz Stadium",
-    "collected_at":"2026-06-19T09:26:59.899533+00:00"
+    "collected_at":"2026-06-19T20:24:49.027858+00:00"
   },
   {
     "match_id":537363,
@@ -263,7 +263,7 @@
     "away_conf":"CAF",
     "city":"Seattle",
     "venue":"Lumen Field",
-    "collected_at":"2026-06-19T09:26:59.899548+00:00"
+    "collected_at":"2026-06-19T20:24:49.027871+00:00"
   },
   {
     "match_id":537370,
@@ -282,7 +282,7 @@
     "away_conf":"CONMEBOL",
     "city":"Miami",
     "venue":"Hard Rock Stadium",
-    "collected_at":"2026-06-19T09:26:59.899567+00:00"
+    "collected_at":"2026-06-19T20:24:49.027886+00:00"
   },
   {
     "match_id":537364,
@@ -301,7 +301,7 @@
     "away_conf":"OFC",
     "city":"Los Angeles",
     "venue":"SoFi Stadium",
-    "collected_at":"2026-06-19T09:26:59.899606+00:00"
+    "collected_at":"2026-06-19T20:24:49.027920+00:00"
   },
   {
     "match_id":537391,
@@ -320,7 +320,7 @@
     "away_conf":"CAF",
     "city":"New York\/NJ",
     "venue":"MetLife Stadium",
-    "collected_at":"2026-06-19T09:26:59.899620+00:00"
+    "collected_at":"2026-06-19T20:24:49.027936+00:00"
   },
   {
     "match_id":537392,
@@ -339,7 +339,7 @@
     "away_conf":"UEFA",
     "city":"Boston",
     "venue":"Gillette Stadium",
-    "collected_at":"2026-06-19T09:26:59.899636+00:00"
+    "collected_at":"2026-06-19T20:24:49.027947+00:00"
   },
   {
     "match_id":537397,
@@ -358,7 +358,7 @@
     "away_conf":"CAF",
     "city":"Kansas City",
     "venue":"Arrowhead Stadium",
-    "collected_at":"2026-06-19T09:26:59.899668+00:00"
+    "collected_at":"2026-06-19T20:24:49.027975+00:00"
   },
   {
     "match_id":537398,
@@ -377,7 +377,7 @@
     "away_conf":"AFC",
     "city":"San Francisco",
     "venue":"Levi's Stadium",
-    "collected_at":"2026-06-19T09:26:59.899680+00:00"
+    "collected_at":"2026-06-19T20:24:49.027986+00:00"
   },
   {
     "match_id":537403,
@@ -396,7 +396,7 @@
     "away_conf":"Unknown",
     "city":"Houston",
     "venue":"NRG Stadium",
-    "collected_at":"2026-06-19T09:26:59.899692+00:00"
+    "collected_at":"2026-06-19T20:24:49.028000+00:00"
   },
   {
     "match_id":537409,
@@ -415,7 +415,7 @@
     "away_conf":"UEFA",
     "city":"Dallas",
     "venue":"AT&T Stadium",
-    "collected_at":"2026-06-19T09:26:59.899704+00:00"
+    "collected_at":"2026-06-19T20:24:49.028010+00:00"
   },
   {
     "match_id":537410,
@@ -434,7 +434,7 @@
     "away_conf":"CONCACAF",
     "city":"Toronto",
     "venue":"BMO Field",
-    "collected_at":"2026-06-19T09:26:59.899717+00:00"
+    "collected_at":"2026-06-19T20:24:49.028021+00:00"
   },
   {
     "match_id":537404,
@@ -453,7 +453,7 @@
     "away_conf":"CONMEBOL",
     "city":"Mexico City",
     "venue":"Estadio Azteca",
-    "collected_at":"2026-06-19T09:26:59.899745+00:00"
+    "collected_at":"2026-06-19T20:24:49.028048+00:00"
   },
   {
     "match_id":537329,
@@ -472,7 +472,7 @@
     "away_conf":"CAF",
     "city":"Atlanta",
     "venue":"Mercedes-Benz Stadium",
-    "collected_at":"2026-06-19T09:26:59.899759+00:00"
+    "collected_at":"2026-06-19T20:24:49.028068+00:00"
   },
   {
     "match_id":537335,
@@ -491,7 +491,7 @@
     "away_conf":"Unknown",
     "city":"Los Angeles",
     "venue":"SoFi Stadium",
-    "collected_at":"2026-06-19T09:26:59.899773+00:00"
+    "collected_at":"2026-06-19T20:24:49.028080+00:00"
   },
   {
     "match_id":537336,
@@ -510,7 +510,7 @@
     "away_conf":"AFC",
     "city":"Vancouver",
     "venue":"BC Place",
-    "collected_at":"2026-06-19T09:26:59.899785+00:00"
+    "collected_at":"2026-06-19T20:24:49.028091+00:00"
   },
   {
     "match_id":537330,
@@ -529,26 +529,26 @@
     "away_conf":"Unknown",
     "city":"Guadalajara",
     "venue":"Estadio Akron",
-    "collected_at":"2026-06-19T09:26:59.899819+00:00"
+    "collected_at":"2026-06-19T20:24:49.028119+00:00"
   },
   {
     "match_id":537348,
     "date":"2026-06-19",
     "utc_date":"2026-06-19",
-    "status":"TIMED",
+    "status":"IN_PLAY",
     "stage":"GROUP_STAGE",
     "group":"GROUP_D",
     "matchday":2.0,
     "home_team":"United States",
     "away_team":"Australia",
-    "home_score":null,
-    "away_score":null,
-    "home_result":null,
+    "home_score":2.0,
+    "away_score":0.0,
+    "home_result":"W",
     "home_conf":"Unknown",
     "away_conf":"AFC",
     "city":"Seattle",
     "venue":"Lumen Field",
-    "collected_at":"2026-06-19T09:26:59.899833+00:00"
+    "collected_at":"2026-06-19T20:24:49.028130+00:00"
   },
   {
     "match_id":537342,
@@ -567,7 +567,7 @@
     "away_conf":"CAF",
     "city":"Boston",
     "venue":"Gillette Stadium",
-    "collected_at":"2026-06-19T09:26:59.899846+00:00"
+    "collected_at":"2026-06-19T20:24:49.028141+00:00"
   },
   {
     "match_id":537341,
@@ -586,7 +586,7 @@
     "away_conf":"CONCACAF",
     "city":"Philadelphia",
     "venue":"Lincoln Financial Field",
-    "collected_at":"2026-06-19T09:26:59.899871+00:00"
+    "collected_at":"2026-06-19T20:24:49.028165+00:00"
   },
   {
     "match_id":537347,
@@ -605,7 +605,7 @@
     "away_conf":"CONMEBOL",
     "city":"San Francisco",
     "venue":"Levi's Stadium",
-    "collected_at":"2026-06-19T09:26:59.899895+00:00"
+    "collected_at":"2026-06-19T20:24:49.028194+00:00"
   },
   {
     "match_id":537359,
@@ -624,7 +624,7 @@
     "away_conf":"UEFA",
     "city":"Houston",
     "venue":"NRG Stadium",
-    "collected_at":"2026-06-19T09:26:59.899908+00:00"
+    "collected_at":"2026-06-19T20:24:49.028205+00:00"
   },
   {
     "match_id":537353,
@@ -643,7 +643,7 @@
     "away_conf":"Unknown",
     "city":"Toronto",
     "venue":"BMO Field",
-    "collected_at":"2026-06-19T09:26:59.899920+00:00"
+    "collected_at":"2026-06-19T20:24:49.028217+00:00"
   },
   {
     "match_id":537354,
@@ -662,7 +662,7 @@
     "away_conf":"CONCACAF",
     "city":"Kansas City",
     "venue":"Arrowhead Stadium",
-    "collected_at":"2026-06-19T09:26:59.899947+00:00"
+    "collected_at":"2026-06-19T20:24:49.028244+00:00"
   },
   {
     "match_id":537360,
@@ -681,7 +681,7 @@
     "away_conf":"AFC",
     "city":"Monterrey",
     "venue":"Estadio BBVA",
-    "collected_at":"2026-06-19T09:26:59.899960+00:00"
+    "collected_at":"2026-06-19T20:24:49.028255+00:00"
   },
   {
     "match_id":537371,
@@ -700,7 +700,7 @@
     "away_conf":"AFC",
     "city":"Atlanta",
     "venue":"Mercedes-Benz Stadium",
-    "collected_at":"2026-06-19T09:26:59.899971+00:00"
+    "collected_at":"2026-06-19T20:24:49.028265+00:00"
   },
   {
     "match_id":537365,
@@ -719,7 +719,7 @@
     "away_conf":"AFC",
     "city":"Los Angeles",
     "venue":"SoFi Stadium",
-    "collected_at":"2026-06-19T09:26:59.899982+00:00"
+    "collected_at":"2026-06-19T20:24:49.028276+00:00"
   },
   {
     "match_id":537372,
@@ -738,7 +738,7 @@
     "away_conf":"Unknown",
     "city":"Miami",
     "venue":"Hard Rock Stadium",
-    "collected_at":"2026-06-19T09:26:59.899995+00:00"
+    "collected_at":"2026-06-19T20:24:49.028286+00:00"
   },
   {
     "match_id":537366,
@@ -757,7 +757,7 @@
     "away_conf":"CAF",
     "city":"Vancouver",
     "venue":"BC Place",
-    "collected_at":"2026-06-19T09:26:59.900020+00:00"
+    "collected_at":"2026-06-19T20:24:49.028311+00:00"
   },
   {
     "match_id":537399,
@@ -776,7 +776,7 @@
     "away_conf":"UEFA",
     "city":"Dallas",
     "venue":"AT&T Stadium",
-    "collected_at":"2026-06-19T09:26:59.900031+00:00"
+    "collected_at":"2026-06-19T20:24:49.028322+00:00"
   },
   {
     "match_id":537393,
@@ -795,7 +795,7 @@
     "away_conf":"AFC",
     "city":"Philadelphia",
     "venue":"Lincoln Financial Field",
-    "collected_at":"2026-06-19T09:26:59.900043+00:00"
+    "collected_at":"2026-06-19T20:24:49.028333+00:00"
   },
   {
     "match_id":537394,
@@ -814,7 +814,7 @@
     "away_conf":"CAF",
     "city":"New York\/NJ",
     "venue":"MetLife Stadium",
-    "collected_at":"2026-06-19T09:26:59.900067+00:00"
+    "collected_at":"2026-06-19T20:24:49.028356+00:00"
   },
   {
     "match_id":537400,
@@ -833,7 +833,7 @@
     "away_conf":"CAF",
     "city":"San Francisco",
     "venue":"Levi's Stadium",
-    "collected_at":"2026-06-19T09:26:59.900091+00:00"
+    "collected_at":"2026-06-19T20:24:49.028379+00:00"
   },
   {
     "match_id":537405,
@@ -852,7 +852,7 @@
     "away_conf":"AFC",
     "city":"Houston",
     "venue":"NRG Stadium",
-    "collected_at":"2026-06-19T09:26:59.900106+00:00"
+    "collected_at":"2026-06-19T20:24:49.028394+00:00"
   },
   {
     "match_id":537411,
@@ -871,7 +871,7 @@
     "away_conf":"CAF",
     "city":"Boston",
     "venue":"Gillette Stadium",
-    "collected_at":"2026-06-19T09:26:59.900117+00:00"
+    "collected_at":"2026-06-19T20:24:49.028404+00:00"
   },
   {
     "match_id":537412,
@@ -890,7 +890,7 @@
     "away_conf":"UEFA",
     "city":"Toronto",
     "venue":"BMO Field",
-    "collected_at":"2026-06-19T09:26:59.900129+00:00"
+    "collected_at":"2026-06-19T20:24:49.028415+00:00"
   },
   {
     "match_id":537406,
@@ -909,7 +909,7 @@
     "away_conf":"Unknown",
     "city":"Guadalajara",
     "venue":"Estadio Akron",
-    "collected_at":"2026-06-19T09:26:59.900154+00:00"
+    "collected_at":"2026-06-19T20:24:49.028438+00:00"
   },
   {
     "match_id":537337,
@@ -928,7 +928,7 @@
     "away_conf":"CONCACAF",
     "city":"Vancouver",
     "venue":"BC Place",
-    "collected_at":"2026-06-19T09:26:59.900166+00:00"
+    "collected_at":"2026-06-19T20:24:49.028449+00:00"
   },
   {
     "match_id":537338,
@@ -947,7 +947,7 @@
     "away_conf":"AFC",
     "city":"Seattle",
     "venue":"Lumen Field",
-    "collected_at":"2026-06-19T09:26:59.900177+00:00"
+    "collected_at":"2026-06-19T20:24:49.028458+00:00"
   },
   {
     "match_id":537344,
@@ -966,7 +966,7 @@
     "away_conf":"CONCACAF",
     "city":"Atlanta",
     "venue":"Mercedes-Benz Stadium",
-    "collected_at":"2026-06-19T09:26:59.900188+00:00"
+    "collected_at":"2026-06-19T20:24:49.028469+00:00"
   },
   {
     "match_id":537343,
@@ -985,7 +985,7 @@
     "away_conf":"CONMEBOL",
     "city":"Miami",
     "venue":"Hard Rock Stadium",
-    "collected_at":"2026-06-19T09:26:59.900198+00:00"
+    "collected_at":"2026-06-19T20:24:49.028478+00:00"
   },
   {
     "match_id":537331,
@@ -1004,7 +1004,7 @@
     "away_conf":"CONCACAF",
     "city":"Mexico City",
     "venue":"Estadio Azteca",
-    "collected_at":"2026-06-19T09:26:59.900226+00:00"
+    "collected_at":"2026-06-19T20:24:49.028502+00:00"
   },
   {
     "match_id":537332,
@@ -1023,7 +1023,7 @@
     "away_conf":"Unknown",
     "city":"Monterrey",
     "venue":"Estadio BBVA",
-    "collected_at":"2026-06-19T09:26:59.900252+00:00"
+    "collected_at":"2026-06-19T20:24:49.028524+00:00"
   },
   {
     "match_id":537355,
@@ -1042,7 +1042,7 @@
     "away_conf":"UEFA",
     "city":"New York\/NJ",
     "venue":"MetLife Stadium",
-    "collected_at":"2026-06-19T09:26:59.900266+00:00"
+    "collected_at":"2026-06-19T20:24:49.028537+00:00"
   },
   {
     "match_id":537356,
@@ -1061,7 +1061,7 @@
     "away_conf":"Unknown",
     "city":"Philadelphia",
     "venue":"Lincoln Financial Field",
-    "collected_at":"2026-06-19T09:26:59.900277+00:00"
+    "collected_at":"2026-06-19T20:24:49.028550+00:00"
   },
   {
     "match_id":537361,
@@ -1080,7 +1080,7 @@
     "away_conf":"UEFA",
     "city":"Kansas City",
     "venue":"Arrowhead Stadium",
-    "collected_at":"2026-06-19T09:26:59.900288+00:00"
+    "collected_at":"2026-06-19T20:24:49.028562+00:00"
   },
   {
     "match_id":537362,
@@ -1099,7 +1099,7 @@
     "away_conf":"UEFA",
     "city":"Dallas",
     "venue":"AT&T Stadium",
-    "collected_at":"2026-06-19T09:26:59.900299+00:00"
+    "collected_at":"2026-06-19T20:24:49.028572+00:00"
   },
   {
     "match_id":537349,
@@ -1118,7 +1118,7 @@
     "away_conf":"Unknown",
     "city":"Los Angeles",
     "venue":"SoFi Stadium",
-    "collected_at":"2026-06-19T09:26:59.900324+00:00"
+    "collected_at":"2026-06-19T20:24:49.028596+00:00"
   },
   {
     "match_id":537350,
@@ -1137,7 +1137,7 @@
     "away_conf":"AFC",
     "city":"San Francisco",
     "venue":"Levi's Stadium",
-    "collected_at":"2026-06-19T09:26:59.900347+00:00"
+    "collected_at":"2026-06-19T20:24:49.028623+00:00"
   },
   {
     "match_id":537395,
@@ -1156,7 +1156,7 @@
     "away_conf":"UEFA",
     "city":"Boston",
     "venue":"Gillette Stadium",
-    "collected_at":"2026-06-19T09:26:59.900361+00:00"
+    "collected_at":"2026-06-19T20:24:49.028634+00:00"
   },
   {
     "match_id":537396,
@@ -1175,7 +1175,7 @@
     "away_conf":"AFC",
     "city":"Toronto",
     "venue":"BMO Field",
-    "collected_at":"2026-06-19T09:26:59.900372+00:00"
+    "collected_at":"2026-06-19T20:24:49.028644+00:00"
   },
   {
     "match_id":537373,
@@ -1194,7 +1194,7 @@
     "away_conf":"UEFA",
     "city":"Guadalajara",
     "venue":"Estadio Akron",
-    "collected_at":"2026-06-19T09:26:59.900395+00:00"
+    "collected_at":"2026-06-19T20:24:49.028667+00:00"
   },
   {
     "match_id":537374,
@@ -1213,7 +1213,7 @@
     "away_conf":"AFC",
     "city":"Houston",
     "venue":"NRG Stadium",
-    "collected_at":"2026-06-19T09:26:59.900418+00:00"
+    "collected_at":"2026-06-19T20:24:49.028690+00:00"
   },
   {
     "match_id":537367,
@@ -1232,7 +1232,7 @@
     "away_conf":"UEFA",
     "city":"Vancouver",
     "venue":"BC Place",
-    "collected_at":"2026-06-19T09:26:59.900478+00:00"
+    "collected_at":"2026-06-19T20:24:49.028716+00:00"
   },
   {
     "match_id":537368,
@@ -1251,7 +1251,7 @@
     "away_conf":"AFC",
     "city":"Seattle",
     "venue":"Lumen Field",
-    "collected_at":"2026-06-19T09:26:59.900515+00:00"
+    "collected_at":"2026-06-19T20:24:49.028768+00:00"
   },
   {
     "match_id":537413,
@@ -1270,7 +1270,7 @@
     "away_conf":"UEFA",
     "city":"New York\/NJ",
     "venue":"MetLife Stadium",
-    "collected_at":"2026-06-19T09:26:59.900527+00:00"
+    "collected_at":"2026-06-19T20:24:49.028785+00:00"
   },
   {
     "match_id":537414,
@@ -1289,7 +1289,7 @@
     "away_conf":"CAF",
     "city":"Philadelphia",
     "venue":"Lincoln Financial Field",
-    "collected_at":"2026-06-19T09:26:59.900538+00:00"
+    "collected_at":"2026-06-19T20:24:49.028796+00:00"
   },
   {
     "match_id":537407,
@@ -1308,7 +1308,7 @@
     "away_conf":"UEFA",
     "city":"Miami",
     "venue":"Hard Rock Stadium",
-    "collected_at":"2026-06-19T09:26:59.900550+00:00"
+    "collected_at":"2026-06-19T20:24:49.028808+00:00"
   },
   {
     "match_id":537408,
@@ -1327,7 +1327,7 @@
     "away_conf":"AFC",
     "city":"Atlanta",
     "venue":"Mercedes-Benz Stadium",
-    "collected_at":"2026-06-19T09:26:59.900562+00:00"
+    "collected_at":"2026-06-19T20:24:49.028819+00:00"
   },
   {
     "match_id":537401,
@@ -1346,7 +1346,7 @@
     "away_conf":"CONMEBOL",
     "city":"Dallas",
     "venue":"AT&T Stadium",
-    "collected_at":"2026-06-19T09:26:59.900587+00:00"
+    "collected_at":"2026-06-19T20:24:49.028845+00:00"
   },
   {
     "match_id":537402,
@@ -1365,7 +1365,7 @@
     "away_conf":"UEFA",
     "city":"Kansas City",
     "venue":"Arrowhead Stadium",
-    "collected_at":"2026-06-19T09:26:59.900610+00:00"
+    "collected_at":"2026-06-19T20:24:49.028868+00:00"
   },
   {
     "match_id":537417,
@@ -1384,7 +1384,7 @@
     "away_conf":"Unknown",
     "city":null,
     "venue":null,
-    "collected_at":"2026-06-19T09:26:59.900630+00:00"
+    "collected_at":"2026-06-19T20:24:49.028888+00:00"
   },
   {
     "match_id":537423,
@@ -1403,7 +1403,7 @@
     "away_conf":"Unknown",
     "city":null,
     "venue":null,
-    "collected_at":"2026-06-19T09:26:59.900649+00:00"
+    "collected_at":"2026-06-19T20:24:49.028914+00:00"
   },
   {
     "match_id":537415,
@@ -1422,7 +1422,7 @@
     "away_conf":"Unknown",
     "city":null,
     "venue":null,
-    "collected_at":"2026-06-19T09:26:59.900671+00:00"
+    "collected_at":"2026-06-19T20:24:49.028935+00:00"
   },
   {
     "match_id":537418,
@@ -1441,7 +1441,7 @@
     "away_conf":"Unknown",
     "city":null,
     "venue":null,
-    "collected_at":"2026-06-19T09:26:59.900690+00:00"
+    "collected_at":"2026-06-19T20:24:49.028954+00:00"
   },
   {
     "match_id":537424,
@@ -1460,7 +1460,7 @@
     "away_conf":"Unknown",
     "city":null,
     "venue":null,
-    "collected_at":"2026-06-19T09:26:59.900707+00:00"
+    "collected_at":"2026-06-19T20:24:49.028970+00:00"
   },
   {
     "match_id":537416,
@@ -1479,7 +1479,7 @@
     "away_conf":"Unknown",
     "city":null,
     "venue":null,
-    "collected_at":"2026-06-19T09:26:59.900725+00:00"
+    "collected_at":"2026-06-19T20:24:49.028988+00:00"
   },
   {
     "match_id":537425,
@@ -1498,7 +1498,7 @@
     "away_conf":"Unknown",
     "city":null,
     "venue":null,
-    "collected_at":"2026-06-19T09:26:59.900742+00:00"
+    "collected_at":"2026-06-19T20:24:49.029004+00:00"
   },
   {
     "match_id":537426,
@@ -1517,7 +1517,7 @@
     "away_conf":"Unknown",
     "city":null,
     "venue":null,
-    "collected_at":"2026-06-19T09:26:59.900760+00:00"
+    "collected_at":"2026-06-19T20:24:49.029020+00:00"
   },
   {
     "match_id":537422,
@@ -1536,7 +1536,7 @@
     "away_conf":"Unknown",
     "city":null,
     "venue":null,
-    "collected_at":"2026-06-19T09:26:59.900781+00:00"
+    "collected_at":"2026-06-19T20:24:49.029036+00:00"
   },
   {
     "match_id":537421,
@@ -1555,7 +1555,7 @@
     "away_conf":"Unknown",
     "city":null,
     "venue":null,
-    "collected_at":"2026-06-19T09:26:59.900799+00:00"
+    "collected_at":"2026-06-19T20:24:49.029051+00:00"
   },
   {
     "match_id":537420,
@@ -1574,7 +1574,7 @@
     "away_conf":"Unknown",
     "city":null,
     "venue":null,
-    "collected_at":"2026-06-19T09:26:59.900816+00:00"
+    "collected_at":"2026-06-19T20:24:49.029067+00:00"
   },
   {
     "match_id":537419,
@@ -1593,7 +1593,7 @@
     "away_conf":"Unknown",
     "city":null,
     "venue":null,
-    "collected_at":"2026-06-19T09:26:59.900832+00:00"
+    "collected_at":"2026-06-19T20:24:49.029087+00:00"
   },
   {
     "match_id":537429,
@@ -1612,7 +1612,7 @@
     "away_conf":"Unknown",
     "city":null,
     "venue":null,
-    "collected_at":"2026-06-19T09:26:59.900851+00:00"
+    "collected_at":"2026-06-19T20:24:49.029106+00:00"
   },
   {
     "match_id":537428,
@@ -1631,7 +1631,7 @@
     "away_conf":"Unknown",
     "city":null,
     "venue":null,
-    "collected_at":"2026-06-19T09:26:59.900868+00:00"
+    "collected_at":"2026-06-19T20:24:49.029122+00:00"
   },
   {
     "match_id":537427,
@@ -1650,7 +1650,7 @@
     "away_conf":"Unknown",
     "city":null,
     "venue":null,
-    "collected_at":"2026-06-19T09:26:59.900884+00:00"
+    "collected_at":"2026-06-19T20:24:49.029138+00:00"
   },
   {
     "match_id":537430,
@@ -1669,7 +1669,7 @@
     "away_conf":"Unknown",
     "city":null,
     "venue":null,
-    "collected_at":"2026-06-19T09:26:59.900901+00:00"
+    "collected_at":"2026-06-19T20:24:49.029153+00:00"
   },
   {
     "match_id":537376,
@@ -1688,7 +1688,7 @@
     "away_conf":"Unknown",
     "city":null,
     "venue":null,
-    "collected_at":"2026-06-19T09:26:59.900917+00:00"
+    "collected_at":"2026-06-19T20:24:49.029169+00:00"
   },
   {
     "match_id":537375,
@@ -1707,7 +1707,7 @@
     "away_conf":"Unknown",
     "city":null,
     "venue":null,
-    "collected_at":"2026-06-19T09:26:59.900933+00:00"
+    "collected_at":"2026-06-19T20:24:49.029185+00:00"
   },
   {
     "match_id":537377,
@@ -1726,7 +1726,7 @@
     "away_conf":"Unknown",
     "city":null,
     "venue":null,
-    "collected_at":"2026-06-19T09:26:59.900950+00:00"
+    "collected_at":"2026-06-19T20:24:49.029200+00:00"
   },
   {
     "match_id":537378,
@@ -1745,7 +1745,7 @@
     "away_conf":"Unknown",
     "city":null,
     "venue":null,
-    "collected_at":"2026-06-19T09:26:59.900966+00:00"
+    "collected_at":"2026-06-19T20:24:49.029215+00:00"
   },
   {
     "match_id":537379,
@@ -1764,7 +1764,7 @@
     "away_conf":"Unknown",
     "city":null,
     "venue":null,
-    "collected_at":"2026-06-19T09:26:59.900984+00:00"
+    "collected_at":"2026-06-19T20:24:49.029231+00:00"
   },
   {
     "match_id":537380,
@@ -1783,7 +1783,7 @@
     "away_conf":"Unknown",
     "city":null,
     "venue":null,
-    "collected_at":"2026-06-19T09:26:59.901001+00:00"
+    "collected_at":"2026-06-19T20:24:49.029246+00:00"
   },
   {
     "match_id":537381,
@@ -1802,7 +1802,7 @@
     "away_conf":"Unknown",
     "city":null,
     "venue":null,
-    "collected_at":"2026-06-19T09:26:59.901020+00:00"
+    "collected_at":"2026-06-19T20:24:49.029264+00:00"
   },
   {
     "match_id":537382,
@@ -1821,7 +1821,7 @@
     "away_conf":"Unknown",
     "city":null,
     "venue":null,
-    "collected_at":"2026-06-19T09:26:59.901038+00:00"
+    "collected_at":"2026-06-19T20:24:49.029280+00:00"
   },
   {
     "match_id":537383,
@@ -1840,7 +1840,7 @@
     "away_conf":"Unknown",
     "city":null,
     "venue":null,
-    "collected_at":"2026-06-19T09:26:59.901055+00:00"
+    "collected_at":"2026-06-19T20:24:49.029295+00:00"
   },
   {
     "match_id":537384,
@@ -1859,7 +1859,7 @@
     "away_conf":"Unknown",
     "city":null,
     "venue":null,
-    "collected_at":"2026-06-19T09:26:59.901075+00:00"
+    "collected_at":"2026-06-19T20:24:49.029310+00:00"
   },
   {
     "match_id":537385,
@@ -1878,7 +1878,7 @@
     "away_conf":"Unknown",
     "city":null,
     "venue":null,
-    "collected_at":"2026-06-19T09:26:59.901093+00:00"
+    "collected_at":"2026-06-19T20:24:49.029326+00:00"
   },
   {
     "match_id":537386,
@@ -1897,7 +1897,7 @@
     "away_conf":"Unknown",
     "city":null,
     "venue":null,
-    "collected_at":"2026-06-19T09:26:59.901110+00:00"
+    "collected_at":"2026-06-19T20:24:49.029340+00:00"
   },
   {
     "match_id":537387,
@@ -1916,7 +1916,7 @@
     "away_conf":"Unknown",
     "city":null,
     "venue":null,
-    "collected_at":"2026-06-19T09:26:59.901127+00:00"
+    "collected_at":"2026-06-19T20:24:49.029356+00:00"
   },
   {
     "match_id":537388,
@@ -1935,7 +1935,7 @@
     "away_conf":"Unknown",
     "city":null,
     "venue":null,
-    "collected_at":"2026-06-19T09:26:59.901143+00:00"
+    "collected_at":"2026-06-19T20:24:49.029372+00:00"
   },
   {
     "match_id":537389,
@@ -1954,7 +1954,7 @@
     "away_conf":"Unknown",
     "city":null,
     "venue":null,
-    "collected_at":"2026-06-19T09:26:59.901160+00:00"
+    "collected_at":"2026-06-19T20:24:49.029392+00:00"
   },
   {
     "match_id":537390,
@@ -1973,6 +1973,6 @@
     "away_conf":"Unknown",
     "city":null,
     "venue":null,
-    "collected_at":"2026-06-19T09:26:59.901180+00:00"
+    "collected_at":"2026-06-19T20:24:49.029408+00:00"
   }
 ]
