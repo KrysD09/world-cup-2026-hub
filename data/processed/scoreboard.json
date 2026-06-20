@@ -1,16 +1,16 @@
 {
-  "last_updated": "2026-06-20T07:51:14.264417+00:00",
-  "matches_played": 32,
+  "last_updated": "2026-06-20T20:12:22.628997+00:00",
+  "matches_played": 33,
   "total_matches": 104,
-  "total_goals": 96,
+  "total_goals": 102,
   "confederations": {
     "UEFA": {
       "teams": 16,
-      "played": 17,
-      "wins": 8,
-      "points": 29,
-      "gf": 38,
-      "ga": 21,
+      "played": 20,
+      "wins": 9,
+      "points": 33,
+      "gf": 44,
+      "ga": 27,
       "gd": 17
     },
     "CONMEBOL": {
@@ -24,9 +24,9 @@
     },
     "CAF": {
       "teams": 10,
-      "played": 10,
+      "played": 11,
       "wins": 3,
-      "points": 12,
+      "points": 13,
       "gf": 8,
       "ga": 16,
       "gd": -8
@@ -238,24 +238,24 @@
     },
     "Germany": {
       "group": "Group E",
-      "played": 1,
+      "played": 2,
       "won": 1,
-      "drawn": 0,
+      "drawn": 1,
       "lost": 0,
       "gf": 7,
       "ga": 1,
-      "points": 3,
+      "points": 4,
       "conf": "UEFA"
     },
     "Ivory Coast": {
       "group": "Group E",
-      "played": 1,
+      "played": 2,
       "won": 1,
-      "drawn": 0,
+      "drawn": 1,
       "lost": 0,
       "gf": 1,
       "ga": 0,
-      "points": 3,
+      "points": 4,
       "conf": "CAF"
     },
     "Ecuador": {
@@ -280,14 +280,25 @@
       "points": 0,
       "conf": "CONCACAF"
     },
+    "Netherlands": {
+      "group": "Group F",
+      "played": 2,
+      "won": 1,
+      "drawn": 1,
+      "lost": 0,
+      "gf": 7,
+      "ga": 3,
+      "points": 4,
+      "conf": "UEFA"
+    },
     "Sweden": {
       "group": "Group F",
-      "played": 1,
+      "played": 2,
       "won": 1,
       "drawn": 0,
-      "lost": 0,
-      "gf": 5,
-      "ga": 1,
+      "lost": 1,
+      "gf": 6,
+      "ga": 6,
       "points": 3,
       "conf": "UEFA"
     },
@@ -301,17 +312,6 @@
       "ga": 2,
       "points": 1,
       "conf": "AFC"
-    },
-    "Netherlands": {
-      "group": "Group F",
-      "played": 1,
-      "won": 0,
-      "drawn": 1,
-      "lost": 0,
-      "gf": 2,
-      "ga": 2,
-      "points": 1,
-      "conf": "UEFA"
     },
     "Tunisia": {
       "group": "Group F",
