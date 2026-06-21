@@ -1,50 +1,50 @@
 {
-  "last_updated": "2026-06-20T20:12:22.628997+00:00",
-  "matches_played": 33,
+  "last_updated": "2026-06-21T06:08:17.080677+00:00",
+  "matches_played": 36,
   "total_matches": 104,
-  "total_goals": 102,
+  "total_goals": 109,
   "confederations": {
     "UEFA": {
       "teams": 16,
       "played": 20,
-      "wins": 9,
-      "points": 33,
-      "gf": 44,
-      "ga": 27,
-      "gd": 17
+      "wins": 10,
+      "points": 35,
+      "gf": 46,
+      "ga": 28,
+      "gd": 18
     },
     "CONMEBOL": {
       "teams": 6,
-      "played": 8,
+      "played": 9,
       "wins": 4,
-      "points": 14,
+      "points": 15,
       "gf": 13,
       "ga": 8,
       "gd": 5
     },
     "CAF": {
       "teams": 10,
-      "played": 11,
+      "played": 12,
       "wins": 3,
-      "points": 13,
-      "gf": 8,
-      "ga": 16,
-      "gd": -8
+      "points": 12,
+      "gf": 9,
+      "ga": 22,
+      "gd": -13
     },
     "AFC": {
       "teams": 9,
-      "played": 12,
-      "wins": 2,
-      "points": 10,
-      "gf": 13,
+      "played": 13,
+      "wins": 3,
+      "points": 13,
+      "gf": 17,
       "ga": 26,
-      "gd": -13
+      "gd": -9
     },
     "CONCACAF": {
       "teams": 6,
-      "played": 8,
+      "played": 9,
       "wins": 3,
-      "points": 10,
+      "points": 11,
       "gf": 11,
       "ga": 13,
       "gd": -2
@@ -239,45 +239,45 @@
     "Germany": {
       "group": "Group E",
       "played": 2,
-      "won": 1,
-      "drawn": 1,
+      "won": 2,
+      "drawn": 0,
       "lost": 0,
-      "gf": 7,
-      "ga": 1,
-      "points": 4,
+      "gf": 9,
+      "ga": 2,
+      "points": 6,
       "conf": "UEFA"
     },
     "Ivory Coast": {
       "group": "Group E",
       "played": 2,
       "won": 1,
-      "drawn": 1,
-      "lost": 0,
-      "gf": 1,
-      "ga": 0,
-      "points": 4,
+      "drawn": 0,
+      "lost": 1,
+      "gf": 2,
+      "ga": 2,
+      "points": 3,
       "conf": "CAF"
     },
     "Ecuador": {
       "group": "Group E",
-      "played": 1,
+      "played": 2,
       "won": 0,
-      "drawn": 0,
+      "drawn": 1,
       "lost": 1,
       "gf": 0,
       "ga": 1,
-      "points": 0,
+      "points": 1,
       "conf": "CONMEBOL"
     },
     "Cura\u00e7ao": {
       "group": "Group E",
-      "played": 1,
+      "played": 2,
       "won": 0,
-      "drawn": 0,
+      "drawn": 1,
       "lost": 1,
       "gf": 1,
       "ga": 7,
-      "points": 0,
+      "points": 1,
       "conf": "CONCACAF"
     },
     "Netherlands": {
@@ -291,6 +291,17 @@
       "points": 4,
       "conf": "UEFA"
     },
+    "Japan": {
+      "group": "Group F",
+      "played": 2,
+      "won": 1,
+      "drawn": 1,
+      "lost": 0,
+      "gf": 6,
+      "ga": 2,
+      "points": 4,
+      "conf": "AFC"
+    },
     "Sweden": {
       "group": "Group F",
       "played": 2,
@@ -302,25 +313,14 @@
       "points": 3,
       "conf": "UEFA"
     },
-    "Japan": {
-      "group": "Group F",
-      "played": 1,
-      "won": 0,
-      "drawn": 1,
-      "lost": 0,
-      "gf": 2,
-      "ga": 2,
-      "points": 1,
-      "conf": "AFC"
-    },
     "Tunisia": {
       "group": "Group F",
-      "played": 1,
+      "played": 2,
       "won": 0,
       "drawn": 0,
-      "lost": 1,
+      "lost": 2,
       "gf": 1,
-      "ga": 5,
+      "ga": 9,
       "points": 0,
       "conf": "CAF"
     },
