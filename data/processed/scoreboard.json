@@ -1,17 +1,17 @@
 {
-  "last_updated": "2026-06-21T08:35:51.551108+00:00",
-  "matches_played": 36,
+  "last_updated": "2026-06-21T20:21:20.848910+00:00",
+  "matches_played": 37,
   "total_matches": 104,
-  "total_goals": 109,
+  "total_goals": 114,
   "confederations": {
     "UEFA": {
       "teams": 16,
-      "played": 20,
-      "wins": 10,
-      "points": 35,
-      "gf": 46,
+      "played": 22,
+      "wins": 11,
+      "points": 39,
+      "gf": 50,
       "ga": 28,
-      "gd": 18
+      "gd": 22
     },
     "CONMEBOL": {
       "teams": 6,
@@ -33,12 +33,12 @@
     },
     "AFC": {
       "teams": 9,
-      "played": 13,
+      "played": 15,
       "wins": 3,
-      "points": 13,
+      "points": 14,
       "gf": 17,
-      "ga": 26,
-      "gd": -9
+      "ga": 30,
+      "gd": -13
     },
     "CONCACAF": {
       "teams": 6,
@@ -324,6 +324,28 @@
       "points": 0,
       "conf": "CAF"
     },
+    "Iran": {
+      "group": "Group G",
+      "played": 2,
+      "won": 0,
+      "drawn": 2,
+      "lost": 0,
+      "gf": 2,
+      "ga": 2,
+      "points": 2,
+      "conf": "AFC"
+    },
+    "Belgium": {
+      "group": "Group G",
+      "played": 2,
+      "won": 0,
+      "drawn": 2,
+      "lost": 0,
+      "gf": 1,
+      "ga": 1,
+      "points": 2,
+      "conf": "UEFA"
+    },
     "New Zealand": {
       "group": "Group G",
       "played": 1,
@@ -335,28 +357,6 @@
       "points": 1,
       "conf": "OFC"
     },
-    "Iran": {
-      "group": "Group G",
-      "played": 1,
-      "won": 0,
-      "drawn": 1,
-      "lost": 0,
-      "gf": 2,
-      "ga": 2,
-      "points": 1,
-      "conf": "AFC"
-    },
-    "Belgium": {
-      "group": "Group G",
-      "played": 1,
-      "won": 0,
-      "drawn": 1,
-      "lost": 0,
-      "gf": 1,
-      "ga": 1,
-      "points": 1,
-      "conf": "UEFA"
-    },
     "Egypt": {
       "group": "Group G",
       "played": 1,
@@ -367,6 +367,17 @@
       "ga": 1,
       "points": 1,
       "conf": "CAF"
+    },
+    "Spain": {
+      "group": "Group H",
+      "played": 2,
+      "won": 1,
+      "drawn": 1,
+      "lost": 0,
+      "gf": 4,
+      "ga": 0,
+      "points": 4,
+      "conf": "UEFA"
     },
     "Uruguay": {
       "group": "Group H",
@@ -381,25 +392,14 @@
     },
     "Saudi Arabia": {
       "group": "Group H",
-      "played": 1,
+      "played": 2,
       "won": 0,
       "drawn": 1,
-      "lost": 0,
+      "lost": 1,
       "gf": 1,
-      "ga": 1,
+      "ga": 5,
       "points": 1,
       "conf": "AFC"
-    },
-    "Spain": {
-      "group": "Group H",
-      "played": 1,
-      "won": 0,
-      "drawn": 1,
-      "lost": 0,
-      "gf": 0,
-      "ga": 0,
-      "points": 1,
-      "conf": "UEFA"
     },
     "Cape Verde Islands": {
       "group": "Group H",
