@@ -1,26 +1,26 @@
 {
-  "last_updated": "2026-06-22T09:48:56.926274+00:00",
-  "matches_played": 40,
+  "last_updated": "2026-06-22T21:29:53.244862+00:00",
+  "matches_played": 41,
   "total_matches": 104,
-  "total_goals": 121,
+  "total_goals": 123,
   "confederations": {
     "UEFA": {
       "teams": 16,
-      "played": 22,
+      "played": 24,
       "wins": 11,
-      "points": 39,
+      "points": 40,
       "gf": 50,
-      "ga": 28,
-      "gd": 22
+      "ga": 30,
+      "gd": 20
     },
     "CONMEBOL": {
       "teams": 6,
-      "played": 10,
-      "wins": 4,
-      "points": 16,
-      "gf": 15,
+      "played": 11,
+      "wins": 5,
+      "points": 19,
+      "gf": 17,
       "ga": 10,
-      "gd": 5
+      "gd": 7
     },
     "CAF": {
       "teams": 10,
@@ -33,9 +33,9 @@
     },
     "AFC": {
       "teams": 9,
-      "played": 15,
+      "played": 16,
       "wins": 3,
-      "points": 14,
+      "points": 15,
       "gf": 17,
       "ga": 30,
       "gd": -13
@@ -412,6 +412,17 @@
       "points": 1,
       "conf": "AFC"
     },
+    "France": {
+      "group": "Group I",
+      "played": 2,
+      "won": 1,
+      "drawn": 1,
+      "lost": 0,
+      "gf": 3,
+      "ga": 1,
+      "points": 4,
+      "conf": "UEFA"
+    },
     "Norway": {
       "group": "Group I",
       "played": 1,
@@ -423,16 +434,16 @@
       "points": 3,
       "conf": "UEFA"
     },
-    "France": {
+    "Iraq": {
       "group": "Group I",
-      "played": 1,
-      "won": 1,
-      "drawn": 0,
-      "lost": 0,
-      "gf": 3,
-      "ga": 1,
-      "points": 3,
-      "conf": "UEFA"
+      "played": 2,
+      "won": 0,
+      "drawn": 1,
+      "lost": 1,
+      "gf": 1,
+      "ga": 4,
+      "points": 1,
+      "conf": "AFC"
     },
     "Senegal": {
       "group": "Group I",
@@ -445,36 +456,25 @@
       "points": 0,
       "conf": "CAF"
     },
-    "Iraq": {
-      "group": "Group I",
-      "played": 1,
-      "won": 0,
-      "drawn": 0,
-      "lost": 1,
-      "gf": 1,
-      "ga": 4,
-      "points": 0,
-      "conf": "AFC"
-    },
     "Argentina": {
       "group": "Group J",
-      "played": 1,
-      "won": 1,
+      "played": 2,
+      "won": 2,
       "drawn": 0,
       "lost": 0,
-      "gf": 3,
+      "gf": 5,
       "ga": 0,
-      "points": 3,
+      "points": 6,
       "conf": "CONMEBOL"
     },
     "Austria": {
       "group": "Group J",
-      "played": 1,
+      "played": 2,
       "won": 1,
       "drawn": 0,
-      "lost": 0,
+      "lost": 1,
       "gf": 3,
-      "ga": 1,
+      "ga": 3,
       "points": 3,
       "conf": "UEFA"
     },
