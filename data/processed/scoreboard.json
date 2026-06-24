@@ -1,17 +1,17 @@
 {
-  "last_updated": "2026-06-24T07:41:46.783573+00:00",
+  "last_updated": "2026-06-24T20:30:06.875197+00:00",
   "matches_played": 48,
   "total_matches": 104,
   "total_goals": 141,
   "confederations": {
     "UEFA": {
       "teams": 16,
-      "played": 28,
-      "wins": 15,
-      "points": 52,
-      "gf": 62,
+      "played": 29,
+      "wins": 16,
+      "points": 55,
+      "gf": 64,
       "ga": 32,
-      "gd": 30
+      "gd": 32
     },
     "CONMEBOL": {
       "teams": 6,
@@ -33,21 +33,21 @@
     },
     "AFC": {
       "teams": 9,
-      "played": 18,
+      "played": 19,
       "wins": 3,
       "points": 14,
-      "gf": 18,
-      "ga": 40,
-      "gd": -22
+      "gf": 19,
+      "ga": 42,
+      "gd": -23
     },
     "CONCACAF": {
       "teams": 6,
-      "played": 10,
+      "played": 11,
       "wins": 3,
       "points": 11,
       "gf": 11,
-      "ga": 14,
-      "gd": -3
+      "ga": 16,
+      "gd": -5
     },
     "OFC": {
       "teams": 1,
@@ -104,47 +104,47 @@
       "points": 1,
       "conf": "CAF"
     },
-    "Canada": {
+    "Switzerland": {
       "group": "Group B",
-      "played": 2,
-      "won": 1,
+      "played": 3,
+      "won": 2,
       "drawn": 1,
       "lost": 0,
       "gf": 7,
-      "ga": 1,
+      "ga": 2,
+      "points": 7,
+      "conf": "UEFA"
+    },
+    "Canada": {
+      "group": "Group B",
+      "played": 3,
+      "won": 1,
+      "drawn": 1,
+      "lost": 1,
+      "gf": 7,
+      "ga": 3,
       "points": 4,
       "conf": "CONCACAF"
     },
-    "Switzerland": {
-      "group": "Group B",
-      "played": 2,
-      "won": 1,
-      "drawn": 1,
-      "lost": 0,
-      "gf": 5,
-      "ga": 2,
-      "points": 4,
-      "conf": "UEFA"
-    },
     "Bosnia-Herzegovina": {
       "group": "Group B",
-      "played": 2,
-      "won": 0,
+      "played": 3,
+      "won": 1,
       "drawn": 1,
       "lost": 1,
-      "gf": 2,
-      "ga": 5,
-      "points": 1,
+      "gf": 4,
+      "ga": 6,
+      "points": 4,
       "conf": "UEFA"
     },
     "Qatar": {
       "group": "Group B",
-      "played": 2,
+      "played": 3,
       "won": 0,
       "drawn": 1,
-      "lost": 1,
-      "gf": 1,
-      "ga": 7,
+      "lost": 2,
+      "gf": 2,
+      "ga": 9,
       "points": 1,
       "conf": "AFC"
     },
