@@ -1,26 +1,26 @@
 {
-  "last_updated": "2026-06-23T20:59:03.475382+00:00",
-  "matches_played": 45,
+  "last_updated": "2026-06-24T05:05:07.942769+00:00",
+  "matches_played": 48,
   "total_matches": 104,
-  "total_goals": 139,
+  "total_goals": 141,
   "confederations": {
     "UEFA": {
       "teams": 16,
-      "played": 27,
-      "wins": 14,
-      "points": 49,
-      "gf": 61,
+      "played": 28,
+      "wins": 15,
+      "points": 52,
+      "gf": 62,
       "ga": 32,
-      "gd": 29
+      "gd": 30
     },
     "CONMEBOL": {
       "teams": 6,
-      "played": 11,
-      "wins": 5,
-      "points": 19,
-      "gf": 17,
+      "played": 12,
+      "wins": 6,
+      "points": 22,
+      "gf": 18,
       "ga": 10,
-      "gd": 7
+      "gd": 8
     },
     "CAF": {
       "teams": 10,
@@ -42,12 +42,12 @@
     },
     "CONCACAF": {
       "teams": 6,
-      "played": 9,
+      "played": 10,
       "wins": 3,
       "points": 11,
       "gf": 11,
-      "ga": 13,
-      "gd": -2
+      "ga": 14,
+      "gd": -3
     },
     "OFC": {
       "teams": 1,
@@ -500,6 +500,17 @@
       "points": 0,
       "conf": "AFC"
     },
+    "Colombia": {
+      "group": "Group K",
+      "played": 2,
+      "won": 2,
+      "drawn": 0,
+      "lost": 0,
+      "gf": 4,
+      "ga": 1,
+      "points": 6,
+      "conf": "CONMEBOL"
+    },
     "Portugal": {
       "group": "Group K",
       "played": 2,
@@ -511,25 +522,14 @@
       "points": 4,
       "conf": "UEFA"
     },
-    "Colombia": {
-      "group": "Group K",
-      "played": 1,
-      "won": 1,
-      "drawn": 0,
-      "lost": 0,
-      "gf": 3,
-      "ga": 1,
-      "points": 3,
-      "conf": "CONMEBOL"
-    },
     "Congo DR": {
       "group": "Group K",
-      "played": 1,
+      "played": 2,
       "won": 0,
       "drawn": 1,
-      "lost": 0,
+      "lost": 1,
       "gf": 1,
-      "ga": 1,
+      "ga": 2,
       "points": 1,
       "conf": "CAF"
     },
@@ -566,27 +566,27 @@
       "points": 4,
       "conf": "CAF"
     },
-    "Panama": {
-      "group": "Group L",
-      "played": 1,
-      "won": 0,
-      "drawn": 0,
-      "lost": 1,
-      "gf": 0,
-      "ga": 1,
-      "points": 0,
-      "conf": "CONCACAF"
-    },
     "Croatia": {
       "group": "Group L",
-      "played": 1,
-      "won": 0,
+      "played": 2,
+      "won": 1,
       "drawn": 0,
       "lost": 1,
-      "gf": 2,
+      "gf": 3,
       "ga": 4,
-      "points": 0,
+      "points": 3,
       "conf": "UEFA"
+    },
+    "Panama": {
+      "group": "Group L",
+      "played": 2,
+      "won": 0,
+      "drawn": 0,
+      "lost": 2,
+      "gf": 0,
+      "ga": 2,
+      "points": 0,
+      "conf": "CONCACAF"
     }
   }
 }
