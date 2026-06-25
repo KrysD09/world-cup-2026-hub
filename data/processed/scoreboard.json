@@ -1,35 +1,35 @@
 {
-  "last_updated": "2026-06-25T07:42:50.601726+00:00",
+  "last_updated": "2026-06-25T20:53:12.492219+00:00",
   "matches_played": 54,
   "total_matches": 104,
   "total_goals": 161,
   "confederations": {
     "UEFA": {
       "teams": 16,
-      "played": 30,
+      "played": 31,
       "wins": 16,
-      "points": 55,
-      "gf": 64,
-      "ga": 36,
+      "points": 56,
+      "gf": 65,
+      "ga": 37,
       "gd": 28
     },
     "CONMEBOL": {
       "teams": 6,
-      "played": 13,
+      "played": 14,
       "wins": 7,
-      "points": 25,
-      "gf": 21,
-      "ga": 10,
+      "points": 26,
+      "gf": 22,
+      "ga": 11,
       "gd": 11
     },
     "CAF": {
       "teams": 10,
-      "played": 18,
-      "wins": 7,
-      "points": 25,
-      "gf": 21,
+      "played": 19,
+      "wins": 8,
+      "points": 28,
+      "gf": 22,
       "ga": 29,
-      "gd": -8
+      "gd": -7
     },
     "AFC": {
       "teams": 9,
@@ -42,12 +42,12 @@
     },
     "CONCACAF": {
       "teams": 6,
-      "played": 13,
+      "played": 14,
       "wins": 4,
       "points": 14,
       "gf": 17,
-      "ga": 20,
-      "gd": -3
+      "ga": 21,
+      "gd": -4
     },
     "OFC": {
       "teams": 1,
@@ -238,45 +238,45 @@
     },
     "Germany": {
       "group": "Group E",
-      "played": 2,
+      "played": 3,
       "won": 2,
-      "drawn": 0,
+      "drawn": 1,
       "lost": 0,
-      "gf": 9,
-      "ga": 2,
-      "points": 6,
+      "gf": 10,
+      "ga": 3,
+      "points": 7,
       "conf": "UEFA"
     },
     "Ivory Coast": {
       "group": "Group E",
-      "played": 2,
-      "won": 1,
+      "played": 3,
+      "won": 2,
       "drawn": 0,
       "lost": 1,
-      "gf": 2,
+      "gf": 3,
       "ga": 2,
-      "points": 3,
+      "points": 6,
       "conf": "CAF"
     },
     "Ecuador": {
       "group": "Group E",
-      "played": 2,
+      "played": 3,
       "won": 0,
-      "drawn": 1,
+      "drawn": 2,
       "lost": 1,
-      "gf": 0,
-      "ga": 1,
-      "points": 1,
+      "gf": 1,
+      "ga": 2,
+      "points": 2,
       "conf": "CONMEBOL"
     },
     "Cura\u00e7ao": {
       "group": "Group E",
-      "played": 2,
+      "played": 3,
       "won": 0,
       "drawn": 1,
-      "lost": 1,
+      "lost": 2,
       "gf": 1,
-      "ga": 7,
+      "ga": 8,
       "points": 1,
       "conf": "CONCACAF"
     },
