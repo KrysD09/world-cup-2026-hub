@@ -1,16 +1,16 @@
 {
-  "last_updated": "2026-06-26T07:53:42.924861+00:00",
+  "last_updated": "2026-06-26T20:29:06.904525+00:00",
   "matches_played": 60,
   "total_matches": 104,
   "total_goals": 177,
   "confederations": {
     "UEFA": {
       "teams": 16,
-      "played": 34,
-      "wins": 18,
-      "points": 62,
-      "gf": 72,
-      "ga": 42,
+      "played": 36,
+      "wins": 19,
+      "points": 65,
+      "gf": 76,
+      "ga": 46,
       "gd": 30
     },
     "CONMEBOL": {
@@ -24,21 +24,21 @@
     },
     "CAF": {
       "teams": 10,
-      "played": 20,
-      "wins": 8,
-      "points": 28,
-      "gf": 24,
+      "played": 21,
+      "wins": 9,
+      "points": 31,
+      "gf": 25,
       "ga": 32,
-      "gd": -8
+      "gd": -7
     },
     "AFC": {
       "teams": 9,
-      "played": 22,
+      "played": 23,
       "wins": 3,
       "points": 16,
       "gf": 20,
-      "ga": 45,
-      "gd": -25
+      "ga": 46,
+      "gd": -26
     },
     "CONCACAF": {
       "teams": 6,
@@ -414,45 +414,45 @@
     },
     "France": {
       "group": "Group I",
-      "played": 2,
-      "won": 2,
+      "played": 3,
+      "won": 3,
       "drawn": 0,
       "lost": 0,
-      "gf": 6,
-      "ga": 1,
-      "points": 6,
+      "gf": 9,
+      "ga": 2,
+      "points": 9,
       "conf": "UEFA"
     },
     "Norway": {
       "group": "Group I",
-      "played": 2,
+      "played": 3,
       "won": 2,
       "drawn": 0,
-      "lost": 0,
-      "gf": 7,
-      "ga": 3,
+      "lost": 1,
+      "gf": 8,
+      "ga": 6,
       "points": 6,
       "conf": "UEFA"
     },
     "Senegal": {
       "group": "Group I",
-      "played": 2,
-      "won": 0,
+      "played": 3,
+      "won": 1,
       "drawn": 0,
       "lost": 2,
-      "gf": 3,
+      "gf": 4,
       "ga": 6,
-      "points": 0,
+      "points": 3,
       "conf": "CAF"
     },
     "Iraq": {
       "group": "Group I",
-      "played": 2,
+      "played": 3,
       "won": 0,
       "drawn": 0,
-      "lost": 2,
+      "lost": 3,
       "gf": 1,
-      "ga": 7,
+      "ga": 8,
       "points": 0,
       "conf": "AFC"
     },
