@@ -344,9 +344,9 @@
     "won":1,
     "drawn":2,
     "lost":0,
-    "goals_for":4,
-    "goals_against":1,
-    "goal_diff":3,
+    "goals_for":6,
+    "goals_against":2,
+    "goal_diff":4,
     "points":5
   },
   {
@@ -386,9 +386,9 @@
     "won":0,
     "drawn":1,
     "lost":2,
-    "goals_for":3,
-    "goals_against":8,
-    "goal_diff":-5,
+    "goals_for":4,
+    "goals_against":10,
+    "goal_diff":-6,
     "points":1
   },
   {
