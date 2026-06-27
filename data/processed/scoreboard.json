@@ -1,44 +1,44 @@
 {
-  "last_updated": "2026-06-26T20:29:06.904525+00:00",
-  "matches_played": 60,
+  "last_updated": "2026-06-27T04:57:05.330686+00:00",
+  "matches_played": 64,
   "total_matches": 104,
-  "total_goals": 177,
+  "total_goals": 188,
   "confederations": {
     "UEFA": {
       "teams": 16,
-      "played": 36,
-      "wins": 19,
-      "points": 65,
-      "gf": 76,
-      "ga": 46,
-      "gd": 30
+      "played": 38,
+      "wins": 21,
+      "points": 71,
+      "gf": 81,
+      "ga": 47,
+      "gd": 34
     },
     "CONMEBOL": {
       "teams": 6,
-      "played": 15,
+      "played": 16,
       "wins": 8,
       "points": 29,
       "gf": 23,
-      "ga": 11,
-      "gd": 12
+      "ga": 12,
+      "gd": 11
     },
     "CAF": {
       "teams": 10,
-      "played": 21,
+      "played": 22,
       "wins": 9,
-      "points": 31,
-      "gf": 25,
-      "ga": 32,
-      "gd": -7
+      "points": 32,
+      "gf": 30,
+      "ga": 33,
+      "gd": -3
     },
     "AFC": {
       "teams": 9,
-      "played": 23,
+      "played": 25,
       "wins": 3,
-      "points": 16,
-      "gf": 20,
-      "ga": 46,
-      "gd": -26
+      "points": 18,
+      "gf": 21,
+      "ga": 51,
+      "gd": -30
     },
     "CONCACAF": {
       "teams": 6,
@@ -51,12 +51,12 @@
     },
     "OFC": {
       "teams": 1,
-      "played": 2,
+      "played": 3,
       "wins": 0,
       "points": 1,
       "gf": 3,
-      "ga": 5,
-      "gd": -2
+      "ga": 8,
+      "gd": -5
     }
   },
   "team_standings": {
@@ -324,92 +324,92 @@
       "points": 0,
       "conf": "CAF"
     },
-    "Egypt": {
+    "Belgium": {
       "group": "Group G",
-      "played": 2,
+      "played": 3,
       "won": 1,
-      "drawn": 1,
+      "drawn": 2,
       "lost": 0,
       "gf": 4,
-      "ga": 2,
-      "points": 4,
+      "ga": 1,
+      "points": 5,
+      "conf": "UEFA"
+    },
+    "Egypt": {
+      "group": "Group G",
+      "played": 3,
+      "won": 1,
+      "drawn": 2,
+      "lost": 0,
+      "gf": 5,
+      "ga": 3,
+      "points": 5,
       "conf": "CAF"
     },
     "Iran": {
       "group": "Group G",
-      "played": 2,
+      "played": 3,
       "won": 0,
-      "drawn": 2,
+      "drawn": 3,
       "lost": 0,
-      "gf": 2,
-      "ga": 2,
-      "points": 2,
+      "gf": 3,
+      "ga": 3,
+      "points": 3,
       "conf": "AFC"
-    },
-    "Belgium": {
-      "group": "Group G",
-      "played": 2,
-      "won": 0,
-      "drawn": 2,
-      "lost": 0,
-      "gf": 1,
-      "ga": 1,
-      "points": 2,
-      "conf": "UEFA"
     },
     "New Zealand": {
       "group": "Group G",
-      "played": 2,
+      "played": 3,
       "won": 0,
       "drawn": 1,
-      "lost": 1,
+      "lost": 2,
       "gf": 3,
-      "ga": 5,
+      "ga": 8,
       "points": 1,
       "conf": "OFC"
     },
     "Spain": {
       "group": "Group H",
-      "played": 2,
-      "won": 1,
+      "played": 3,
+      "won": 2,
       "drawn": 1,
       "lost": 0,
-      "gf": 4,
+      "gf": 5,
       "ga": 0,
-      "points": 4,
+      "points": 7,
       "conf": "UEFA"
-    },
-    "Uruguay": {
-      "group": "Group H",
-      "played": 2,
-      "won": 0,
-      "drawn": 2,
-      "lost": 0,
-      "gf": 3,
-      "ga": 3,
-      "points": 2,
-      "conf": "CONMEBOL"
     },
     "Cape Verde Islands": {
       "group": "Group H",
-      "played": 2,
+      "played": 3,
       "won": 0,
-      "drawn": 2,
+      "drawn": 3,
       "lost": 0,
       "gf": 2,
       "ga": 2,
-      "points": 2,
+      "points": 3,
       "conf": "CAF"
+    },
+    "Uruguay": {
+      "group": "Group H",
+      "played": 3,
+      "won": 0,
+      "drawn": 2,
+      "lost": 1,
+      "gf": 3,
+      "ga": 4,
+      "points": 2,
+      "conf": "CONMEBOL"
     },
     "Saudi Arabia": {
       "group": "Group H",
-      "played": 2,
+      "played": 3,
       "won": 0,
-      "drawn": 1,
+      "drawn": 2,
       "lost": 1,
       "gf": 1,
       "ga": 5,
-      "points": 1,
+      "points": 2,
       "conf": "AFC"
     },
     "France": {
@@ -418,7 +418,7 @@
       "won": 3,
       "drawn": 0,
       "lost": 0,
-      "gf": 9,
+      "gf": 10,
       "ga": 2,
       "points": 9,
       "conf": "UEFA"
@@ -430,7 +430,7 @@
       "drawn": 0,
       "lost": 1,
       "gf": 8,
-      "ga": 6,
+      "ga": 7,
       "points": 6,
       "conf": "UEFA"
     },
@@ -440,7 +440,7 @@
       "won": 1,
       "drawn": 0,
       "lost": 2,
-      "gf": 4,
+      "gf": 8,
       "ga": 6,
       "points": 3,
       "conf": "CAF"
@@ -452,7 +452,7 @@
       "drawn": 0,
       "lost": 3,
       "gf": 1,
-      "ga": 8,
+      "ga": 12,
       "points": 0,
       "conf": "AFC"
     },
