@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-16T19:58:09.589076+00:00",
+  "generated_at": "2026-07-17T04:11:25.181834+00:00",
   "n_sims": 10000,
   "matches_played": 102,
   "seed": 42,
@@ -8,297 +8,306 @@
       "team": "Argentina",
       "elo": 2120,
       "qualify": 100.0,
-      "reach_qf": 62.66,
-      "reach_sf": 47.38,
-      "final": 33.79,
-      "champion": 22.52
+      "reach_qf": 62.67,
+      "reach_sf": 46.46,
+      "final": 32.94,
+      "champion": 22.43
     },
     {
       "team": "France",
       "elo": 2080,
       "qualify": 100.0,
-      "reach_qf": 57.49,
-      "reach_sf": 40.25,
-      "final": 25.56,
-      "champion": 15.45
+      "reach_qf": 57.45,
+      "reach_sf": 40.43,
+      "final": 26.19,
+      "champion": 16.02
     },
     {
       "team": "Brazil",
       "elo": 2060,
       "qualify": 100.0,
-      "reach_qf": 54.2,
-      "reach_sf": 36.05,
-      "final": 21.84,
-      "champion": 12.76
+      "reach_qf": 53.31,
+      "reach_sf": 36.02,
+      "final": 22.17,
+      "champion": 12.21
+    },
+    {
+      "team": "England",
+      "elo": 2040,
+      "qualify": 99.39,
+      "reach_qf": 51.47,
+      "reach_sf": 33.01,
+      "final": 19.51,
+      "champion": 10.55
     },
     {
       "team": "Spain",
       "elo": 2035,
       "qualify": 100.0,
-      "reach_qf": 51.19,
-      "reach_sf": 32.45,
-      "final": 18.77,
-      "champion": 9.98
-    },
-    {
-      "team": "England",
-      "elo": 2040,
-      "qualify": 99.38,
-      "reach_qf": 51.01,
-      "reach_sf": 32.34,
-      "final": 19.44,
-      "champion": 9.98
+      "reach_qf": 50.83,
+      "reach_sf": 32.41,
+      "final": 18.55,
+      "champion": 9.84
     },
     {
       "team": "Netherlands",
       "elo": 2000,
       "qualify": 100.0,
-      "reach_qf": 44.69,
-      "reach_sf": 26.62,
-      "final": 14.38,
-      "champion": 7.0
+      "reach_qf": 44.49,
+      "reach_sf": 25.77,
+      "final": 13.35,
+      "champion": 6.3
     },
     {
       "team": "Portugal",
       "elo": 1995,
-      "qualify": 81.1,
-      "reach_qf": 35.01,
-      "reach_sf": 20.03,
-      "final": 10.16,
-      "champion": 4.57
+      "qualify": 80.82,
+      "reach_qf": 35.03,
+      "reach_sf": 19.77,
+      "final": 9.96,
+      "champion": 4.59
     },
     {
       "team": "Germany",
       "elo": 1965,
       "qualify": 100.0,
-      "reach_qf": 39.55,
-      "reach_sf": 20.38,
-      "final": 9.55,
-      "champion": 3.99
+      "reach_qf": 39.44,
+      "reach_sf": 20.58,
+      "final": 10.06,
+      "champion": 3.91
     },
     {
       "team": "Belgium",
       "elo": 1950,
       "qualify": 100.0,
-      "reach_qf": 35.8,
-      "reach_sf": 18.17,
-      "final": 7.81,
-      "champion": 3.08
+      "reach_qf": 36.4,
+      "reach_sf": 18.9,
+      "final": 9.03,
+      "champion": 3.35
     },
     {
       "team": "Croatia",
       "elo": 1920,
-      "qualify": 95.62,
-      "reach_qf": 30.08,
-      "reach_sf": 14.32,
-      "final": 5.99,
-      "champion": 2.06
+      "qualify": 95.27,
+      "reach_qf": 30.97,
+      "reach_sf": 14.81,
+      "final": 5.87,
+      "champion": 1.98
     },
     {
       "team": "Colombia",
       "elo": 1900,
-      "qualify": 96.74,
-      "reach_qf": 27.68,
-      "reach_sf": 12.46,
-      "final": 4.48,
-      "champion": 1.55
+      "qualify": 96.98,
+      "reach_qf": 27.63,
+      "reach_sf": 11.72,
+      "final": 4.28,
+      "champion": 1.57
     },
     {
       "team": "Morocco",
       "elo": 1890,
       "qualify": 100.0,
-      "reach_qf": 26.96,
-      "reach_sf": 11.54,
-      "final": 4.06,
-      "champion": 1.26
+      "reach_qf": 27.19,
+      "reach_sf": 11.96,
+      "final": 4.62,
+      "champion": 1.43
     },
     {
       "team": "Norway",
       "elo": 1880,
       "qualify": 100.0,
-      "reach_qf": 26.0,
-      "reach_sf": 10.65,
-      "final": 3.82,
-      "champion": 1.17
+      "reach_qf": 26.4,
+      "reach_sf": 10.76,
+      "final": 3.98,
+      "champion": 1.27
     },
     {
       "team": "Switzerland",
       "elo": 1860,
       "qualify": 100.0,
-      "reach_qf": 22.9,
-      "reach_sf": 8.94,
-      "final": 2.86,
-      "champion": 0.77
+      "reach_qf": 23.01,
+      "reach_sf": 9.01,
+      "final": 3.13,
+      "champion": 0.9
     },
     {
       "team": "Japan",
       "elo": 1830,
       "qualify": 100.0,
-      "reach_qf": 19.71,
-      "reach_sf": 6.57,
-      "final": 2.1,
-      "champion": 0.56
-    },
-    {
-      "team": "United States",
-      "elo": 1820,
-      "qualify": 100.0,
-      "reach_qf": 19.3,
-      "reach_sf": 6.52,
-      "final": 1.75,
-      "champion": 0.42
-    },
-    {
-      "team": "Senegal",
-      "elo": 1815,
-      "qualify": 100.0,
-      "reach_qf": 18.14,
-      "reach_sf": 6.15,
-      "final": 1.61,
-      "champion": 0.39
+      "reach_qf": 19.19,
+      "reach_sf": 7.14,
+      "final": 2.01,
+      "champion": 0.54
     },
     {
       "team": "Sweden",
       "elo": 1820,
       "qualify": 100.0,
-      "reach_qf": 18.37,
-      "reach_sf": 6.03,
-      "final": 1.68,
-      "champion": 0.37
+      "reach_qf": 19.02,
+      "reach_sf": 6.37,
+      "final": 1.74,
+      "champion": 0.5
+    },
+    {
+      "team": "United States",
+      "elo": 1820,
+      "qualify": 100.0,
+      "reach_qf": 18.57,
+      "reach_sf": 6.36,
+      "final": 1.89,
+      "champion": 0.45
     },
     {
       "team": "Austria",
       "elo": 1830,
       "qualify": 100.0,
-      "reach_qf": 19.14,
-      "reach_sf": 6.75,
-      "final": 2.03,
-      "champion": 0.36
-    },
-    {
-      "team": "Ecuador",
-      "elo": 1790,
-      "qualify": 100.0,
-      "reach_qf": 14.89,
-      "reach_sf": 4.49,
-      "final": 1.23,
-      "champion": 0.32
+      "reach_qf": 19.23,
+      "reach_sf": 6.74,
+      "final": 1.9,
+      "champion": 0.45
     },
     {
       "team": "Mexico",
       "elo": 1800,
       "qualify": 100.0,
-      "reach_qf": 16.22,
-      "reach_sf": 4.99,
-      "final": 1.34,
-      "champion": 0.28
+      "reach_qf": 16.09,
+      "reach_sf": 5.31,
+      "final": 1.26,
+      "champion": 0.34
+    },
+    {
+      "team": "Senegal",
+      "elo": 1815,
+      "qualify": 100.0,
+      "reach_qf": 17.87,
+      "reach_sf": 5.73,
+      "final": 1.3,
+      "champion": 0.31
+    },
+    {
+      "team": "Ecuador",
+      "elo": 1790,
+      "qualify": 100.0,
+      "reach_qf": 14.85,
+      "reach_sf": 4.62,
+      "final": 0.93,
+      "champion": 0.21
     },
     {
       "team": "Iran",
       "elo": 1770,
-      "qualify": 77.78,
-      "reach_qf": 10.5,
-      "reach_sf": 3.05,
-      "final": 0.73,
-      "champion": 0.18
-    },
-    {
-      "team": "Canada",
-      "elo": 1760,
-      "qualify": 100.0,
-      "reach_qf": 12.78,
-      "reach_sf": 3.58,
-      "final": 0.76,
-      "champion": 0.17
+      "qualify": 78.02,
+      "reach_qf": 10.56,
+      "reach_sf": 2.99,
+      "final": 0.66,
+      "champion": 0.19
     },
     {
       "team": "Algeria",
       "elo": 1760,
       "qualify": 100.0,
-      "reach_qf": 12.15,
-      "reach_sf": 3.47,
-      "final": 0.8,
-      "champion": 0.17
+      "reach_qf": 12.12,
+      "reach_sf": 3.03,
+      "final": 0.62,
+      "champion": 0.15
     },
     {
-      "team": "Ivory Coast",
-      "elo": 1745,
+      "team": "Canada",
+      "elo": 1760,
       "qualify": 100.0,
-      "reach_qf": 11.35,
-      "reach_sf": 2.98,
-      "final": 0.76,
-      "champion": 0.14
-    },
-    {
-      "team": "Australia",
-      "elo": 1740,
-      "qualify": 100.0,
-      "reach_qf": 10.4,
-      "reach_sf": 2.4,
-      "final": 0.57,
-      "champion": 0.11
+      "reach_qf": 11.85,
+      "reach_sf": 3.25,
+      "final": 0.63,
+      "champion": 0.08
     },
     {
       "team": "Paraguay",
       "elo": 1730,
       "qualify": 100.0,
-      "reach_qf": 10.02,
-      "reach_sf": 2.38,
-      "final": 0.4,
-      "champion": 0.09
-    },
-    {
-      "team": "Egypt",
-      "elo": 1740,
-      "qualify": 100.0,
-      "reach_qf": 10.2,
-      "reach_sf": 2.5,
-      "final": 0.58,
-      "champion": 0.09
+      "reach_qf": 9.69,
+      "reach_sf": 2.22,
+      "final": 0.49,
+      "champion": 0.08
     },
     {
       "team": "South Africa",
       "elo": 1700,
       "qualify": 100.0,
-      "reach_qf": 7.75,
-      "reach_sf": 1.66,
-      "final": 0.27,
-      "champion": 0.08
+      "reach_qf": 7.95,
+      "reach_sf": 1.8,
+      "final": 0.32,
+      "champion": 0.07
+    },
+    {
+      "team": "Australia",
+      "elo": 1740,
+      "qualify": 100.0,
+      "reach_qf": 10.87,
+      "reach_sf": 2.43,
+      "final": 0.5,
+      "champion": 0.07
+    },
+    {
+      "team": "Ivory Coast",
+      "elo": 1745,
+      "qualify": 100.0,
+      "reach_qf": 11.53,
+      "reach_sf": 2.86,
+      "final": 0.62,
+      "champion": 0.06
+    },
+    {
+      "team": "Egypt",
+      "elo": 1740,
+      "qualify": 100.0,
+      "reach_qf": 10.66,
+      "reach_sf": 2.58,
+      "final": 0.57,
+      "champion": 0.06
     },
     {
       "team": "South Korea",
       "elo": 1775,
-      "qualify": 17.01,
-      "reach_qf": 2.42,
-      "reach_sf": 0.62,
-      "final": 0.2,
-      "champion": 0.06
-    },
-    {
-      "team": "Bosnia-Herzegovina",
-      "elo": 1700,
-      "qualify": 100.0,
-      "reach_qf": 7.89,
-      "reach_sf": 1.66,
-      "final": 0.3,
-      "champion": 0.05
+      "qualify": 16.82,
+      "reach_qf": 2.3,
+      "reach_sf": 0.7,
+      "final": 0.17,
+      "champion": 0.03
     },
     {
       "team": "Ghana",
       "elo": 1720,
-      "qualify": 53.54,
-      "reach_qf": 4.81,
-      "reach_sf": 0.99,
-      "final": 0.13,
+      "qualify": 53.36,
+      "reach_qf": 4.83,
+      "reach_sf": 1.07,
+      "final": 0.25,
+      "champion": 0.03
+    },
+    {
+      "team": "Congo DR",
+      "elo": 1680,
+      "qualify": 32.5,
+      "reach_qf": 1.89,
+      "reach_sf": 0.34,
+      "final": 0.08,
       "champion": 0.01
     },
     {
       "team": "Panama",
       "elo": 1680,
-      "qualify": 25.93,
-      "reach_qf": 1.69,
-      "reach_sf": 0.35,
-      "final": 0.08,
+      "qualify": 25.43,
+      "reach_qf": 1.71,
+      "reach_sf": 0.3,
+      "final": 0.06,
+      "champion": 0.01
+    },
+    {
+      "team": "Uzbekistan",
+      "elo": 1680,
+      "qualify": 21.41,
+      "reach_qf": 1.56,
+      "reach_sf": 0.26,
+      "final": 0.04,
       "champion": 0.01
     },
     {
@@ -308,6 +317,15 @@
       "reach_qf": 0.0,
       "reach_sf": 0.0,
       "final": 0.0,
+      "champion": 0.0
+    },
+    {
+      "team": "Bosnia-Herzegovina",
+      "elo": 1700,
+      "qualify": 100.0,
+      "reach_qf": 8.16,
+      "reach_sf": 1.79,
+      "final": 0.28,
       "champion": 0.0
     },
     {
@@ -377,9 +395,9 @@
       "team": "Cape Verde Islands",
       "elo": 1600,
       "qualify": 100.0,
-      "reach_qf": 3.38,
-      "reach_sf": 0.46,
-      "final": 0.08,
+      "reach_qf": 3.21,
+      "reach_sf": 0.5,
+      "final": 0.04,
       "champion": 0.0
     },
     {
@@ -416,24 +434,6 @@
       "reach_qf": 0.0,
       "reach_sf": 0.0,
       "final": 0.0,
-      "champion": 0.0
-    },
-    {
-      "team": "Congo DR",
-      "elo": 1680,
-      "qualify": 32.16,
-      "reach_qf": 2.29,
-      "reach_sf": 0.56,
-      "final": 0.08,
-      "champion": 0.0
-    },
-    {
-      "team": "Uzbekistan",
-      "elo": 1680,
-      "qualify": 20.74,
-      "reach_qf": 1.38,
-      "reach_sf": 0.26,
-      "final": 0.01,
       "champion": 0.0
     }
   ]
