@@ -9,14 +9,14 @@
     "matchday":1.0,
     "home_team":"Mexico",
     "away_team":"South Africa",
-    "home_score":2.0,
-    "away_score":0.0,
+    "home_score":2,
+    "away_score":0,
     "home_result":"W",
     "home_conf":"CONCACAF",
     "away_conf":"CAF",
     "city":"Mexico City",
     "venue":"Estadio Azteca",
-    "collected_at":"2026-07-19T06:30:45.183119+00:00"
+    "collected_at":"2026-07-19T20:04:36.641867+00:00"
   },
   {
     "match_id":537328,
@@ -28,14 +28,14 @@
     "matchday":1.0,
     "home_team":"South Korea",
     "away_team":"Czechia",
-    "home_score":2.0,
-    "away_score":1.0,
+    "home_score":2,
+    "away_score":1,
     "home_result":"W",
     "home_conf":"Unknown",
     "away_conf":"Unknown",
     "city":"Guadalajara",
     "venue":"Estadio Akron",
-    "collected_at":"2026-07-19T06:30:45.183472+00:00"
+    "collected_at":"2026-07-19T20:04:36.642227+00:00"
   },
   {
     "match_id":537333,
@@ -47,14 +47,14 @@
     "matchday":1.0,
     "home_team":"Canada",
     "away_team":"Bosnia-Herzegovina",
-    "home_score":1.0,
-    "away_score":1.0,
+    "home_score":1,
+    "away_score":1,
     "home_result":"D",
     "home_conf":"CONCACAF",
     "away_conf":"Unknown",
     "city":"Toronto",
     "venue":"BMO Field",
-    "collected_at":"2026-07-19T06:30:45.189343+00:00"
+    "collected_at":"2026-07-19T20:04:36.647690+00:00"
   },
   {
     "match_id":537345,
@@ -66,14 +66,14 @@
     "matchday":1.0,
     "home_team":"United States",
     "away_team":"Paraguay",
-    "home_score":4.0,
-    "away_score":1.0,
+    "home_score":4,
+    "away_score":1,
     "home_result":"W",
     "home_conf":"Unknown",
     "away_conf":"CONMEBOL",
     "city":"Los Angeles",
     "venue":"SoFi Stadium",
-    "collected_at":"2026-07-19T06:30:45.195275+00:00"
+    "collected_at":"2026-07-19T20:04:36.653935+00:00"
   },
   {
     "match_id":537334,
@@ -85,14 +85,14 @@
     "matchday":1.0,
     "home_team":"Qatar",
     "away_team":"Switzerland",
-    "home_score":1.0,
-    "away_score":1.0,
+    "home_score":1,
+    "away_score":1,
     "home_result":"D",
     "home_conf":"AFC",
     "away_conf":"UEFA",
     "city":"San Francisco",
     "venue":"Levi's Stadium",
-    "collected_at":"2026-07-19T06:30:45.195308+00:00"
+    "collected_at":"2026-07-19T20:04:36.653971+00:00"
   },
   {
     "match_id":537339,
@@ -104,14 +104,14 @@
     "matchday":1.0,
     "home_team":"Brazil",
     "away_team":"Morocco",
-    "home_score":1.0,
-    "away_score":1.0,
+    "home_score":1,
+    "away_score":1,
     "home_result":"D",
     "home_conf":"CONMEBOL",
     "away_conf":"CAF",
     "city":"New York\/NJ",
     "venue":"MetLife Stadium",
-    "collected_at":"2026-07-19T06:30:45.200306+00:00"
+    "collected_at":"2026-07-19T20:04:36.659702+00:00"
   },
   {
     "match_id":537340,
@@ -123,14 +123,14 @@
     "matchday":1.0,
     "home_team":"Haiti",
     "away_team":"Scotland",
-    "home_score":0.0,
-    "away_score":1.0,
+    "home_score":0,
+    "away_score":1,
     "home_result":"L",
     "home_conf":"CONCACAF",
     "away_conf":"UEFA",
     "city":"Boston",
     "venue":"Gillette Stadium",
-    "collected_at":"2026-07-19T06:30:45.200385+00:00"
+    "collected_at":"2026-07-19T20:04:36.659785+00:00"
   },
   {
     "match_id":537346,
@@ -142,14 +142,14 @@
     "matchday":1.0,
     "home_team":"Australia",
     "away_team":"Turkey",
-    "home_score":2.0,
-    "away_score":0.0,
+    "home_score":2,
+    "away_score":0,
     "home_result":"W",
     "home_conf":"AFC",
     "away_conf":"Unknown",
     "city":"Vancouver",
     "venue":"BC Place",
-    "collected_at":"2026-07-19T06:30:45.200789+00:00"
+    "collected_at":"2026-07-19T20:04:36.660035+00:00"
   },
   {
     "match_id":537351,
@@ -161,14 +161,14 @@
     "matchday":1.0,
     "home_team":"Germany",
     "away_team":"Cura\u00e7ao",
-    "home_score":7.0,
-    "away_score":1.0,
+    "home_score":7,
+    "away_score":1,
     "home_result":"W",
     "home_conf":"UEFA",
     "away_conf":"CONCACAF",
     "city":"Houston",
     "venue":"NRG Stadium",
-    "collected_at":"2026-07-19T06:30:45.206995+00:00"
+    "collected_at":"2026-07-19T20:04:36.665593+00:00"
   },
   {
     "match_id":537357,
@@ -180,14 +180,14 @@
     "matchday":1.0,
     "home_team":"Netherlands",
     "away_team":"Japan",
-    "home_score":2.0,
-    "away_score":2.0,
+    "home_score":2,
+    "away_score":2,
     "home_result":"D",
     "home_conf":"UEFA",
     "away_conf":"AFC",
     "city":"Dallas",
     "venue":"AT&T Stadium",
-    "collected_at":"2026-07-19T06:30:45.207037+00:00"
+    "collected_at":"2026-07-19T20:04:36.665627+00:00"
   },
   {
     "match_id":537352,
@@ -199,14 +199,14 @@
     "matchday":1.0,
     "home_team":"Ivory Coast",
     "away_team":"Ecuador",
-    "home_score":1.0,
-    "away_score":0.0,
+    "home_score":1,
+    "away_score":0,
     "home_result":"W",
     "home_conf":"Unknown",
     "away_conf":"CONMEBOL",
     "city":"Philadelphia",
     "venue":"Lincoln Financial Field",
-    "collected_at":"2026-07-19T06:30:45.207059+00:00"
+    "collected_at":"2026-07-19T20:04:36.665645+00:00"
   },
   {
     "match_id":537358,
@@ -218,14 +218,14 @@
     "matchday":1.0,
     "home_team":"Sweden",
     "away_team":"Tunisia",
-    "home_score":5.0,
-    "away_score":1.0,
+    "home_score":5,
+    "away_score":1,
     "home_result":"W",
     "home_conf":"UEFA",
     "away_conf":"CAF",
     "city":"Monterrey",
     "venue":"Estadio BBVA",
-    "collected_at":"2026-07-19T06:30:45.207557+00:00"
+    "collected_at":"2026-07-19T20:04:36.666037+00:00"
   },
   {
     "match_id":537369,
@@ -237,14 +237,14 @@
     "matchday":1.0,
     "home_team":"Spain",
     "away_team":"Cape Verde Islands",
-    "home_score":0.0,
-    "away_score":0.0,
+    "home_score":0,
+    "away_score":0,
     "home_result":"D",
     "home_conf":"UEFA",
     "away_conf":"Unknown",
     "city":"Atlanta",
     "venue":"Mercedes-Benz Stadium",
-    "collected_at":"2026-07-19T06:30:45.207589+00:00"
+    "collected_at":"2026-07-19T20:04:36.666068+00:00"
   },
   {
     "match_id":537363,
@@ -256,14 +256,14 @@
     "matchday":1.0,
     "home_team":"Belgium",
     "away_team":"Egypt",
-    "home_score":1.0,
-    "away_score":1.0,
+    "home_score":1,
+    "away_score":1,
     "home_result":"D",
     "home_conf":"UEFA",
     "away_conf":"CAF",
     "city":"Seattle",
     "venue":"Lumen Field",
-    "collected_at":"2026-07-19T06:30:45.207605+00:00"
+    "collected_at":"2026-07-19T20:04:36.666085+00:00"
   },
   {
     "match_id":537370,
@@ -275,14 +275,14 @@
     "matchday":1.0,
     "home_team":"Saudi Arabia",
     "away_team":"Uruguay",
-    "home_score":1.0,
-    "away_score":1.0,
+    "home_score":1,
+    "away_score":1,
     "home_result":"D",
     "home_conf":"AFC",
     "away_conf":"CONMEBOL",
     "city":"Miami",
     "venue":"Hard Rock Stadium",
-    "collected_at":"2026-07-19T06:30:45.207620+00:00"
+    "collected_at":"2026-07-19T20:04:36.666100+00:00"
   },
   {
     "match_id":537364,
@@ -294,14 +294,14 @@
     "matchday":1.0,
     "home_team":"Iran",
     "away_team":"New Zealand",
-    "home_score":2.0,
-    "away_score":2.0,
+    "home_score":2,
+    "away_score":2,
     "home_result":"D",
     "home_conf":"AFC",
     "away_conf":"OFC",
     "city":"Los Angeles",
     "venue":"SoFi Stadium",
-    "collected_at":"2026-07-19T06:30:45.207662+00:00"
+    "collected_at":"2026-07-19T20:04:36.666141+00:00"
   },
   {
     "match_id":537391,
@@ -313,14 +313,14 @@
     "matchday":1.0,
     "home_team":"France",
     "away_team":"Senegal",
-    "home_score":3.0,
-    "away_score":1.0,
+    "home_score":3,
+    "away_score":1,
     "home_result":"W",
     "home_conf":"UEFA",
     "away_conf":"CAF",
     "city":"New York\/NJ",
     "venue":"MetLife Stadium",
-    "collected_at":"2026-07-19T06:30:45.207675+00:00"
+    "collected_at":"2026-07-19T20:04:36.666156+00:00"
   },
   {
     "match_id":537392,
@@ -332,14 +332,14 @@
     "matchday":1.0,
     "home_team":"Iraq",
     "away_team":"Norway",
-    "home_score":1.0,
-    "away_score":4.0,
+    "home_score":1,
+    "away_score":4,
     "home_result":"L",
     "home_conf":"AFC",
     "away_conf":"UEFA",
     "city":"Boston",
     "venue":"Gillette Stadium",
-    "collected_at":"2026-07-19T06:30:45.207688+00:00"
+    "collected_at":"2026-07-19T20:04:36.666170+00:00"
   },
   {
     "match_id":537397,
@@ -351,14 +351,14 @@
     "matchday":1.0,
     "home_team":"Argentina",
     "away_team":"Algeria",
-    "home_score":3.0,
-    "away_score":0.0,
+    "home_score":3,
+    "away_score":0,
     "home_result":"W",
     "home_conf":"CONMEBOL",
     "away_conf":"CAF",
     "city":"Kansas City",
     "venue":"Arrowhead Stadium",
-    "collected_at":"2026-07-19T06:30:45.207720+00:00"
+    "collected_at":"2026-07-19T20:04:36.666201+00:00"
   },
   {
     "match_id":537398,
@@ -370,14 +370,14 @@
     "matchday":1.0,
     "home_team":"Austria",
     "away_team":"Jordan",
-    "home_score":3.0,
-    "away_score":1.0,
+    "home_score":3,
+    "away_score":1,
     "home_result":"W",
     "home_conf":"UEFA",
     "away_conf":"AFC",
     "city":"San Francisco",
     "venue":"Levi's Stadium",
-    "collected_at":"2026-07-19T06:30:45.207734+00:00"
+    "collected_at":"2026-07-19T20:04:36.666213+00:00"
   },
   {
     "match_id":537403,
@@ -389,14 +389,14 @@
     "matchday":1.0,
     "home_team":"Portugal",
     "away_team":"Congo DR",
-    "home_score":1.0,
-    "away_score":1.0,
+    "home_score":1,
+    "away_score":1,
     "home_result":"D",
     "home_conf":"UEFA",
     "away_conf":"Unknown",
     "city":"Houston",
     "venue":"NRG Stadium",
-    "collected_at":"2026-07-19T06:30:45.207750+00:00"
+    "collected_at":"2026-07-19T20:04:36.666225+00:00"
   },
   {
     "match_id":537409,
@@ -408,14 +408,14 @@
     "matchday":1.0,
     "home_team":"England",
     "away_team":"Croatia",
-    "home_score":4.0,
-    "away_score":2.0,
+    "home_score":4,
+    "away_score":2,
     "home_result":"W",
     "home_conf":"UEFA",
     "away_conf":"UEFA",
     "city":"Dallas",
     "venue":"AT&T Stadium",
-    "collected_at":"2026-07-19T06:30:45.207763+00:00"
+    "collected_at":"2026-07-19T20:04:36.666241+00:00"
   },
   {
     "match_id":537410,
@@ -427,14 +427,14 @@
     "matchday":1.0,
     "home_team":"Ghana",
     "away_team":"Panama",
-    "home_score":1.0,
-    "away_score":0.0,
+    "home_score":1,
+    "away_score":0,
     "home_result":"W",
     "home_conf":"CAF",
     "away_conf":"CONCACAF",
     "city":"Toronto",
     "venue":"BMO Field",
-    "collected_at":"2026-07-19T06:30:45.207778+00:00"
+    "collected_at":"2026-07-19T20:04:36.666258+00:00"
   },
   {
     "match_id":537404,
@@ -446,14 +446,14 @@
     "matchday":1.0,
     "home_team":"Uzbekistan",
     "away_team":"Colombia",
-    "home_score":1.0,
-    "away_score":3.0,
+    "home_score":1,
+    "away_score":3,
     "home_result":"L",
     "home_conf":"AFC",
     "away_conf":"CONMEBOL",
     "city":"Mexico City",
     "venue":"Estadio Azteca",
-    "collected_at":"2026-07-19T06:30:45.207808+00:00"
+    "collected_at":"2026-07-19T20:04:36.666286+00:00"
   },
   {
     "match_id":537329,
@@ -465,14 +465,14 @@
     "matchday":2.0,
     "home_team":"Czechia",
     "away_team":"South Africa",
-    "home_score":1.0,
-    "away_score":1.0,
+    "home_score":1,
+    "away_score":1,
     "home_result":"D",
     "home_conf":"Unknown",
     "away_conf":"CAF",
     "city":"Atlanta",
     "venue":"Mercedes-Benz Stadium",
-    "collected_at":"2026-07-19T06:30:45.207821+00:00"
+    "collected_at":"2026-07-19T20:04:36.666298+00:00"
   },
   {
     "match_id":537335,
@@ -484,14 +484,14 @@
     "matchday":2.0,
     "home_team":"Switzerland",
     "away_team":"Bosnia-Herzegovina",
-    "home_score":4.0,
-    "away_score":1.0,
+    "home_score":4,
+    "away_score":1,
     "home_result":"W",
     "home_conf":"UEFA",
     "away_conf":"Unknown",
     "city":"Los Angeles",
     "venue":"SoFi Stadium",
-    "collected_at":"2026-07-19T06:30:45.207834+00:00"
+    "collected_at":"2026-07-19T20:04:36.666310+00:00"
   },
   {
     "match_id":537336,
@@ -503,14 +503,14 @@
     "matchday":2.0,
     "home_team":"Canada",
     "away_team":"Qatar",
-    "home_score":6.0,
-    "away_score":0.0,
+    "home_score":6,
+    "away_score":0,
     "home_result":"W",
     "home_conf":"CONCACAF",
     "away_conf":"AFC",
     "city":"Vancouver",
     "venue":"BC Place",
-    "collected_at":"2026-07-19T06:30:45.207846+00:00"
+    "collected_at":"2026-07-19T20:04:36.666323+00:00"
   },
   {
     "match_id":537330,
@@ -522,14 +522,14 @@
     "matchday":2.0,
     "home_team":"Mexico",
     "away_team":"South Korea",
-    "home_score":1.0,
-    "away_score":0.0,
+    "home_score":1,
+    "away_score":0,
     "home_result":"W",
     "home_conf":"CONCACAF",
     "away_conf":"Unknown",
     "city":"Guadalajara",
     "venue":"Estadio Akron",
-    "collected_at":"2026-07-19T06:30:45.207874+00:00"
+    "collected_at":"2026-07-19T20:04:36.666350+00:00"
   },
   {
     "match_id":537348,
@@ -541,14 +541,14 @@
     "matchday":2.0,
     "home_team":"United States",
     "away_team":"Australia",
-    "home_score":2.0,
-    "away_score":0.0,
+    "home_score":2,
+    "away_score":0,
     "home_result":"W",
     "home_conf":"Unknown",
     "away_conf":"AFC",
     "city":"Seattle",
     "venue":"Lumen Field",
-    "collected_at":"2026-07-19T06:30:45.207888+00:00"
+    "collected_at":"2026-07-19T20:04:36.666362+00:00"
   },
   {
     "match_id":537342,
@@ -560,14 +560,14 @@
     "matchday":2.0,
     "home_team":"Scotland",
     "away_team":"Morocco",
-    "home_score":0.0,
-    "away_score":1.0,
+    "home_score":0,
+    "away_score":1,
     "home_result":"L",
     "home_conf":"UEFA",
     "away_conf":"CAF",
     "city":"Boston",
     "venue":"Gillette Stadium",
-    "collected_at":"2026-07-19T06:30:45.207901+00:00"
+    "collected_at":"2026-07-19T20:04:36.666374+00:00"
   },
   {
     "match_id":537341,
@@ -579,14 +579,14 @@
     "matchday":2.0,
     "home_team":"Brazil",
     "away_team":"Haiti",
-    "home_score":3.0,
-    "away_score":0.0,
+    "home_score":3,
+    "away_score":0,
     "home_result":"W",
     "home_conf":"CONMEBOL",
     "away_conf":"CONCACAF",
     "city":"Philadelphia",
     "venue":"Lincoln Financial Field",
-    "collected_at":"2026-07-19T06:30:45.207958+00:00"
+    "collected_at":"2026-07-19T20:04:36.666395+00:00"
   },
   {
     "match_id":537347,
@@ -598,14 +598,14 @@
     "matchday":2.0,
     "home_team":"Turkey",
     "away_team":"Paraguay",
-    "home_score":0.0,
-    "away_score":1.0,
+    "home_score":0,
+    "away_score":1,
     "home_result":"L",
     "home_conf":"Unknown",
     "away_conf":"CONMEBOL",
     "city":"San Francisco",
     "venue":"Levi's Stadium",
-    "collected_at":"2026-07-19T06:30:45.207996+00:00"
+    "collected_at":"2026-07-19T20:04:36.666449+00:00"
   },
   {
     "match_id":537359,
@@ -617,14 +617,14 @@
     "matchday":2.0,
     "home_team":"Netherlands",
     "away_team":"Sweden",
-    "home_score":5.0,
-    "away_score":1.0,
+    "home_score":5,
+    "away_score":1,
     "home_result":"W",
     "home_conf":"UEFA",
     "away_conf":"UEFA",
     "city":"Houston",
     "venue":"NRG Stadium",
-    "collected_at":"2026-07-19T06:30:45.208011+00:00"
+    "collected_at":"2026-07-19T20:04:36.666468+00:00"
   },
   {
     "match_id":537353,
@@ -636,14 +636,14 @@
     "matchday":2.0,
     "home_team":"Germany",
     "away_team":"Ivory Coast",
-    "home_score":2.0,
-    "away_score":1.0,
+    "home_score":2,
+    "away_score":1,
     "home_result":"W",
     "home_conf":"UEFA",
     "away_conf":"Unknown",
     "city":"Toronto",
     "venue":"BMO Field",
-    "collected_at":"2026-07-19T06:30:45.208026+00:00"
+    "collected_at":"2026-07-19T20:04:36.666480+00:00"
   },
   {
     "match_id":537354,
@@ -655,14 +655,14 @@
     "matchday":2.0,
     "home_team":"Ecuador",
     "away_team":"Cura\u00e7ao",
-    "home_score":0.0,
-    "away_score":0.0,
+    "home_score":0,
+    "away_score":0,
     "home_result":"D",
     "home_conf":"CONMEBOL",
     "away_conf":"CONCACAF",
     "city":"Kansas City",
     "venue":"Arrowhead Stadium",
-    "collected_at":"2026-07-19T06:30:45.208054+00:00"
+    "collected_at":"2026-07-19T20:04:36.666502+00:00"
   },
   {
     "match_id":537360,
@@ -674,14 +674,14 @@
     "matchday":2.0,
     "home_team":"Tunisia",
     "away_team":"Japan",
-    "home_score":0.0,
-    "away_score":4.0,
+    "home_score":0,
+    "away_score":4,
     "home_result":"L",
     "home_conf":"CAF",
     "away_conf":"AFC",
     "city":"Monterrey",
     "venue":"Estadio BBVA",
-    "collected_at":"2026-07-19T06:30:45.208069+00:00"
+    "collected_at":"2026-07-19T20:04:36.666516+00:00"
   },
   {
     "match_id":537371,
@@ -693,14 +693,14 @@
     "matchday":2.0,
     "home_team":"Spain",
     "away_team":"Saudi Arabia",
-    "home_score":4.0,
-    "away_score":0.0,
+    "home_score":4,
+    "away_score":0,
     "home_result":"W",
     "home_conf":"UEFA",
     "away_conf":"AFC",
     "city":"Atlanta",
     "venue":"Mercedes-Benz Stadium",
-    "collected_at":"2026-07-19T06:30:45.208082+00:00"
+    "collected_at":"2026-07-19T20:04:36.666528+00:00"
   },
   {
     "match_id":537365,
@@ -712,14 +712,14 @@
     "matchday":2.0,
     "home_team":"Belgium",
     "away_team":"Iran",
-    "home_score":0.0,
-    "away_score":0.0,
+    "home_score":0,
+    "away_score":0,
     "home_result":"D",
     "home_conf":"UEFA",
     "away_conf":"AFC",
     "city":"Los Angeles",
     "venue":"SoFi Stadium",
-    "collected_at":"2026-07-19T06:30:45.208095+00:00"
+    "collected_at":"2026-07-19T20:04:36.666540+00:00"
   },
   {
     "match_id":537372,
@@ -731,14 +731,14 @@
     "matchday":2.0,
     "home_team":"Uruguay",
     "away_team":"Cape Verde Islands",
-    "home_score":2.0,
-    "away_score":2.0,
+    "home_score":2,
+    "away_score":2,
     "home_result":"D",
     "home_conf":"CONMEBOL",
     "away_conf":"Unknown",
     "city":"Miami",
     "venue":"Hard Rock Stadium",
-    "collected_at":"2026-07-19T06:30:45.208107+00:00"
+    "collected_at":"2026-07-19T20:04:36.666551+00:00"
   },
   {
     "match_id":537366,
@@ -750,14 +750,14 @@
     "matchday":2.0,
     "home_team":"New Zealand",
     "away_team":"Egypt",
-    "home_score":1.0,
-    "away_score":3.0,
+    "home_score":1,
+    "away_score":3,
     "home_result":"L",
     "home_conf":"OFC",
     "away_conf":"CAF",
     "city":"Vancouver",
     "venue":"BC Place",
-    "collected_at":"2026-07-19T06:30:45.208133+00:00"
+    "collected_at":"2026-07-19T20:04:36.666572+00:00"
   },
   {
     "match_id":537399,
@@ -769,14 +769,14 @@
     "matchday":2.0,
     "home_team":"Argentina",
     "away_team":"Austria",
-    "home_score":2.0,
-    "away_score":0.0,
+    "home_score":2,
+    "away_score":0,
     "home_result":"W",
     "home_conf":"CONMEBOL",
     "away_conf":"UEFA",
     "city":"Dallas",
     "venue":"AT&T Stadium",
-    "collected_at":"2026-07-19T06:30:45.208146+00:00"
+    "collected_at":"2026-07-19T20:04:36.666584+00:00"
   },
   {
     "match_id":537393,
@@ -788,14 +788,14 @@
     "matchday":2.0,
     "home_team":"France",
     "away_team":"Iraq",
-    "home_score":3.0,
-    "away_score":0.0,
+    "home_score":3,
+    "away_score":0,
     "home_result":"W",
     "home_conf":"UEFA",
     "away_conf":"AFC",
     "city":"Philadelphia",
     "venue":"Lincoln Financial Field",
-    "collected_at":"2026-07-19T06:30:45.208158+00:00"
+    "collected_at":"2026-07-19T20:04:36.666596+00:00"
   },
   {
     "match_id":537394,
@@ -807,14 +807,14 @@
     "matchday":2.0,
     "home_team":"Norway",
     "away_team":"Senegal",
-    "home_score":3.0,
-    "away_score":2.0,
+    "home_score":3,
+    "away_score":2,
     "home_result":"W",
     "home_conf":"UEFA",
     "away_conf":"CAF",
     "city":"New York\/NJ",
     "venue":"MetLife Stadium",
-    "collected_at":"2026-07-19T06:30:45.208189+00:00"
+    "collected_at":"2026-07-19T20:04:36.666620+00:00"
   },
   {
     "match_id":537400,
@@ -826,14 +826,14 @@
     "matchday":2.0,
     "home_team":"Jordan",
     "away_team":"Algeria",
-    "home_score":1.0,
-    "away_score":2.0,
+    "home_score":1,
+    "away_score":2,
     "home_result":"L",
     "home_conf":"AFC",
     "away_conf":"CAF",
     "city":"San Francisco",
     "venue":"Levi's Stadium",
-    "collected_at":"2026-07-19T06:30:45.208215+00:00"
+    "collected_at":"2026-07-19T20:04:36.666643+00:00"
   },
   {
     "match_id":537405,
@@ -845,14 +845,14 @@
     "matchday":2.0,
     "home_team":"Portugal",
     "away_team":"Uzbekistan",
-    "home_score":5.0,
-    "away_score":0.0,
+    "home_score":5,
+    "away_score":0,
     "home_result":"W",
     "home_conf":"UEFA",
     "away_conf":"AFC",
     "city":"Houston",
     "venue":"NRG Stadium",
-    "collected_at":"2026-07-19T06:30:45.208228+00:00"
+    "collected_at":"2026-07-19T20:04:36.666654+00:00"
   },
   {
     "match_id":537411,
@@ -864,14 +864,14 @@
     "matchday":2.0,
     "home_team":"England",
     "away_team":"Ghana",
-    "home_score":0.0,
-    "away_score":0.0,
+    "home_score":0,
+    "away_score":0,
     "home_result":"D",
     "home_conf":"UEFA",
     "away_conf":"CAF",
     "city":"Boston",
     "venue":"Gillette Stadium",
-    "collected_at":"2026-07-19T06:30:45.208239+00:00"
+    "collected_at":"2026-07-19T20:04:36.666666+00:00"
   },
   {
     "match_id":537412,
@@ -883,14 +883,14 @@
     "matchday":2.0,
     "home_team":"Panama",
     "away_team":"Croatia",
-    "home_score":0.0,
-    "away_score":1.0,
+    "home_score":0,
+    "away_score":1,
     "home_result":"L",
     "home_conf":"CONCACAF",
     "away_conf":"UEFA",
     "city":"Toronto",
     "venue":"BMO Field",
-    "collected_at":"2026-07-19T06:30:45.208251+00:00"
+    "collected_at":"2026-07-19T20:04:36.666677+00:00"
   },
   {
     "match_id":537406,
@@ -902,14 +902,14 @@
     "matchday":2.0,
     "home_team":"Colombia",
     "away_team":"Congo DR",
-    "home_score":1.0,
-    "away_score":0.0,
+    "home_score":1,
+    "away_score":0,
     "home_result":"W",
     "home_conf":"CONMEBOL",
     "away_conf":"Unknown",
     "city":"Guadalajara",
     "venue":"Estadio Akron",
-    "collected_at":"2026-07-19T06:30:45.208277+00:00"
+    "collected_at":"2026-07-19T20:04:36.666699+00:00"
   },
   {
     "match_id":537337,
@@ -921,14 +921,14 @@
     "matchday":3.0,
     "home_team":"Switzerland",
     "away_team":"Canada",
-    "home_score":2.0,
-    "away_score":1.0,
+    "home_score":2,
+    "away_score":1,
     "home_result":"W",
     "home_conf":"UEFA",
     "away_conf":"CONCACAF",
     "city":"Vancouver",
     "venue":"BC Place",
-    "collected_at":"2026-07-19T06:30:45.208290+00:00"
+    "collected_at":"2026-07-19T20:04:36.666710+00:00"
   },
   {
     "match_id":537338,
@@ -940,14 +940,14 @@
     "matchday":3.0,
     "home_team":"Bosnia-Herzegovina",
     "away_team":"Qatar",
-    "home_score":3.0,
-    "away_score":1.0,
+    "home_score":3,
+    "away_score":1,
     "home_result":"W",
     "home_conf":"Unknown",
     "away_conf":"AFC",
     "city":"Seattle",
     "venue":"Lumen Field",
-    "collected_at":"2026-07-19T06:30:45.208302+00:00"
+    "collected_at":"2026-07-19T20:04:36.666721+00:00"
   },
   {
     "match_id":537344,
@@ -959,14 +959,14 @@
     "matchday":3.0,
     "home_team":"Morocco",
     "away_team":"Haiti",
-    "home_score":4.0,
-    "away_score":2.0,
+    "home_score":4,
+    "away_score":2,
     "home_result":"W",
     "home_conf":"CAF",
     "away_conf":"CONCACAF",
     "city":"Atlanta",
     "venue":"Mercedes-Benz Stadium",
-    "collected_at":"2026-07-19T06:30:45.208314+00:00"
+    "collected_at":"2026-07-19T20:04:36.666732+00:00"
   },
   {
     "match_id":537343,
@@ -978,14 +978,14 @@
     "matchday":3.0,
     "home_team":"Scotland",
     "away_team":"Brazil",
-    "home_score":0.0,
-    "away_score":3.0,
+    "home_score":0,
+    "away_score":3,
     "home_result":"L",
     "home_conf":"UEFA",
     "away_conf":"CONMEBOL",
     "city":"Miami",
     "venue":"Hard Rock Stadium",
-    "collected_at":"2026-07-19T06:30:45.208326+00:00"
+    "collected_at":"2026-07-19T20:04:36.666744+00:00"
   },
   {
     "match_id":537331,
@@ -997,14 +997,14 @@
     "matchday":3.0,
     "home_team":"Czechia",
     "away_team":"Mexico",
-    "home_score":0.0,
-    "away_score":3.0,
+    "home_score":0,
+    "away_score":3,
     "home_result":"L",
     "home_conf":"Unknown",
     "away_conf":"CONCACAF",
     "city":"Mexico City",
     "venue":"Estadio Azteca",
-    "collected_at":"2026-07-19T06:30:45.208354+00:00"
+    "collected_at":"2026-07-19T20:04:36.666766+00:00"
   },
   {
     "match_id":537332,
@@ -1016,14 +1016,14 @@
     "matchday":3.0,
     "home_team":"South Africa",
     "away_team":"South Korea",
-    "home_score":1.0,
-    "away_score":0.0,
+    "home_score":1,
+    "away_score":0,
     "home_result":"W",
     "home_conf":"CAF",
     "away_conf":"Unknown",
     "city":"Monterrey",
     "venue":"Estadio BBVA",
-    "collected_at":"2026-07-19T06:30:45.208382+00:00"
+    "collected_at":"2026-07-19T20:04:36.666788+00:00"
   },
   {
     "match_id":537355,
@@ -1035,14 +1035,14 @@
     "matchday":3.0,
     "home_team":"Ecuador",
     "away_team":"Germany",
-    "home_score":2.0,
-    "away_score":1.0,
+    "home_score":2,
+    "away_score":1,
     "home_result":"W",
     "home_conf":"CONMEBOL",
     "away_conf":"UEFA",
     "city":"New York\/NJ",
     "venue":"MetLife Stadium",
-    "collected_at":"2026-07-19T06:30:45.208395+00:00"
+    "collected_at":"2026-07-19T20:04:36.666799+00:00"
   },
   {
     "match_id":537356,
@@ -1054,14 +1054,14 @@
     "matchday":3.0,
     "home_team":"Cura\u00e7ao",
     "away_team":"Ivory Coast",
-    "home_score":0.0,
-    "away_score":2.0,
+    "home_score":0,
+    "away_score":2,
     "home_result":"L",
     "home_conf":"CONCACAF",
     "away_conf":"Unknown",
     "city":"Philadelphia",
     "venue":"Lincoln Financial Field",
-    "collected_at":"2026-07-19T06:30:45.208410+00:00"
+    "collected_at":"2026-07-19T20:04:36.666812+00:00"
   },
   {
     "match_id":537361,
@@ -1073,14 +1073,14 @@
     "matchday":3.0,
     "home_team":"Tunisia",
     "away_team":"Netherlands",
-    "home_score":1.0,
-    "away_score":3.0,
+    "home_score":1,
+    "away_score":3,
     "home_result":"L",
     "home_conf":"CAF",
     "away_conf":"UEFA",
     "city":"Kansas City",
     "venue":"Arrowhead Stadium",
-    "collected_at":"2026-07-19T06:30:45.208423+00:00"
+    "collected_at":"2026-07-19T20:04:36.666825+00:00"
   },
   {
     "match_id":537362,
@@ -1092,14 +1092,14 @@
     "matchday":3.0,
     "home_team":"Japan",
     "away_team":"Sweden",
-    "home_score":1.0,
-    "away_score":1.0,
+    "home_score":1,
+    "away_score":1,
     "home_result":"D",
     "home_conf":"AFC",
     "away_conf":"UEFA",
     "city":"Dallas",
     "venue":"AT&T Stadium",
-    "collected_at":"2026-07-19T06:30:45.208434+00:00"
+    "collected_at":"2026-07-19T20:04:36.666837+00:00"
   },
   {
     "match_id":537349,
@@ -1111,14 +1111,14 @@
     "matchday":3.0,
     "home_team":"Turkey",
     "away_team":"United States",
-    "home_score":3.0,
-    "away_score":2.0,
+    "home_score":3,
+    "away_score":2,
     "home_result":"W",
     "home_conf":"Unknown",
     "away_conf":"Unknown",
     "city":"Los Angeles",
     "venue":"SoFi Stadium",
-    "collected_at":"2026-07-19T06:30:45.208462+00:00"
+    "collected_at":"2026-07-19T20:04:36.666860+00:00"
   },
   {
     "match_id":537350,
@@ -1130,14 +1130,14 @@
     "matchday":3.0,
     "home_team":"Paraguay",
     "away_team":"Australia",
-    "home_score":0.0,
-    "away_score":0.0,
+    "home_score":0,
+    "away_score":0,
     "home_result":"D",
     "home_conf":"CONMEBOL",
     "away_conf":"AFC",
     "city":"San Francisco",
     "venue":"Levi's Stadium",
-    "collected_at":"2026-07-19T06:30:45.208487+00:00"
+    "collected_at":"2026-07-19T20:04:36.666881+00:00"
   },
   {
     "match_id":537395,
@@ -1149,14 +1149,14 @@
     "matchday":3.0,
     "home_team":"Norway",
     "away_team":"France",
-    "home_score":1.0,
-    "away_score":4.0,
+    "home_score":1,
+    "away_score":4,
     "home_result":"L",
     "home_conf":"UEFA",
     "away_conf":"UEFA",
     "city":"Boston",
     "venue":"Gillette Stadium",
-    "collected_at":"2026-07-19T06:30:45.208499+00:00"
+    "collected_at":"2026-07-19T20:04:36.666893+00:00"
   },
   {
     "match_id":537396,
@@ -1168,14 +1168,14 @@
     "matchday":3.0,
     "home_team":"Senegal",
     "away_team":"Iraq",
-    "home_score":5.0,
-    "away_score":0.0,
+    "home_score":5,
+    "away_score":0,
     "home_result":"W",
     "home_conf":"CAF",
     "away_conf":"AFC",
     "city":"Toronto",
     "venue":"BMO Field",
-    "collected_at":"2026-07-19T06:30:45.208511+00:00"
+    "collected_at":"2026-07-19T20:04:36.666904+00:00"
   },
   {
     "match_id":537373,
@@ -1187,14 +1187,14 @@
     "matchday":3.0,
     "home_team":"Uruguay",
     "away_team":"Spain",
-    "home_score":0.0,
-    "away_score":1.0,
+    "home_score":0,
+    "away_score":1,
     "home_result":"L",
     "home_conf":"CONMEBOL",
     "away_conf":"UEFA",
     "city":"Guadalajara",
     "venue":"Estadio Akron",
-    "collected_at":"2026-07-19T06:30:45.208537+00:00"
+    "collected_at":"2026-07-19T20:04:36.666927+00:00"
   },
   {
     "match_id":537374,
@@ -1206,14 +1206,14 @@
     "matchday":3.0,
     "home_team":"Cape Verde Islands",
     "away_team":"Saudi Arabia",
-    "home_score":0.0,
-    "away_score":0.0,
+    "home_score":0,
+    "away_score":0,
     "home_result":"D",
     "home_conf":"Unknown",
     "away_conf":"AFC",
     "city":"Houston",
     "venue":"NRG Stadium",
-    "collected_at":"2026-07-19T06:30:45.208562+00:00"
+    "collected_at":"2026-07-19T20:04:36.666948+00:00"
   },
   {
     "match_id":537367,
@@ -1225,14 +1225,14 @@
     "matchday":3.0,
     "home_team":"New Zealand",
     "away_team":"Belgium",
-    "home_score":1.0,
-    "away_score":5.0,
+    "home_score":1,
+    "away_score":5,
     "home_result":"L",
     "home_conf":"OFC",
     "away_conf":"UEFA",
     "city":"Vancouver",
     "venue":"BC Place",
-    "collected_at":"2026-07-19T06:30:45.208586+00:00"
+    "collected_at":"2026-07-19T20:04:36.666969+00:00"
   },
   {
     "match_id":537368,
@@ -1244,14 +1244,14 @@
     "matchday":3.0,
     "home_team":"Egypt",
     "away_team":"Iran",
-    "home_score":1.0,
-    "away_score":1.0,
+    "home_score":1,
+    "away_score":1,
     "home_result":"D",
     "home_conf":"CAF",
     "away_conf":"AFC",
     "city":"Seattle",
     "venue":"Lumen Field",
-    "collected_at":"2026-07-19T06:30:45.208610+00:00"
+    "collected_at":"2026-07-19T20:04:36.666990+00:00"
   },
   {
     "match_id":537413,
@@ -1263,14 +1263,14 @@
     "matchday":3.0,
     "home_team":"Panama",
     "away_team":"England",
-    "home_score":0.0,
-    "away_score":2.0,
+    "home_score":0,
+    "away_score":2,
     "home_result":"L",
     "home_conf":"CONCACAF",
     "away_conf":"UEFA",
     "city":"New York\/NJ",
     "venue":"MetLife Stadium",
-    "collected_at":"2026-07-19T06:30:45.208622+00:00"
+    "collected_at":"2026-07-19T20:04:36.667001+00:00"
   },
   {
     "match_id":537414,
@@ -1282,14 +1282,14 @@
     "matchday":3.0,
     "home_team":"Croatia",
     "away_team":"Ghana",
-    "home_score":2.0,
-    "away_score":1.0,
+    "home_score":2,
+    "away_score":1,
     "home_result":"W",
     "home_conf":"UEFA",
     "away_conf":"CAF",
     "city":"Philadelphia",
     "venue":"Lincoln Financial Field",
-    "collected_at":"2026-07-19T06:30:45.208633+00:00"
+    "collected_at":"2026-07-19T20:04:36.667012+00:00"
   },
   {
     "match_id":537407,
@@ -1301,14 +1301,14 @@
     "matchday":3.0,
     "home_team":"Colombia",
     "away_team":"Portugal",
-    "home_score":0.0,
-    "away_score":0.0,
+    "home_score":0,
+    "away_score":0,
     "home_result":"D",
     "home_conf":"CONMEBOL",
     "away_conf":"UEFA",
     "city":"Miami",
     "venue":"Hard Rock Stadium",
-    "collected_at":"2026-07-19T06:30:45.208644+00:00"
+    "collected_at":"2026-07-19T20:04:36.667025+00:00"
   },
   {
     "match_id":537408,
@@ -1320,14 +1320,14 @@
     "matchday":3.0,
     "home_team":"Congo DR",
     "away_team":"Uzbekistan",
-    "home_score":3.0,
-    "away_score":1.0,
+    "home_score":3,
+    "away_score":1,
     "home_result":"W",
     "home_conf":"Unknown",
     "away_conf":"AFC",
     "city":"Atlanta",
     "venue":"Mercedes-Benz Stadium",
-    "collected_at":"2026-07-19T06:30:45.208655+00:00"
+    "collected_at":"2026-07-19T20:04:36.667037+00:00"
   },
   {
     "match_id":537401,
@@ -1339,14 +1339,14 @@
     "matchday":3.0,
     "home_team":"Jordan",
     "away_team":"Argentina",
-    "home_score":1.0,
-    "away_score":3.0,
+    "home_score":1,
+    "away_score":3,
     "home_result":"L",
     "home_conf":"AFC",
     "away_conf":"CONMEBOL",
     "city":"Dallas",
     "venue":"AT&T Stadium",
-    "collected_at":"2026-07-19T06:30:45.208683+00:00"
+    "collected_at":"2026-07-19T20:04:36.667057+00:00"
   },
   {
     "match_id":537402,
@@ -1358,14 +1358,14 @@
     "matchday":3.0,
     "home_team":"Algeria",
     "away_team":"Austria",
-    "home_score":3.0,
-    "away_score":3.0,
+    "home_score":3,
+    "away_score":3,
     "home_result":"D",
     "home_conf":"CAF",
     "away_conf":"UEFA",
     "city":"Kansas City",
     "venue":"Arrowhead Stadium",
-    "collected_at":"2026-07-19T06:30:45.208706+00:00"
+    "collected_at":"2026-07-19T20:04:36.667076+00:00"
   },
   {
     "match_id":537417,
@@ -1377,14 +1377,14 @@
     "matchday":null,
     "home_team":"South Africa",
     "away_team":"Canada",
-    "home_score":0.0,
-    "away_score":1.0,
+    "home_score":0,
+    "away_score":1,
     "home_result":"L",
     "home_conf":"CAF",
     "away_conf":"CONCACAF",
     "city":null,
     "venue":null,
-    "collected_at":"2026-07-19T06:30:45.208730+00:00"
+    "collected_at":"2026-07-19T20:04:36.667096+00:00"
   },
   {
     "match_id":537423,
@@ -1396,14 +1396,14 @@
     "matchday":null,
     "home_team":"Brazil",
     "away_team":"Japan",
-    "home_score":2.0,
-    "away_score":1.0,
+    "home_score":2,
+    "away_score":1,
     "home_result":"W",
     "home_conf":"CONMEBOL",
     "away_conf":"AFC",
     "city":null,
     "venue":null,
-    "collected_at":"2026-07-19T06:30:45.208750+00:00"
+    "collected_at":"2026-07-19T20:04:36.667113+00:00"
   },
   {
     "match_id":537415,
@@ -1415,14 +1415,14 @@
     "matchday":null,
     "home_team":"Germany",
     "away_team":"Paraguay",
-    "home_score":4.0,
-    "away_score":5.0,
+    "home_score":4,
+    "away_score":5,
     "home_result":"L",
     "home_conf":"UEFA",
     "away_conf":"CONMEBOL",
     "city":null,
     "venue":null,
-    "collected_at":"2026-07-19T06:30:45.208769+00:00"
+    "collected_at":"2026-07-19T20:04:36.667131+00:00"
   },
   {
     "match_id":537418,
@@ -1434,14 +1434,14 @@
     "matchday":null,
     "home_team":"Netherlands",
     "away_team":"Morocco",
-    "home_score":3.0,
-    "away_score":4.0,
+    "home_score":3,
+    "away_score":4,
     "home_result":"L",
     "home_conf":"UEFA",
     "away_conf":"CAF",
     "city":null,
     "venue":null,
-    "collected_at":"2026-07-19T06:30:45.208787+00:00"
+    "collected_at":"2026-07-19T20:04:36.667148+00:00"
   },
   {
     "match_id":537424,
@@ -1453,14 +1453,14 @@
     "matchday":null,
     "home_team":"Ivory Coast",
     "away_team":"Norway",
-    "home_score":1.0,
-    "away_score":2.0,
+    "home_score":1,
+    "away_score":2,
     "home_result":"L",
     "home_conf":"Unknown",
     "away_conf":"UEFA",
     "city":null,
     "venue":null,
-    "collected_at":"2026-07-19T06:30:45.208805+00:00"
+    "collected_at":"2026-07-19T20:04:36.667164+00:00"
   },
   {
     "match_id":537416,
@@ -1472,14 +1472,14 @@
     "matchday":null,
     "home_team":"France",
     "away_team":"Sweden",
-    "home_score":3.0,
-    "away_score":0.0,
+    "home_score":3,
+    "away_score":0,
     "home_result":"W",
     "home_conf":"UEFA",
     "away_conf":"UEFA",
     "city":null,
     "venue":null,
-    "collected_at":"2026-07-19T06:30:45.208828+00:00"
+    "collected_at":"2026-07-19T20:04:36.667184+00:00"
   },
   {
     "match_id":537425,
@@ -1491,14 +1491,14 @@
     "matchday":null,
     "home_team":"Mexico",
     "away_team":"Ecuador",
-    "home_score":2.0,
-    "away_score":0.0,
+    "home_score":2,
+    "away_score":0,
     "home_result":"W",
     "home_conf":"CONCACAF",
     "away_conf":"CONMEBOL",
     "city":null,
     "venue":null,
-    "collected_at":"2026-07-19T06:30:45.208846+00:00"
+    "collected_at":"2026-07-19T20:04:36.667200+00:00"
   },
   {
     "match_id":537426,
@@ -1510,14 +1510,14 @@
     "matchday":null,
     "home_team":"England",
     "away_team":"Congo DR",
-    "home_score":2.0,
-    "away_score":1.0,
+    "home_score":2,
+    "away_score":1,
     "home_result":"W",
     "home_conf":"UEFA",
     "away_conf":"Unknown",
     "city":null,
     "venue":null,
-    "collected_at":"2026-07-19T06:30:45.208863+00:00"
+    "collected_at":"2026-07-19T20:04:36.667216+00:00"
   },
   {
     "match_id":537422,
@@ -1529,14 +1529,14 @@
     "matchday":null,
     "home_team":"Belgium",
     "away_team":"Senegal",
-    "home_score":3.0,
-    "away_score":2.0,
+    "home_score":3,
+    "away_score":2,
     "home_result":"W",
     "home_conf":"UEFA",
     "away_conf":"CAF",
     "city":null,
     "venue":null,
-    "collected_at":"2026-07-19T06:30:45.208881+00:00"
+    "collected_at":"2026-07-19T20:04:36.667233+00:00"
   },
   {
     "match_id":537421,
@@ -1548,14 +1548,14 @@
     "matchday":null,
     "home_team":"United States",
     "away_team":"Bosnia-Herzegovina",
-    "home_score":2.0,
-    "away_score":0.0,
+    "home_score":2,
+    "away_score":0,
     "home_result":"W",
     "home_conf":"Unknown",
     "away_conf":"Unknown",
     "city":null,
     "venue":null,
-    "collected_at":"2026-07-19T06:30:45.208898+00:00"
+    "collected_at":"2026-07-19T20:04:36.667249+00:00"
   },
   {
     "match_id":537420,
@@ -1567,14 +1567,14 @@
     "matchday":null,
     "home_team":"Spain",
     "away_team":"Austria",
-    "home_score":3.0,
-    "away_score":0.0,
+    "home_score":3,
+    "away_score":0,
     "home_result":"W",
     "home_conf":"UEFA",
     "away_conf":"UEFA",
     "city":null,
     "venue":null,
-    "collected_at":"2026-07-19T06:30:45.208937+00:00"
+    "collected_at":"2026-07-19T20:04:36.667267+00:00"
   },
   {
     "match_id":537419,
@@ -1586,14 +1586,14 @@
     "matchday":null,
     "home_team":"Portugal",
     "away_team":"Croatia",
-    "home_score":2.0,
-    "away_score":1.0,
+    "home_score":2,
+    "away_score":1,
     "home_result":"W",
     "home_conf":"UEFA",
     "away_conf":"UEFA",
     "city":null,
     "venue":null,
-    "collected_at":"2026-07-19T06:30:45.208960+00:00"
+    "collected_at":"2026-07-19T20:04:36.667283+00:00"
   },
   {
     "match_id":537429,
@@ -1605,14 +1605,14 @@
     "matchday":null,
     "home_team":"Switzerland",
     "away_team":"Algeria",
-    "home_score":2.0,
-    "away_score":0.0,
+    "home_score":2,
+    "away_score":0,
     "home_result":"W",
     "home_conf":"UEFA",
     "away_conf":"CAF",
     "city":null,
     "venue":null,
-    "collected_at":"2026-07-19T06:30:45.208978+00:00"
+    "collected_at":"2026-07-19T20:04:36.667299+00:00"
   },
   {
     "match_id":537428,
@@ -1624,14 +1624,14 @@
     "matchday":null,
     "home_team":"Australia",
     "away_team":"Egypt",
-    "home_score":3.0,
-    "away_score":5.0,
+    "home_score":3,
+    "away_score":5,
     "home_result":"L",
     "home_conf":"AFC",
     "away_conf":"CAF",
     "city":null,
     "venue":null,
-    "collected_at":"2026-07-19T06:30:45.208996+00:00"
+    "collected_at":"2026-07-19T20:04:36.667317+00:00"
   },
   {
     "match_id":537427,
@@ -1643,14 +1643,14 @@
     "matchday":null,
     "home_team":"Argentina",
     "away_team":"Cape Verde Islands",
-    "home_score":3.0,
-    "away_score":2.0,
+    "home_score":3,
+    "away_score":2,
     "home_result":"W",
     "home_conf":"CONMEBOL",
     "away_conf":"Unknown",
     "city":null,
     "venue":null,
-    "collected_at":"2026-07-19T06:30:45.209013+00:00"
+    "collected_at":"2026-07-19T20:04:36.667333+00:00"
   },
   {
     "match_id":537430,
@@ -1662,14 +1662,14 @@
     "matchday":null,
     "home_team":"Colombia",
     "away_team":"Ghana",
-    "home_score":1.0,
-    "away_score":0.0,
+    "home_score":1,
+    "away_score":0,
     "home_result":"W",
     "home_conf":"CONMEBOL",
     "away_conf":"CAF",
     "city":null,
     "venue":null,
-    "collected_at":"2026-07-19T06:30:45.209031+00:00"
+    "collected_at":"2026-07-19T20:04:36.667350+00:00"
   },
   {
     "match_id":537376,
@@ -1681,14 +1681,14 @@
     "matchday":null,
     "home_team":"Canada",
     "away_team":"Morocco",
-    "home_score":0.0,
-    "away_score":3.0,
+    "home_score":0,
+    "away_score":3,
     "home_result":"L",
     "home_conf":"CONCACAF",
     "away_conf":"CAF",
     "city":null,
     "venue":null,
-    "collected_at":"2026-07-19T06:30:45.209048+00:00"
+    "collected_at":"2026-07-19T20:04:36.667366+00:00"
   },
   {
     "match_id":537375,
@@ -1700,14 +1700,14 @@
     "matchday":null,
     "home_team":"Paraguay",
     "away_team":"France",
-    "home_score":0.0,
-    "away_score":1.0,
+    "home_score":0,
+    "away_score":1,
     "home_result":"L",
     "home_conf":"CONMEBOL",
     "away_conf":"UEFA",
     "city":null,
     "venue":null,
-    "collected_at":"2026-07-19T06:30:45.209066+00:00"
+    "collected_at":"2026-07-19T20:04:36.667381+00:00"
   },
   {
     "match_id":537377,
@@ -1719,14 +1719,14 @@
     "matchday":null,
     "home_team":"Brazil",
     "away_team":"Norway",
-    "home_score":1.0,
-    "away_score":2.0,
+    "home_score":1,
+    "away_score":2,
     "home_result":"L",
     "home_conf":"CONMEBOL",
     "away_conf":"UEFA",
     "city":null,
     "venue":null,
-    "collected_at":"2026-07-19T06:30:45.209086+00:00"
+    "collected_at":"2026-07-19T20:04:36.667398+00:00"
   },
   {
     "match_id":537378,
@@ -1738,14 +1738,14 @@
     "matchday":null,
     "home_team":"Mexico",
     "away_team":"England",
-    "home_score":2.0,
-    "away_score":3.0,
+    "home_score":2,
+    "away_score":3,
     "home_result":"L",
     "home_conf":"CONCACAF",
     "away_conf":"UEFA",
     "city":null,
     "venue":null,
-    "collected_at":"2026-07-19T06:30:45.209104+00:00"
+    "collected_at":"2026-07-19T20:04:36.667425+00:00"
   },
   {
     "match_id":537379,
@@ -1757,14 +1757,14 @@
     "matchday":null,
     "home_team":"Portugal",
     "away_team":"Spain",
-    "home_score":0.0,
-    "away_score":1.0,
+    "home_score":0,
+    "away_score":1,
     "home_result":"L",
     "home_conf":"UEFA",
     "away_conf":"UEFA",
     "city":null,
     "venue":null,
-    "collected_at":"2026-07-19T06:30:45.209123+00:00"
+    "collected_at":"2026-07-19T20:04:36.667443+00:00"
   },
   {
     "match_id":537380,
@@ -1776,14 +1776,14 @@
     "matchday":null,
     "home_team":"United States",
     "away_team":"Belgium",
-    "home_score":1.0,
-    "away_score":4.0,
+    "home_score":1,
+    "away_score":4,
     "home_result":"L",
     "home_conf":"Unknown",
     "away_conf":"UEFA",
     "city":null,
     "venue":null,
-    "collected_at":"2026-07-19T06:30:45.209142+00:00"
+    "collected_at":"2026-07-19T20:04:36.667460+00:00"
   },
   {
     "match_id":537381,
@@ -1795,14 +1795,14 @@
     "matchday":null,
     "home_team":"Argentina",
     "away_team":"Egypt",
-    "home_score":3.0,
-    "away_score":2.0,
+    "home_score":3,
+    "away_score":2,
     "home_result":"W",
     "home_conf":"CONMEBOL",
     "away_conf":"CAF",
     "city":null,
     "venue":null,
-    "collected_at":"2026-07-19T06:30:45.209159+00:00"
+    "collected_at":"2026-07-19T20:04:36.667476+00:00"
   },
   {
     "match_id":537382,
@@ -1814,14 +1814,14 @@
     "matchday":null,
     "home_team":"Switzerland",
     "away_team":"Colombia",
-    "home_score":4.0,
-    "away_score":3.0,
+    "home_score":4,
+    "away_score":3,
     "home_result":"W",
     "home_conf":"UEFA",
     "away_conf":"CONMEBOL",
     "city":null,
     "venue":null,
-    "collected_at":"2026-07-19T06:30:45.209177+00:00"
+    "collected_at":"2026-07-19T20:04:36.667493+00:00"
   },
   {
     "match_id":537383,
@@ -1833,14 +1833,14 @@
     "matchday":null,
     "home_team":"France",
     "away_team":"Morocco",
-    "home_score":2.0,
-    "away_score":0.0,
+    "home_score":2,
+    "away_score":0,
     "home_result":"W",
     "home_conf":"UEFA",
     "away_conf":"CAF",
     "city":null,
     "venue":null,
-    "collected_at":"2026-07-19T06:30:45.209194+00:00"
+    "collected_at":"2026-07-19T20:04:36.667509+00:00"
   },
   {
     "match_id":537384,
@@ -1852,14 +1852,14 @@
     "matchday":null,
     "home_team":"Spain",
     "away_team":"Belgium",
-    "home_score":2.0,
-    "away_score":1.0,
+    "home_score":2,
+    "away_score":1,
     "home_result":"W",
     "home_conf":"UEFA",
     "away_conf":"UEFA",
     "city":null,
     "venue":null,
-    "collected_at":"2026-07-19T06:30:45.209210+00:00"
+    "collected_at":"2026-07-19T20:04:36.667526+00:00"
   },
   {
     "match_id":537385,
@@ -1871,14 +1871,14 @@
     "matchday":null,
     "home_team":"Norway",
     "away_team":"England",
-    "home_score":1.0,
-    "away_score":2.0,
+    "home_score":1,
+    "away_score":2,
     "home_result":"L",
     "home_conf":"UEFA",
     "away_conf":"UEFA",
     "city":null,
     "venue":null,
-    "collected_at":"2026-07-19T06:30:45.209228+00:00"
+    "collected_at":"2026-07-19T20:04:36.667542+00:00"
   },
   {
     "match_id":537386,
@@ -1890,14 +1890,14 @@
     "matchday":null,
     "home_team":"Argentina",
     "away_team":"Switzerland",
-    "home_score":3.0,
-    "away_score":1.0,
+    "home_score":3,
+    "away_score":1,
     "home_result":"W",
     "home_conf":"CONMEBOL",
     "away_conf":"UEFA",
     "city":null,
     "venue":null,
-    "collected_at":"2026-07-19T06:30:45.209245+00:00"
+    "collected_at":"2026-07-19T20:04:36.667558+00:00"
   },
   {
     "match_id":537387,
@@ -1909,14 +1909,14 @@
     "matchday":null,
     "home_team":"France",
     "away_team":"Spain",
-    "home_score":0.0,
-    "away_score":2.0,
+    "home_score":0,
+    "away_score":2,
     "home_result":"L",
     "home_conf":"UEFA",
     "away_conf":"UEFA",
     "city":null,
     "venue":null,
-    "collected_at":"2026-07-19T06:30:45.209262+00:00"
+    "collected_at":"2026-07-19T20:04:36.667574+00:00"
   },
   {
     "match_id":537388,
@@ -1928,14 +1928,14 @@
     "matchday":null,
     "home_team":"England",
     "away_team":"Argentina",
-    "home_score":1.0,
-    "away_score":2.0,
+    "home_score":1,
+    "away_score":2,
     "home_result":"L",
     "home_conf":"UEFA",
     "away_conf":"CONMEBOL",
     "city":null,
     "venue":null,
-    "collected_at":"2026-07-19T06:30:45.209279+00:00"
+    "collected_at":"2026-07-19T20:04:36.667592+00:00"
   },
   {
     "match_id":537389,
@@ -1947,32 +1947,32 @@
     "matchday":null,
     "home_team":"France",
     "away_team":"England",
-    "home_score":4.0,
-    "away_score":6.0,
+    "home_score":4,
+    "away_score":6,
     "home_result":"L",
     "home_conf":"UEFA",
     "away_conf":"UEFA",
     "city":null,
     "venue":null,
-    "collected_at":"2026-07-19T06:30:45.209298+00:00"
+    "collected_at":"2026-07-19T20:04:36.667610+00:00"
   },
   {
     "match_id":537390,
     "date":"2026-07-19",
     "utc_date":"2026-07-19",
-    "status":"TIMED",
+    "status":"PAUSED",
     "stage":"FINAL",
     "group":null,
     "matchday":null,
     "home_team":"Spain",
     "away_team":"Argentina",
-    "home_score":null,
-    "away_score":null,
-    "home_result":null,
+    "home_score":0,
+    "away_score":0,
+    "home_result":"D",
     "home_conf":"UEFA",
     "away_conf":"CONMEBOL",
     "city":null,
     "venue":null,
-    "collected_at":"2026-07-19T06:30:45.209316+00:00"
+    "collected_at":"2026-07-19T20:04:36.667626+00:00"
   }
 ]
